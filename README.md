@@ -94,8 +94,8 @@ SPIRO gives both groups that view on one map, together with plain-language guida
 - **Search** for cities, places and facilities
 - **TB Health Guide** on symptoms, prevention and free testing, on the introduction page
 - **Admin log-in** for LGUs with one shared username and password (no sign-up)
-- **Admin** view after log-in: TB history by city and year, a crowding report, and the 2026 model prediction on city cards
-- Introduction page, light and dark themes, and a layout that works on phones
+- **Admin** view after log-in: TB history by city and year, a crowding report, an early-warning table (each city's 2026 forecast rate and likely range compared with the NCR rate), and the 2026 model prediction on city cards
+- Introduction page, light and dark colours that follow your device setting, and a layout that works on phones
 - Clear messages when a data file is missing or does not follow the data contract
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -128,11 +128,11 @@ SPIRO gives both groups that view on one map, together with plain-language guida
 
 | Dataset | What it holds | How SPIRO uses it |
 |---|---|---|
-| DOH Field Health Services Information System (FHSIS) TB tables, NCR: `ID TB 2018.xlsx`, `ID TB 2020–2023.xlsx`, `Tuberculosis_EB 2024.xlsx`, `FINAL Tuberculosis_EB_2025.xlsx` (supplied as `Tuberculosis_DS.zip`); 2019 from the FHSIS 2019 annual report, `FHSIS2019.pdf`, Table 1.E.4.1 | Notified TB cases (all forms) and population for each NCR city, 2018–2025. 2024 counts "new and relapse" only. | Cleaned by the data preparation scripts (`docs/device-b/scripts/`) into `data/cleaned_tb_data.csv` (144 rows: NCR plus 17 cities, 8 years). This is the only source of TB numbers on the map, the cards and the Admin tables. |
+| DOH Field Health Services Information System (FHSIS) TB tables, NCR: `ID TB 2018.xlsx`, `ID TB 2020–2023.xlsx`, `Tuberculosis_EB 2024.xlsx`, `FINAL Tuberculosis_EB_2025.xlsx` (supplied as `Tuberculosis_DS.zip`); 2019 from the FHSIS 2019 annual report, `FHSIS2019.pdf`, Table 1.E.4.1 | Notified TB cases (all forms) and population for each NCR city, 2018–2025. 2024 counts "new and relapse" only. | Cleaned by the data pipeline scripts (`tools/data-pipeline/`) into `data/cleaned_tb_data.csv` (144 rows: NCR plus 17 cities, 8 years). This is the only source of TB numbers on the map, the cards and the Admin tables. |
 | DOH FHSIS Annual 2025, Table 2.F.7.1 | Projected population (all ages) for 2025, by city. The NCR total is 14,015,646. | Population shown on the city cards; the denominator for rates. |
 | PSA 2020 Census of Population | City populations in 2020 | Kept for reference (`pop2020`). |
 | PSGC 2023 boundaries (PSA), via faeldon/philippines-json-maps (MIT licence) | City, municipality and region polygons | City shapes, the NCR outline and the grey mask outside NCR (`data/geo/`). |
-| `data/tb_predictions.csv` and `data/model_evaluation.json` | 2026 predicted TB case rate per 100,000 for each city (ridge mean-reversion model), with its back-test results | Shown only on city cards after the Admin log-in, labelled "Prediction". |
+| `data/tb_predictions.csv` and `data/model_evaluation.json` | 2026 predicted TB case rate per 100,000 for each city (ridge mean-reversion model), with its back-test results | Shown only after the Admin log-in, labelled "Prediction": on city cards and in the Admin early-warning table. |
 | BestTime foot-traffic forecasts (`data/places/besttime-malls.json`) | NCR malls known to BestTime and, for those forecast so far, the share of each mall's busiest hour for every hour of a typical week | The Crowding heatmap, the city mall lists and mall cards (see `docs/foot-traffic.md`). |
 | SPIRO public-place list (`data/places/public-places.json`) | 52 public places with approximate coordinates, each checked to fall inside its city | Gives familiar names to the malls that have a BestTime forecast; places without a forecast are not shown. |
 | PhilHealth, *List of Accredited TB DOTS Clinics for CY 2026* (updated September 30, 2026), NCR section, list nos. 599–983 | Name, phone, email, street address, city, accreditation end date and sector of each accredited TB-DOTS facility | `data/facilities/` (385 rows, no duplicates). Each address was matched to its PSGC 2023 barangay to place the pin. Method: [`docs/tb-facilities.md`](docs/tb-facilities.md). |
@@ -159,6 +159,11 @@ Opening `SPIRO.html` straight from the folder does not work, because browsers bl
 
 **Tests:** with the server running, open http://localhost:8000/tests/unit-tests.html (calculations and error cases) and http://localhost:8000/tests/contract-tests.html (data loader). See [`tests/README.md`](tests/README.md).
 
+**Updating the data** (optional; the site does not need this to run):
+- TB cases and the 2026 model: Python scripts in `tools/data-pipeline/`; steps in [`tools/data-pipeline/RUN.md`](tools/data-pipeline/RUN.md).
+- Mall crowding: `tools/fetch-besttime.ps1`, which reads your BestTime private key from a `.besttime.env` file (never committed).
+- Facility pins: `tools/geocode-facilities.py`.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -171,17 +176,21 @@ The code follows a Model–View–Controller split with native ES modules:
 ```
 SPIRO.html          the page
 serve.ps1           local web server
-assets/             CSS, logo, Leaflet
+assets/             CSS, logo and icons, Leaflet
 data/               every data file the site reads
 src/
   config/           data paths and settings
-  services/         loading and checking data files
+  services/         loading and checking data files, admin log-in
   models/           data and rules (no page code)
   views/            what is drawn on the page
   controllers/      what happens when the user acts
   utils/            small shared helpers
 tests/              browser test pages and test-only data
+tools/              offline scripts that produce data/ (never loaded by the site)
+  data-pipeline/    Python: clean the DOH workbooks, train and check the model
 docs/               architecture, data contract, method notes
+  data-preparation/ how the TB files were cleaned and the model chosen
+  screenshots/      images used in this README
 ```
 
 Details, data flow and naming conventions: [`docs/architecture.md`](docs/architecture.md).
