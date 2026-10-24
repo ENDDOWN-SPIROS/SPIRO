@@ -12,16 +12,12 @@
 </head>
 <body>
 <h1>Contract loader tests (test data only)</h1>
-<p>Runs ContractLoader against <code>tests/fixtures/*</code> and the live <code>data/shared/</code> folder. Open through serve.ps1: <code>http://localhost:8000/tests/contract-tests.html</code>.</p>
+<p>Runs ContractLoader against <code>tests/fixtures/*</code> and the live <code>data/</code> folder. Open through serve.ps1: <code>http://localhost:8000/tests/contract-tests.html</code>.</p>
 <p id="sum">Running…</p>
 <ul id="out"></ul>
-<script>
-  /* The loader resolves paths from the page; run it from the project root so data/shared/ is the same folder the site reads. */
-  window.NCR_GEO = { features: [] };
-</script>
-<script src="../assets/js/models/contract-loader.js"></script>
-<script>
-"use strict";
+<script type="module">
+/* The loader resolves paths from this page, so fixtures/ and ../data/ are relative to tests/. */
+import { ContractLoader, CONTRACT } from "../src/services/contract-loader.js";
 const results = [];
 const ok = (name, cond, info = "") => results.push({ name, pass: !!cond, info });
 const at = (base, file) => ContractLoader.fetchText(base, file, null);
@@ -87,9 +83,9 @@ async function load(caseName) {
   ok("pending: evaluation ok with status pending", pd.ev.state === "ok" && pd.ev.data.status === "pending");
   ok("pending: CSVs and dictionary missing", pd.tb.state === "missing" && pd.pred.state === "missing" && pd.dict.state === "missing");
 
-  /* Live folder (Device B's files) */
-  const live = await ContractLoader.listing("../data/shared/");
-  ok("live: data/shared/ listing readable", live instanceof Set, live ? [...live].join(", ") : "no listing");
+  /* Live data folder */
+  const live = await ContractLoader.listing("../data/");
+  ok("live: data/ listing readable", live instanceof Set, live ? [...live].join(", ") : "no listing");
 
   const failed = results.filter(r => !r.pass);
   document.getElementById("out").innerHTML = results.map(r => `<li class="${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"}: ${r.name}${r.info && !r.pass ? ` <small>(${r.info.replace(/</g, "&lt;")})</small>` : ""}</li>`).join("");

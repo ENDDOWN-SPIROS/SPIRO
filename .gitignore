@@ -1,0 +1,10 @@
+# Local backups made while editing (kept on this computer only)
+backup/
+
+# Editor and tool settings
+.claude/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

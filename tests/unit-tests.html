@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Resolve data paths from the project root, the same way SPIRO.html does. -->
+<base href="../">
+<title>Calculation and error tests</title>
+<style>
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 1rem; color: #203B4C; background: #F4F7F8; }
+  h1 { font-size: 1.25rem; } h2 { font-size: 1rem; margin: 1rem 0 .25rem; }
+  .pass { color: #1E7B4F; } .fail { color: #B0262E; font-weight: 700; }
+  li { margin: .15rem 0; } code { background: #fff; padding: 0 .25rem; }
+</style>
+</head>
+<body>
+<h1>Calculation and error tests</h1>
+<p>Checks the map's calculations (TB classes, busy levels, accreditation status, foot-traffic shares, formatting) against the real data files, and checks that bad files and bad URLs fail safely. Open through serve.ps1: <code>http://localhost:8000/tests/unit-tests.html</code>.</p>
+<p id="sum">Running…</p>
+<div id="out"></div>
+<script type="module">
+import { APP_CONFIG } from "./src/config/app-config.js";
+import { fetchJSON, DataLoadError } from "./src/services/data-service.js";
+import { ContractLoader } from "./src/services/contract-loader.js";
+import { TbData, tbVal, tbClass, yStatus, YEARS, DEFAULT_YEAR, TB_BREAKS } from "./src/models/tb-data-model.js";
+import { busyLevel, CITIES, PLACES } from "./src/models/places-model.js";
+import { FAC, facStatus, facTitle, facDirections } from "./src/models/facilities-model.js";
+import { OsmFoot } from "./src/models/foot-traffic-model.js";
+import { esc, fmt, isoDate, parseIso, shortNum } from "./src/utils/format.js";
+
+const groups = [];
+let cur;
+const group = name => { cur = { name, results: [] }; groups.push(cur); };
+const ok = (name, cond, info = "") => cur.results.push({ name, pass: !!cond, info: String(info) });
+const rejects = async (p, test) => { try { await p; return false; } catch (e) { return test(e); } };
+
+(async () => {
+  /* Real data, loaded the same way the site loads it */
+  const data = await ContractLoader.loadAll();
+  TbData.setData(data.tb);
+
+  group("TB data and classes");
+  ok("default year is 2025", DEFAULT_YEAR === 2025);
+  ok("2025 is an available year", YEARS.includes(2025), YEARS.join(", "));
+  ok("2019 has no records and is not filled from another year", yStatus(2019).s === "missing" && tbVal("qc", 2019, "count") === null);
+  ok("Quezon City 2018 count matches the cleaned file (11,947)", tbVal("qc", 2018, "count") === 11947, tbVal("qc", 2018, "count"));
+  ok("NCR total = sum of the 17 cities", tbVal("all", 2025, "count") === CITIES.reduce((a, c) => a + (tbVal(c.id, 2025, "count") ?? 0), 0));
+  ok("unknown city gives null, not 0", tbVal("not-a-city", 2025, "count") === null);
+  ok("tbClass: null → -1 (no data)", tbClass(null, "count") === -1);
+  ok("tbClass: 999 → class 0, 1,000 → class 1 (edge belongs to the upper class)", tbClass(999, "count") === 0 && tbClass(1000, "count") === 1);
+  ok("tbClass: 9,999 → 3, 10,000 → 4 (top class)", tbClass(9999, "count") === 3 && tbClass(10000, "count") === 4);
+  ok("tbClass: every 2025 city value falls in a class 0–4", CITIES.every(c => { const k = tbClass(tbVal(c.id, 2025, "count"), "count"); return k >= 0 && k <= 4; }));
+  ok("five legend labels for four edges", TB_BREAKS.count.labels.length === TB_BREAKS.count.edges.length + 1);
+
+  group("Crowding levels and foot traffic");
+  ok("busyLevel: closed (null) → Closed", busyLevel(null) === "Closed");
+  ok("busyLevel: 0 and 39 → Low", busyLevel(0) === "Low" && busyLevel(39) === "Low");
+  ok("busyLevel: 40 → Moderate, 69 → Moderate", busyLevel(40) === "Moderate" && busyLevel(69) === "Moderate");
+  ok("busyLevel: 70 → High, 89 → High", busyLevel(70) === "High" && busyLevel(89) === "High");
+  ok("busyLevel: 90 and 100 → Very high", busyLevel(90) === "Very high" && busyLevel(100) === "Very high");
+  ok("52 listed public places loaded", PLACES.length === 52, PLACES.length);
+  let maxShare = 0, minShare = 1;
+  for (const k of OsmFoot.ORDER) for (let d = 0; d < 7; d++) for (let h = 0; h < 24; h++) { const v = OsmFoot.share(k, d, h); maxShare = Math.max(maxShare, v); minShare = Math.min(minShare, v); }
+  ok("foot-traffic shares stay between 0 and 1", minShare >= 0 && maxShare <= 1.000001, `${minShare}–${maxShare}`);
+  ok("each type reaches 100% at its busiest hour", OsmFoot.ORDER.every(k => { let m = 0; for (let d = 0; d < 7; d++) for (let h = 0; h < 24; h++) m = Math.max(m, OsmFoot.share(k, d, h)); return Math.abs(m - 1) < 1e-9; }));
+  ok("malls are 0% when closed (3:00)", OsmFoot.share("mall", 3, 3) === 0);
+  ok("schools are 0% on Saturday", [...Array(24).keys()].every(h => OsmFoot.share("school", 6, h) === 0));
+  ok("OSM tags: mall, market, supermarket", OsmFoot.classify({ shop: "mall" }) === "mall" && OsmFoot.classify({ amenity: "marketplace" }) === "market" && OsmFoot.classify({ shop: "supermarket" }) === "supermarket");
+  ok("OSM tags: a train station is rail, a plain station is bus", OsmFoot.classify({ public_transport: "station", train: "yes" }) === "rail" && OsmFoot.classify({ public_transport: "station" }) === "bus");
+  ok("OSM tags: unrelated places are ignored", OsmFoot.classify({ amenity: "hospital" }) === null && OsmFoot.classify(null) === null);
+  ok("the foot-traffic endpoint is the free Overpass API over HTTPS", /^https:\/\/overpass-api\.de\//.test(APP_CONFIG.overpassEndpoint));
+
+  group("TB-DOTS facilities");
+  ok("385 facilities loaded", FAC.length === 385, FAC.length);
+  ok("every facility has an id, name, city and end date", FAC.every(f => f.id && f.n && f.c && /^\d{4}-\d{2}-\d{2}$/.test(f.e)));
+  ok("facility ids are unique", new Set(FAC.map(f => f.id)).size === FAC.length);
+  ok("pins are inside Metro Manila's box", FAC.filter(f => f.lat != null).every(f => f.lat > 14.3 && f.lat < 14.8 && f.lng > 120.9 && f.lng < 121.2));
+  const f = { e: "2026-10-03" };
+  ok("status: end date still ahead → accredited", facStatus(f, "2026-10-01").ok === true);
+  ok("status: end date today → still accredited", facStatus(f, "2026-10-03").ok === true);
+  ok("status: end date passed → expired", facStatus(f, "2026-10-04").ok === false);
+  ok("6 facilities expired as of 2026-10-24", FAC.filter(x => !facStatus(x, "2026-10-24").ok).length === 6);
+  ok("names: small words lower-case, acronyms kept", facTitle("LUNG CENTER OF THE PHILIPPINES (LCP)") === "Lung Center of the Philippines (LCP)", facTitle("LUNG CENTER OF THE PHILIPPINES (LCP)"));
+  ok("directions link encodes the address", facDirections(FAC[0]).startsWith("https://www.google.com/maps/dir/?api=1&destination=") && !/\s/.test(facDirections(FAC[0])));
+
+  group("Formatting and safe text");
+  ok("esc: HTML special characters are escaped", esc(`<img src=x onerror="a">&'`) === "&lt;img src=x onerror=&quot;a&quot;&gt;&amp;&#39;");
+  ok("esc: null and undefined become empty text", esc(null) === "" && esc(undefined) === "");
+  ok("fmt: thousands separator; missing → dash", fmt(101500) === "101,500" && fmt(null) === "–" && fmt(NaN) === "–");
+  ok("shortNum: 1,050 → 1.1k, 22,000 → 22k", shortNum(1050) === "1.1k" && shortNum(22000) === "22k", `${shortNum(1050)} ${shortNum(22000)}`);
+  ok("parseIso: valid date round-trips", isoDate(parseIso("2026-02-28")) === "2026-02-28");
+  ok("parseIso: bad input → null", parseIso("2026-2-8") === null && parseIso("") === null && parseIso(null) === null);
+
+  group("Error cases");
+  ok("missing data file → DataLoadError naming the file",
+    await rejects(fetchJSON("data/geo/does-not-exist.json"), e => e instanceof DataLoadError && e.file === "data/geo/does-not-exist.json" && /404/.test(e.message)));
+  ok("file that is not JSON → DataLoadError 'not valid JSON'",
+    await rejects(fetchJSON("data/README.md"), e => e instanceof DataLoadError && /not valid JSON/.test(e.message)));
+  ok("JSON with the wrong structure → DataLoadError",
+    await rejects(fetchJSON(APP_CONFIG.staticData.publicPlaces, v => v && Array.isArray(v.notThere)), e => e instanceof DataLoadError && /expected structure/.test(e.message)));
+  ok("real static files pass their checks", (await fetchJSON(APP_CONFIG.staticData.ncrCities, v => v?.type === "FeatureCollection")).features.length === 17);
+  const bad = ["../data", "valid/../../", "..", "a/b", "a.b", "VALID", "", "x".repeat(41), "%2e%2e"];
+  ok("fixture names that could leave tests/fixtures/ are refused", bad.every(n => !APP_CONFIG.fixtureName.test(n)), bad.filter(n => APP_CONFIG.fixtureName.test(n)).join(" "));
+  ok("normal fixture names are allowed", ["valid", "no-2025", "wrong-header"].every(n => APP_CONFIG.fixtureName.test(n)));
+  const status = async p => (await fetch(p, { cache: "no-store" })).status;
+  ok("server: backup folder is not served", [403, 404].includes(await status("backup/move-old-files.ps1")));
+  ok("server: hidden files (.gitignore) are not served", [403, 404].includes(await status(".gitignore")));
+  ok("server: src/ has no directory listing", (await status("src/")) !== 200);
+  ok("server: data/ listing works (the loader needs it)", (await status("data/")) === 200);
+  ok("no API keys or tokens in the config", !/key|token|secret/i.test(JSON.stringify(APP_CONFIG)));
+
+  /* Report */
+  const all = groups.flatMap(g => g.results), failed = all.filter(r => !r.pass);
+  document.getElementById("out").innerHTML = groups.map(g => `<h2>${esc(g.name)}</h2><ul>${g.results.map(r =>
+    `<li class="${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"}: ${esc(r.name)}${r.info && !r.pass ? ` <small>(${esc(r.info)})</small>` : ""}</li>`).join("")}</ul>`).join("");
+  document.getElementById("sum").textContent = `${all.length - failed.length} of ${all.length} passed`;
+  window.__unitTestResults = { total: all.length, failed: failed.map(r => r.name + (r.info ? " :: " + r.info : "")) };
+})().catch(e => {
+  document.getElementById("sum").textContent = "The tests could not run: " + e.message;
+  window.__unitTestResults = { total: 0, failed: ["could not run: " + e.message] };
+});
+</script>
+</body>
+</html>

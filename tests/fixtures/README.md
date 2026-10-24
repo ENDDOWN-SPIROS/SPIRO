@@ -4,7 +4,7 @@ Every file under tests/fixtures/ is made-up data for testing the shared-data loa
 missing/invalid states. Values, record_ids (TEST-...) and source_file ("TEST FIXTURE - not real data")
 are invented. The live site never reads these folders.
 
-Open a case only in test mode, on localhost:  http://localhost:8000/version-5.html?fixtures=<case>
+Open a case only in test mode, on localhost:  http://localhost:8000/SPIRO.html?fixtures=<case>
 
 | Case | What it checks |
 |---|---|

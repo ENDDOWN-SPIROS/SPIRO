@@ -3,7 +3,7 @@
 #   powershell -ExecutionPolicy Bypass -File serve.ps1            # http://localhost:8000
 #   powershell -ExecutionPolicy Bypass -File serve.ps1 -Port 8080
 #
-# Why a server: the page reads the shared data files in data/shared/ with fetch(),
+# Why a server: the page reads the shared data files in data/ with fetch(),
 # which browsers block for pages opened from a file. Map tiles also need a normal
 # Referer, which file:// pages don't send.
 # "/" opens SPIRO.html. With Python, "python -m http.server 8000" works too.
@@ -11,11 +11,11 @@ param([int]$Port = 8000)
 $root = (Resolve-Path $PSScriptRoot).Path
 $types = @{
   ".html" = "text/html; charset=utf-8"; ".js" = "text/javascript; charset=utf-8"; ".css" = "text/css; charset=utf-8"
-  ".json" = "application/json; charset=utf-8"; ".csv" = "text/csv; charset=utf-8"; ".md" = "text/markdown; charset=utf-8"
+  ".json" = "application/json; charset=utf-8"; ".geojson" = "application/geo+json; charset=utf-8"; ".csv" = "text/csv; charset=utf-8"; ".md" = "text/markdown; charset=utf-8"
   ".svg" = "image/svg+xml"; ".png" = "image/png"; ".jpg" = "image/jpeg"; ".ico" = "image/x-icon"
 }
 # Folders that may be listed, so the page can tell a missing data file from a broken one.
-$listable = '^(data/shared|tests/fixtures/[a-z0-9-]+)/?$'
+$listable = '^(data|tests/fixtures/[a-z0-9-]+)/?$'
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$Port/")
 $listener.Start()

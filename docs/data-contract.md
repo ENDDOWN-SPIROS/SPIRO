@@ -1,7 +1,7 @@
-# Shared data contract: checklist (Device A, frontend)
+# Data contract
 
-Device B produces these files. Device A (this website) only reads them.
-**Location:** `data/shared/`, next to `version-5.html`. The site reads them over
+The data preparation step (cleaning and modelling, scripts in `docs/device-b/scripts/`) produces these four files. The website only reads them and never changes them.
+**Location:** `data/`, next to `SPIRO.html`. The path is set once in `src/config/app-config.js`. The site reads them over
 `http://localhost:8000` (run `serve.ps1`); browsers block `fetch()` from `file://`.
 
 ## General rules (as applied by the loader)
@@ -29,16 +29,16 @@ Header, exact:
 | Field | Type read as | Used by |
 |---|---|---|
 | record_id | string | data notices (via line numbers) |
-| year | integer 1900–2100 (required) | year selector, map, legend, details, LGU history |
+| year | integer 1900–2100 (required) | year selector, map, legend, details, Admin TB history |
 | period_start, period_end | date | read and validated; not displayed yet |
 | period_type | string | only `annual` / `year` / `yearly` rows go on the yearly map; other types are counted in a notice |
 | geo_level | string (required) | map accepts `city`, `municipality`, `city_municipality`, `city/municipality`, `citymun`; others (region, province, barangay…) are counted in a notice |
 | geo_code | string | matched to the NCR boundary PSGC codes (e.g. `1380600000` = Manila) |
 | geo_name | string | used if geo_code is empty or unknown; a code and name naming different cities → row not used |
 | province, city_municipality, barangay | string | read; not displayed yet |
-| case_count | whole number ≥ 0 | map colours (Cases), legend, city card, LGU table and chart |
+| case_count | whole number ≥ 0 | map colours (Cases), legend, city card, Admin table and chart |
 | population | number | NCR-wide rate (Per 100k for "All of NCR") |
-| case_rate_per_100k | number | map colours (Per 100k), city card, LGU table, trend |
+| case_rate_per_100k | number | map colours (Per 100k), city card, Admin table, trend |
 | source_file, source_sheet | string | legend "Source:" line |
 
 Duplicates (same city and year): identical values are kept once; conflicting values make that city and year "unavailable".
@@ -62,26 +62,18 @@ Header, exact:
 | training_data_end | date | "trained to …" |
 | lower_bound, upper_bound | number | "Bounds" column, "not given" when empty |
 
-Shown in: LGU tools → Data and model, and in each city card for LGU users. Never on the public map, never mixed with observed cases.
+Shown on each city card after the Admin log-in. Never on the public map, never mixed with observed cases.
 
 ## 3. `model_evaluation.json`
 
 Required keys: `status` (`pending` | `completed` | `insufficient_data` | `failed`), `target_variable`, `prediction_horizon`, `geographic_level`, `feature_columns` (list or null), `excluded_columns` (list or null), `model_name`, `baseline_name`, `validation_method`, `training_rows`, `testing_rows` (whole number or null), `metrics` {`mae`,`rmse`,`r2`}, `baseline_metrics` {`mae`,`rmse`,`r2`} (numbers or null), `limitations`, `notes` (text, list or null).
 
-A missing key, an unknown status or a wrong type → rejected, with the problems listed. Shown as given in LGU tools → Data and model → Model status, with an honest message per status. Metrics are only presented as results when status is `completed`; otherwise they are marked "not final". Nothing is hardcoded.
+A missing key, an unknown status or a wrong type → rejected, with the problems listed. The website reads and checks it on load. Metrics are only presented as results when status is `completed`; otherwise they are marked "not final". Nothing is hardcoded.
 
 ## 4. `data_dictionary.md`
 
-Shown as plain text, escaped, on the "Data dictionary" page (menu, overview link, LGU tools). If absent: "Data dictionary not yet provided."
+Shown as plain text, escaped, on the "Data dictionary" page (opened with `#dictionary`). If absent: "Data dictionary not yet provided."
 
 ## Test fixtures
 
 `tests/fixtures/<case>/` holds TEST data only. The site reads a fixture folder only on localhost with `?fixtures=<case>`, and then shows a "Test mode" banner and "[TEST DATA]" in the tab title. Automated checks: `http://localhost:8000/tests/contract-tests.html`.
-
-## Questions for Device B
-
-1. Exact `geo_level` vocabulary (is it `city` / `municipality`?) and `period_type` vocabulary (is it `annual`?).
-2. `geo_code` format: 10-digit PSGC as text (e.g. `1380600000`, Pateros `1381701000`)? The site matches these codes against the boundaries.
-3. Will NCR-level or barangay-level rows appear in the same file? (The map ignores them and says so.)
-4. Is `case_rate_per_100k` always computed from the `population` in the same row? (The site shows the given rate and doesn't recompute it.)
-5. `limitations` and `notes` in the JSON: a string or a list? Both are accepted.
