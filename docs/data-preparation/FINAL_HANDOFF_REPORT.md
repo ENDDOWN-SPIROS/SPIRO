@@ -1,4 +1,4 @@
-# Proximity — Device B final handoff report (Module B6)
+# SPIRO — Device B final handoff report (Module B6)
 
 QA run on 2026-10-24. The whole pipeline was re-run end to end in a fresh folder, from the supplied `Tuberculosis_DS.zip` (SHA-256 `3520922f…`, identical to the copy in the owner's Downloads). The re-run output matches the delivered files exactly, apart from run timestamps.
 
@@ -16,11 +16,11 @@ QA run on 2026-10-24. The whole pipeline was re-run end to end in a fresh folder
 The other 24 sheets (treatment success, drug-resistant TB, preventive treatment, testing, population by age) were inspected and not used. See `data_inspection_report.md`.
 
 ## 2. Scripts and supporting files (`proximity_device_b/`)
-- **`scripts/clean.py`:** workbooks → `cleaned_tb_data.csv` and `cleaning_log.txt`.
-- **`scripts/model.py`:** trains, evaluates and predicts → `tb_predictions.csv` and `model_evaluation.json`.
-- **`scripts/validate.py`:** checks all four files against the contract.
-- **`scripts/verify_model.py`:** recomputes the metrics and predictions in plain numpy.
-- **`scripts/RUN.md`:** run instructions.
+- **`tools/data-pipeline/clean.py`:** workbooks → `cleaned_tb_data.csv` and `cleaning_log.txt`.
+- **`tools/data-pipeline/model.py`:** trains, evaluates and predicts → `tb_predictions.csv` and `model_evaluation.json`.
+- **`tools/data-pipeline/validate.py`:** checks all four files against the contract.
+- **`tools/data-pipeline/verify_model.py`:** recomputes the metrics and predictions in plain numpy.
+- **`tools/data-pipeline/RUN.md`:** run instructions.
 - **Supporting documents:** `data_inspection_report.md`, `model_task_decision.md`, `device_a_handoff.md` and this report.
 
 ## 3. The four required outputs
@@ -104,5 +104,5 @@ The same files are bundled in `proximity_device_b_outputs.zip`, and a copy of th
 pip install pandas openpyxl scikit-learn
 mkdir raw output && unzip Tuberculosis_DS.zip -d raw
 cp proximity_device_b/data_dictionary.md output/
-python3 scripts/clean.py raw output && python3 scripts/model.py output && python3 scripts/validate.py output && python3 scripts/verify_model.py output
+python3 tools/data-pipeline/clean.py raw output && python3 tools/data-pipeline/model.py output && python3 tools/data-pipeline/validate.py output && python3 tools/data-pipeline/verify_model.py output
 ```

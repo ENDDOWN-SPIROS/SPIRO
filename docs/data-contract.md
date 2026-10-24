@@ -1,6 +1,6 @@
 # Data contract
 
-The data preparation step (cleaning and modelling, scripts in `docs/device-b/scripts/`) produces these four files. The website only reads them and never changes them.
+The data preparation step (cleaning and modelling, scripts in `tools/data-pipeline/`) produces these four files. The website only reads them and never changes them.
 **Location:** `data/`, next to `SPIRO.html`. The path is set once in `src/config/app-config.js`. The site reads them over
 `http://localhost:8000` (run `serve.ps1`); browsers block `fetch()` from `file://`.
 

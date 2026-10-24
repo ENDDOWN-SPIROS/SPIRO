@@ -14,3 +14,8 @@ body.test-mode .topbar { top: calc(var(--test-h, 2rem) + .375rem); }
 .pred-tag { display: inline-flex; font-size: .6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #AD5B20; background: #FFFFFF; border: 1px solid #AD5B20; padding: .05rem .4rem; border-radius: 999px; vertical-align: middle; }
 .cs-pred { display: flex; flex-direction: column; gap: .375rem; }
 .dict-text { white-space: pre-wrap; overflow-wrap: anywhere; font: .875rem/1.5 var(--f-mono); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1rem; margin: 0; }
+/* Early warning tab: forecast flags. */
+.ew { display: inline-block; padding: .05rem .5rem; border-radius: 999px; font-size: .75rem; font-weight: 700; white-space: nowrap; }
+.ew-high { background: var(--bad-bg); color: var(--bad); }
+.ew-mid { background: var(--warn-bg); color: var(--warn); }
+.ew-low { background: var(--na-bg); color: var(--muted); }

@@ -12,7 +12,7 @@ Project folder `proximity_device_b/`, also bundled as `proximity_device_b_output
 | `model_evaluation.json` | `status: completed`; the model ties the "same as last year" baseline |
 | `data_dictionary.md` | every field in both CSVs: type, meaning, source, missing values |
 
-Supporting files: `data_inspection_report.md`, `model_task_decision.md`, `cleaning_log.txt` and `scripts/`.
+Supporting files: `data_inspection_report.md`, `model_task_decision.md`, `cleaning_log.txt` and `tools/data-pipeline/`.
 
 ## Field summary
 - **Join key:** `geo_code`, a 10-digit PSGC code. Read it as a string. NCR = `1300000000`.

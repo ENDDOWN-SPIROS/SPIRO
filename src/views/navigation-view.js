@@ -1,12 +1,11 @@
 /* =====================================================================
-   NavigationView: hamburger menu (overlay panel) and the
-   account button in the top bar.
+   NavigationView: the LGU Admin card, the log-out button and the
+   search box in the top bar.
    ===================================================================== */
 
 import { FAC, FAC_KIND, facAddress, facName } from "../models/facilities-model.js";
 import { CATEGORY, CITIES, PLACE, PLACES, cityName } from "../models/places-model.js";
-import { Prefs } from "../models/settings-model.js";
-import { $, $$, icon, opt } from "../utils/dom.js";
+import { $, $$, icon } from "../utils/dom.js";
 import { esc } from "../utils/format.js";
 
 export class NavigationView {
@@ -14,18 +13,14 @@ export class NavigationView {
 
   init(handlers) {
     this.handlers = handlers;
-    $("#navBtn").addEventListener("click", () => handlers.onToggleNav());
-    $("#navScrim").addEventListener("click", () => handlers.onCloseNav());
     $("#topLogout").addEventListener("click", () => handlers.onLogout());
     this.renderSearch();
-    this.render(["navOpen", "isAdmin", "route"]);
+    this.render(["isAdmin", "route"]);
   }
 
   render(changed) {
-    const c = new Set(changed), s = this.model.state;
-    if (c.has("isAdmin") || c.has("route") || c.has("navOpen")) this.renderPanel();
+    const c = new Set(changed);
     if (c.has("isAdmin") || c.has("route") || c.has("adminTab")) this.renderAdminBox();
-    if (c.has("navOpen")) this.setOpen(s.navOpen);
   }
 
   /* LGU Admin card in the map's left column: visible only when logged in, one click to each admin page.
@@ -41,40 +36,10 @@ export class NavigationView {
       <div class="adm-list">
         ${item("tb", "i-chart", "TB history", "Cases and rates by year")}
         ${item("crowd", "i-people", "Crowding report", "Busy hours by mall")}
+        ${item("early", "i-flag", "Early warning", "Next year's forecast by city")}
       </div>`;
-    $$("[data-route]", box).forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.handlers.onNavigate(a.dataset.route); }));  }
-
-  renderPanel() {
-    const s = this.model.state, cur = s.route === "admin" ? "admin/" + s.adminTab : s.route, v = Prefs.current;
-    const item = (route, ic, label, sub) => `<a class="np-item${cur === route ? " on" : ""}" href="#${route}" data-route="${route}"${cur === route ? ' aria-current="page"' : ""}>${icon(ic)}<span><b>${label}</b>${sub ? `<small>${sub}</small>` : ""}</span></a>`;
-    const o = (val, l) => opt(val, l, (v.theme || "system") === val);
-    $("#navPanel").innerHTML = `
-      <div class="np-head">
-        <h2 id="setTitle">Settings</h2>
-        <button type="button" class="icon-btn" id="navClose" aria-label="Close settings">${icon("i-close")}</button>
-      </div>
-      <div class="np-group">
-        <p class="np-label">Pages</p>
-        ${item("intro", "i-book", "Home", "TB Health Guide and quick links")}
-        ${item("map", "i-map", "Map", "TB cases and crowding")}
-      </div>
-      <div class="np-group">
-        <p class="np-label">Display</p>
-        <label class="np-set"><span>Theme</span><select id="setTheme">${o("system", "Device setting")}${o("light", "Light")}${o("dark", "Dark")}</select></label>
-        <label class="np-set"><span>City names and values<small>Shown when zoomed in</small></span><input type="checkbox" role="switch" class="switch" id="setLabels"${v.labels !== false ? " checked" : ""}></label>
-      </div>
-      <div class="np-group">
-        ${s.isAdmin ? `
-          <p class="np-label">Admin</p>
-          <p class="np-note">Logged in. The LGU Admin tools are in the left panel of the map.</p>`
-        : `<button type="button" class="btn np-login" id="npLogin">Log In</button>`}
-      </div>`;
-    const p = $("#navPanel");
-    $("#navClose").addEventListener("click", () => this.handlers.onCloseNav());
-    $$("[data-route]", p).forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.handlers.onNavigate(a.dataset.route); }));
-    const upd = () => this.handlers.onPrefs({ theme: $("#setTheme").value, labels: $("#setLabels").checked });
-    ["#setTheme", "#setLabels"].forEach(id => $(id).addEventListener("change", upd));
-    $("#npLogin")?.addEventListener("click", () => this.handlers.onLogin());  }
+    $$("[data-route]", box).forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.handlers.onNavigate(a.dataset.route); }));
+  }
 
   /* Search box in the top bar: cities with TB records in cleaned_tb_data.csv, the malls
      with a BestTime forecast (crowding layer) and the TB-DOTS facilities. */
@@ -127,11 +92,4 @@ export class NavigationView {
 
   /* Cities come only from cleaned_tb_data.csv (cities with at least one valid case
      count). Malls are the crowding layer's places, each with a BestTime forecast. */
-  setOpen(open) {
-    const p = $("#navPanel"), btn = $("#navBtn");
-    p.hidden = !open; $("#navScrim").hidden = !open;
-    btn.setAttribute("aria-expanded", open);
-    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    if (open) { requestAnimationFrame(() => (p.querySelector(".np-item.on") || p.querySelector(".np-item"))?.focus()); }
-  }
 }

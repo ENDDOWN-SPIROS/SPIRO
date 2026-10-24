@@ -1,4 +1,4 @@
-# Proximity — Data Dictionary (Device B outputs)
+# SPIRO — Data Dictionary
 
 Produced by `clean.py` and `model.py` from the supplied `Tuberculosis_DS.zip`, plus `add_fhsis_2019.py` for 2019 from the DOH FHSIS 2019 annual report (`FHSIS2019.pdf`). All CSVs are UTF-8, comma-separated, with headers exactly as in the shared data contract. Missing CSV values are empty fields; missing JSON values are `null`.
 

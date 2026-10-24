@@ -12,8 +12,8 @@ export class MapController {
 
   init() {
     this.view.init({
-      /* Switching layer closes the open card and the Settings overlay. */
-      onLayer: layer => { if (layer !== this.model.state.layer) this.model.set({ layer, selected: null, navOpen: false }); },
+      /* Switching layer closes the open card. */
+      onLayer: layer => { if (layer !== this.model.state.layer) this.model.set({ layer, selected: null }); },
       onYear: year => this.model.set({ year }),
       onDate: date => this.model.set({ date, day: parseIso(date).getDay() }),
       onTime: (hour, minute, second) => this.model.set({ hour, minute, second }),

@@ -20,7 +20,7 @@ export const LoginView = {
         <div class="field"><label for="lgUser">Username</label><input type="text" id="lgUser" autocomplete="username" autocapitalize="none" spellcheck="false" aria-describedby="lgUser-e"><span class="err" id="lgUser-e" hidden></span></div>
         <div class="field"><label for="lgPass">Password</label><input type="password" id="lgPass" autocomplete="current-password" aria-describedby="lgPass-e"><span class="err" id="lgPass-e" hidden></span></div>
         <p class="err" id="lgForm-e" role="alert" hidden></p>
-        <div class="form-actions"><button type="submit" class="btn np-login" id="loginSubmit">Log-In</button></div>
+        <div class="form-actions"><button type="submit" class="btn btn-login" id="loginSubmit">Log-In</button></div>
         <p class="small muted login-note">For LGU administrators only.</p>
       </form>
     </div>`;

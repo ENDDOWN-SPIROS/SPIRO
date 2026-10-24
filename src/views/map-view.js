@@ -9,7 +9,6 @@
 
 import { Crowd } from "../models/crowd-model.js";
 import { CATEGORY, CITIES, CITY, PLACE, busyLevel, cityMalls, cityName, crowdCity } from "../models/places-model.js";
-import { Prefs } from "../models/settings-model.js";
 import { CITY_LABEL_PT, NCR_GEO, NCR_OUTLINE } from "../models/static-data-model.js";
 import { TB_COLORS, YEARS, tbClass, tbVal, yStatus } from "../models/tb-data-model.js";
 import { $, $$, icon, opt } from "../utils/dom.js";
@@ -193,14 +192,16 @@ export class MapView {
     if (this.mode !== "leaflet") return;
     if (this.layers.labels) this.map.removeLayer(this.layers.labels);
     const s = this.model.state, z = this.map.getZoom();
-    if (z < 10.5 || Prefs.current.labels === false) { this.layers.labels = null; return; }
-    /* Caloocan is split in two; label both parts so the name shows wherever you look. */
+    if (z < 10) { this.layers.labels = null; return; }
+    /* Caloocan is split in two; label both parts so the name shows wherever you look.
+       Every layer shows the city name; the TB layer adds the case count under it, and on the
+       Facilities layer the name sits on a light pill so it stays readable over the pins. */
     this.layers.labels = L.layerGroup([...Object.entries(CITY_LABEL_PT), ["caloocan", [14.6583, 120.9876]]].map(([id, ll]) => {
       const v = s.layer === "tb" ? tbVal(id, s.year, MAP_MEASURE) : null;
       const val = s.layer === "tb" ? `<em>${v == null ? "No data" : MAP_MEASURE === "rate" ? fmt(v) : shortNum(v)}</em>` : "";
-      const k = tbClass(v, MAP_MEASURE);
+      const cls = s.layer === "fac" ? "on-pins" : tbClass(v, MAP_MEASURE) >= 3 ? "on-dark" : "";
       return L.marker(ll, { pane: "labels", interactive: false, keyboard: false,
-        icon: L.divIcon({ className: "city-label", iconSize: [0, 0], html: `<span class="${k >= 3 ? "on-dark" : ""}">${z >= 12 || s.layer !== "tb" ? `<b>${esc(CITY[id].name)}</b>` : ""}${val}</span>` }) });
+        icon: L.divIcon({ className: "city-label", iconSize: [0, 0], html: `<span class="${cls}"><b>${esc(CITY[id].name)}</b>${val}</span>` }) });
     })).addTo(this.map);
   }
 

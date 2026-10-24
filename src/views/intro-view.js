@@ -68,7 +68,7 @@ export class IntroView {
       <span class="in-task-go">${go}${icon("i-arrow")}</span></a>`;
     $("#intro").innerHTML = `${this.introMap(y)}
       <header class="in-top"><span class="in-brand"><img class="logo" src="assets/img/spiro-logo.png" alt="" width="256" height="256"><b>SPIRO</b></span>
-        ${isAdmin ? `<a class="btn np-login in-login" href="#admin/tb">Admin</a>` : `<button type="button" class="btn np-login in-login" id="inLogin">Log In</button>`}</header>
+        ${isAdmin ? `<a class="btn btn-login in-login" href="#admin/tb">Admin</a>` : `<button type="button" class="btn btn-login in-login" id="inLogin">Log In</button>`}</header>
       <div class="in-wrap">
         <div class="in-hero">
           <p class="eyebrow">For Metro Manila residents and commuters</p>

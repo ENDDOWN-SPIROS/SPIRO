@@ -35,19 +35,18 @@ src/
     places-model.js        cities, public places, typical-week busyness, busy levels
     facilities-model.js    facilities, map grouping, accreditation status
     crowd-model.js         crowding surface from BestTime mall forecasts
-    settings-model.js      theme and label preferences (localStorage)
     app-model.js           app state (route, layer, year, date, selection, log-in) with change events
   views/
     map-view.js            Leaflet map, layers, legend
     place-details-view.js  city, place and facility cards
     facilities-view.js     facility pins, cards and panel
-    navigation-view.js     menu, settings, search
+    navigation-view.js     admin card, log-out button, search
     intro-view.js          introduction page and its background map
     health-guide-view.js   TB Health Guide (shown on the introduction page)
-    admin-view.js          Admin panel (TB history, crowding report)
+    admin-view.js          Admin panel (TB history, crowding report, early warning)
     login-view.js          front-end log-in window
     data-model-view.js     data dictionary and data-file status
-    helpers/               charts, colour scales, source lines, theme
+    helpers/               charts, colour scales, source lines
   controllers/
     app-controller.js      routes (#intro, #map, #dictionary, #admin/…; #guide scrolls #intro to the guide), panels, log-in
     map-controller.js      layer switching, filters, selecting cities/places/facilities
@@ -56,7 +55,13 @@ tests/
   unit-tests.html          calculation and error-case checks (open through serve.ps1)
   contract-tests.html      data loader checks against the fixtures and data/
   fixtures/                test-only data sets (valid, empty, malformed, wrong-header, …)
+tools/                     offline scripts that produce data/ (never loaded by the site)
+  data-pipeline/           Python: clean DOH workbooks, train/validate the model (see RUN.md)
+  fetch-besttime.ps1       downloads BestTime mall forecasts into data/places/
+  geocode-facilities.py    places PhilHealth facilities on the map (cache: geocode-cache.json)
 docs/                      data contract, method notes, this page
+  data-preparation/        how the TB files were cleaned and the model chosen (reports, cleaning log)
+  screenshots/             images used in README.md
 ```
 
 ## Data flow

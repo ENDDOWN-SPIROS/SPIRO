@@ -21,7 +21,6 @@ export class AppModel extends Emitter {
       day: now.getDay(),
       hour: now.getHours(), minute: now.getMinutes(), second: 0,
       selected: null,         // { type: "city" | "place", id }
-      navOpen: false,
       isAdmin: session.get("tbmap.adminSession", false) === true
     };
   }

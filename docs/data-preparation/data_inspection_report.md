@@ -1,4 +1,4 @@
-# Proximity — TB Data Inspection Report (Device B → Device A)
+# SPIRO — TB Data Inspection Report (Device B → Device A)
 
 **Prepared:** 2026-10-24.
 

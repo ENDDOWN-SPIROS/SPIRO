@@ -5,8 +5,8 @@ Data files the website reads. Do not edit them by hand and do not put test data 
 
 | File | What it is | Made by |
 |---|---|---|
-| `cleaned_tb_data.csv` | Notified TB cases and population per NCR city, 2018–2025 (DOH FHSIS) | Data cleaning script (`docs/device-b/scripts/clean.py`); 2019 added from the FHSIS 2019 report PDF by `add_fhsis_2019.py` |
-| `tb_predictions.csv` | 2026 predicted TB case rate per 100,000 per city | Model script (`docs/device-b/scripts/model.py`) |
+| `cleaned_tb_data.csv` | Notified TB cases and population per NCR city, 2018–2025 (DOH FHSIS) | Data cleaning script (`tools/data-pipeline/clean.py`); 2019 added from the FHSIS 2019 report PDF by `add_fhsis_2019.py` |
+| `tb_predictions.csv` | 2026 predicted TB case rate per 100,000 per city | Model script (`tools/data-pipeline/model.py`) |
 | `model_evaluation.json` | Back-test results and limitations of that model | Data preparation |
 | `data_dictionary.md` | Column definitions for the files above | Data preparation |
 | `facilities/facilities.json` | The same facility records as JSON; this is the file the website loads | Converted from `facilities.csv` |

@@ -1,5 +1,5 @@
 /* =====================================================================
-   AppController: routes, the overlay menu, panels (Admin, data
+   AppController: routes, panels (Admin, data
    dictionary) and the front-end log-in.
 
    Routes (URL hash):
@@ -14,7 +14,6 @@ import { MapController } from "./map-controller.js";
 import { AppModel } from "../models/app-model.js";
 import { FAC } from "../models/facilities-model.js";
 import { CITIES, PLACES } from "../models/places-model.js";
-import { Prefs } from "../models/settings-model.js";
 import { DEFAULT_YEAR, YEARS, tbVal } from "../models/tb-data-model.js";
 import { ContractData } from "../services/contract-loader.js";
 import { $, toast } from "../utils/dom.js";
@@ -22,7 +21,6 @@ import { isoDate, parseIso } from "../utils/format.js";
 import { ADMIN_TABS, AdminView } from "../views/admin-view.js";
 import { DataModelView } from "../views/data-model-view.js";
 import { IntroView } from "../views/intro-view.js";
-import { applyTheme } from "../views/helpers/theme.js";
 import { LoginView } from "../views/login-view.js";
 import { AuthService } from "../services/auth-service.js";
 import { MapView } from "../views/map-view.js";
@@ -38,19 +36,14 @@ export class AppController {
     this.adminView = new AdminView(this.model);
     this.introView = new IntroView();
     this.mapCtl = new MapController(this.model, this.mapView, this.placeView, this);
-    this.settings = Prefs.load(); applyTheme(this.settings.theme); Prefs.current = this.settings;
     this.pendingRoute = null;
   }
 
   start() {
     this.navView.init({
-      onToggleNav: () => this.model.set({ navOpen: !this.model.state.navOpen }),
-      onCloseNav: () => this.closeNav(true),
-      onNavigate: route => { this.closeNav(false); this.navigate(route); },
-      onFind: sel => { this.closeNav(false); this.navigate("map"); this.mapCtl.select(sel, true); setTimeout(() => $("#placeTitle")?.focus({ preventScroll: true }), 350); },
-      onLogin: () => { this.closeNav(false); this.openLogin(null); },
-      onLogout: () => { this.closeNav(false); this.logout(); },
-      onPrefs: v => { this.settings = v; Prefs.current = v; Prefs.save(v); applyTheme(v.theme); this.mapView.drawLabels(); this.mapView.drawPlaces(); }
+      onNavigate: route => this.navigate(route),
+      onFind: sel => { this.navigate("map"); this.mapCtl.select(sel, true); setTimeout(() => $("#placeTitle")?.focus({ preventScroll: true }), 350); },
+      onLogout: () => this.logout()
     });
     this.mapCtl.init();
     this.adminView.init({
@@ -106,9 +99,9 @@ export class AppController {
       this.openLogin("admin/" + r.tab);
       return;
     }
-    /* Leaving the map closes map popups and the Settings overlay. */
+    /* Leaving the map closes map popups. */
     const leave = r.route !== this.model.state.route;
-    this.model.set({ route: r.route, ...(r.tab ? { adminTab: r.tab } : {}), ...(leave ? { navOpen: false } : {}), ...(leave && r.route !== "map" ? { selected: null } : {}) });
+    this.model.set({ route: r.route, ...(r.tab ? { adminTab: r.tab } : {}), ...(leave && r.route !== "map" ? { selected: null } : {}) });
     this.showRoute();
     if (r.jump) {
       history.replaceState(null, "", "#intro");
@@ -144,8 +137,6 @@ export class AppController {
   /* ---------- model changes ---------- */
   onModelChange(changed) {
     const c = new Set(changed);
-    /* The menu/Settings overlay closes when something is selected on the map. */
-    if (c.has("selected") && this.model.state.selected && this.model.state.navOpen) this.model.set({ navOpen: false });
     this.mapView.render(changed);
     this.navView.render(changed);
     if (["selected", "year", "day", "hour", "date", "minute", "second", "isAdmin", "layer"].some(k => c.has(k))) this.placeView.render();
@@ -156,9 +147,6 @@ export class AppController {
     if (["admin"].includes(this.model.state.route)) this.renderSheet(true);
     this.mapView.invalidate();
   }
-
-  /* ---------- menu ---------- */
-  closeNav(returnFocus) { if (!this.model.state.navOpen) return; this.model.set({ navOpen: false }); if (returnFocus) $("#navBtn").focus(); }
 
   /* ---------- log in / log out for the one admin account (AuthService) ----------
      No sign-up. The log-in lasts for this browser tab (app-model.js keeps it in sessionStorage). */
@@ -184,7 +172,8 @@ export class AppController {
     await AuthService.logOut();
     this.model.set({ isAdmin: false });
     toast("Logged out.");
-    if (this.model.state.route === "admin") this.navigate("map");
+    /* Logging out always returns to the first page (the introduction) */
+    this.navigate("intro");
   }
 
   /* Introduction page: the controller gathers the numbers, IntroView draws them. */
@@ -206,7 +195,6 @@ export class AppController {
   onKey(e) {
     if (e.key !== "Escape") return;
     if (LoginView.isOpen()) { LoginView.close(); return; }
-    if (this.model.state.navOpen) { this.closeNav(true); return; }
     if (!$("#sheet").hidden) { this.navigate("map"); return; }
     if (this.model.state.selected) this.mapCtl.clear();
   }
