@@ -1,0 +1,24 @@
+record_id,year,period_start,period_end,period_type,geo_level,geo_code,geo_name,province,city_municipality,barangay,case_count,population,case_rate_per_100k,source_file,source_sheet
+TEST-0001,2024,2024-01-01,2024-12-31,annual,city,1380100000,"City of Caloocan",,"City of Caloocan",,500,100000,500,TEST FIXTURE - not real data,valid
+TEST-0002,2024,2024-01-01,2024-12-31,annual,city,1380200000,"City of Las Piñas",,"City of Las Piñas",,1000,200000,500,TEST FIXTURE - not real data,valid
+TEST-0003,2024,2024-01-01,2024-12-31,annual,city,1380300000,"City of Makati",,"City of Makati",,1500,300000,500,TEST FIXTURE - not real data,valid
+TEST-0004,2024,2024-01-01,2024-12-31,annual,city,1380400000,"City of Malabon",,"City of Malabon",,2000,400000,500,TEST FIXTURE - not real data,valid
+TEST-0005,2024,2024-01-01,2024-12-31,annual,city,1380500000,"City of Mandaluyong",,"City of Mandaluyong",,2500,500000,500,TEST FIXTURE - not real data,valid
+TEST-0006,2025,2025-01-01,2025-12-31,annual,city,1380100000,"City of Caloocan",,"City of Caloocan",,600,100000,600,TEST FIXTURE - not real data,valid
+TEST-0007,2025,2025-01-01,2025-12-31,annual,city,1380200000,"City of Las Piñas",,"City of Las Piñas",,1100,200000,550,TEST FIXTURE - not real data,valid
+TEST-0008,2025,2025-01-01,2025-12-31,annual,city,1380300000,"City of Makati",,"City of Makati",,1600,300000,533.33,TEST FIXTURE - not real data,valid
+TEST-0009,2025,2025-01-01,2025-12-31,annual,city,1380400000,"City of Malabon",,"City of Malabon",,2100,400000,525,TEST FIXTURE - not real data,valid
+TEST-0010,2025,2025-01-01,2025-12-31,annual,city,1380500000,"City of Mandaluyong",,"City of Mandaluyong",,2600,500000,520,TEST FIXTURE - not real data,valid
+TEST-0011,2025,2025-01-01,2025-12-31,annual,city,1380600000,"City of Manila",,"City of Manila",,3100,600000,516.67,TEST FIXTURE - not real data,valid
+TEST-0012,2025,2025-01-01,2025-12-31,annual,city,1380700000,"City of Marikina",,"City of Marikina",,3600,700000,514.29,TEST FIXTURE - not real data,valid
+TEST-0013,2025,2025-01-01,2025-12-31,annual,city,1380800000,"City of Muntinlupa",,"City of Muntinlupa",,4100,800000,512.5,TEST FIXTURE - not real data,valid
+TEST-0014,2025,2025-01-01,2025-12-31,annual,city,1380900000,"City of Navotas",,"City of Navotas",,4600,900000,511.11,TEST FIXTURE - not real data,valid
+TEST-0015,2025,2025-01-01,2025-12-31,annual,city,1381000000,"City of Parañaque",,"City of Parañaque",,5100,1000000,510,TEST FIXTURE - not real data,valid
+TEST-0016,2025,2025-01-01,2025-12-31,annual,city,1381100000,"Pasay City",,"Pasay City",,5600,1100000,509.09,TEST FIXTURE - not real data,valid
+TEST-0017,2025,2025-01-01,2025-12-31,annual,city,1381200000,"City of Pasig",,"City of Pasig",,6100,1200000,508.33,TEST FIXTURE - not real data,valid
+TEST-0018,2025,2025-01-01,2025-12-31,annual,city,1381300000,"Quezon City",,"Quezon City",,6600,1300000,507.69,TEST FIXTURE - not real data,valid
+TEST-0019,2025,2025-01-01,2025-12-31,annual,city,1381400000,"City of San Juan",,"City of San Juan",,7100,1400000,507.14,TEST FIXTURE - not real data,valid
+TEST-0020,2025,2025-01-01,2025-12-31,annual,city,1381500000,"City of Taguig",,"City of Taguig",,7600,1500000,506.67,TEST FIXTURE - not real data,valid
+TEST-0021,2025,2025-01-01,2025-12-31,annual,city,1381600000,"City of Valenzuela",,"City of Valenzuela",,8100,1600000,506.25,TEST FIXTURE - not real data,valid
+TEST-0022,2025,2025-01-01,2025-12-31,annual,municipality,1381701000,"Pateros",,"Pateros",,8600,1700000,505.88,TEST FIXTURE - not real data,valid
+TEST-9999,2025,2025-01-01,2025-12-31,annual,region,1300000000,"National Capital Region (NCR)",,,,99999,9999999,1000,TEST FIXTURE - not real data,valid

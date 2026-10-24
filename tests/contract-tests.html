@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contract loader tests</title>
+<style>
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 1rem; color: #203B4C; background: #F4F7F8; }
+  h1 { font-size: 1.25rem; } .pass { color: #1E7B4F; } .fail { color: #B0262E; font-weight: 700; }
+  li { margin: .15rem 0; } code { background: #fff; padding: 0 .25rem; }
+</style>
+</head>
+<body>
+<h1>Contract loader tests (test data only)</h1>
+<p>Runs ContractLoader against <code>tests/fixtures/*</code> and the live <code>data/shared/</code> folder. Open through serve.ps1: <code>http://localhost:8000/tests/contract-tests.html</code>.</p>
+<p id="sum">Running…</p>
+<ul id="out"></ul>
+<script>
+  /* The loader resolves paths from the page; run it from the project root so data/shared/ is the same folder the site reads. */
+  window.NCR_GEO = { features: [] };
+</script>
+<script src="../assets/js/models/contract-loader.js"></script>
+<script>
+"use strict";
+const results = [];
+const ok = (name, cond, info = "") => results.push({ name, pass: !!cond, info });
+const at = (base, file) => ContractLoader.fetchText(base, file, null);
+async function load(caseName) {
+  const base = `fixtures/${caseName}/`;
+  const list = await ContractLoader.listing(base);
+  const get = f => ContractLoader.fetchText(base, f, list);
+  const [tb, pred, ev, dict] = await Promise.all(["cleaned_tb_data.csv", "tb_predictions.csv", "model_evaluation.json", "data_dictionary.md"].map(get));
+  return {
+    list,
+    tb: tb.state === "ok" ? ContractLoader.readTable(CONTRACT.tb, tb.text) : tb,
+    pred: pred.state === "ok" ? ContractLoader.readTable(CONTRACT.pred, pred.text) : pred,
+    ev: ev.state === "ok" ? ContractLoader.readEvaluation(ev.text) : ev,
+    dict
+  };
+}
+(async () => {
+  /* Parser and cast units */
+  const p = ContractLoader.parseCSV('a,b,c\r\n"x, y","he said ""hi""","line1\nline2"\n\n1,,3\n');
+  ok("CSV: quoted comma, escaped quotes, line break in quotes", p.rows[1].fields[0] === "x, y" && p.rows[1].fields[1] === 'he said "hi"' && p.rows[1].fields[2] === "line1\nline2");
+  ok("CSV: blank line skipped, empty field kept", p.rows.length === 3 && p.rows[2].fields[1] === "");
+  ok("CSV: BOM removed from header", ContractLoader.parseCSV("﻿a,b\n1,2").rows[0].fields[0] === "a");
+  ok("CSV: unclosed quote reported", !!ContractLoader.parseCSV('a\n"oops').error);
+  const c = (t, v) => ContractLoader.cast(t, v);
+  ok("cast: empty -> null (not 0)", c("number", "").value === null && !c("number", "").invalid);
+  ok("cast: '2,100' is invalid", c("count", "2,100").invalid && c("count", "2,100").value === null);
+  ok("cast: negative count is invalid", c("count", "-5").invalid);
+  ok("cast: 1.5e3 number ok", c("number", "1.5e3").value === 1500);
+  ok("cast: 2025-13-01 is an invalid date", c("date", "2025-13-01").invalid);
+  ok("cast: 2024-02-29 valid, 2025-02-29 invalid", !c("date", "2024-02-29").invalid && c("date", "2025-02-29").invalid);
+  ok("cast: ISO timestamp ok", !c("timestamp", "2026-10-24T08:00:00+08:00").invalid && c("timestamp", "not-a-time").invalid);
+  ok("cast: strings untouched (leading zeros kept)", c(undefined, "0137500000").value === "0137500000");
+
+  /* Fixture cases */
+  const v = await load("valid");
+  ok("valid: TB file ok, 17 + 5 + 1 rows", v.tb.state === "ok" && v.tb.rows.length === 23, `${v.tb.state} ${v.tb.rows?.length}`);
+  ok("valid: geo_code stays a string", typeof v.tb.rows[0].geo_code === "string" && v.tb.rows[0].geo_code === "1380100000");
+  ok("valid: UTF-8 name read correctly", v.tb.rows.some(r => r.geo_name === "City of Las Piñas"));
+  ok("valid: predictions ok, bounds empty -> null", v.pred.state === "ok" && v.pred.rows[1].lower_bound === null);
+  ok("valid: evaluation ok and completed", v.ev.state === "ok" && v.ev.data.status === "completed" && v.ev.data.metrics.mae === 123.4);
+  ok("valid: dictionary text loaded", v.dict.state === "ok" && /TEST FIXTURE/.test(v.dict.text));
+
+  const e = await load("empty");
+  ok("empty: header-only TB -> state empty", e.tb.state === "empty");
+  ok("empty: header-only predictions -> state empty", e.pred.state === "empty");
+  ok("empty: evaluation missing (known from listing, no failed request)", e.ev.state === "missing" && e.list && !e.list.has("model_evaluation.json"));
+
+  const m = await load("malformed");
+  ok("malformed: file accepted, bad rows skipped", m.tb.state === "ok" && m.tb.malformed.length === 2, `skipped ${m.tb.malformed.length}: ${JSON.stringify(m.tb.malformed)}`);
+  ok("malformed: quoted comma field read whole", m.tb.rows.find(r => r.record_id === "TEST-0001")?.geo_name === "City of Manila, NCR");
+  ok("malformed: quoted line break read whole", m.tb.rows.find(r => r.record_id === "TEST-0002")?.source_sheet === "multi\nline sheet name");
+  ok("malformed: '2,100', '12a', '-5' -> null and flagged", ["TEST-0002", "TEST-0003", "TEST-0004"].every(id => m.tb.rows.find(r => r.record_id === id)?.case_count === null) && m.tb.flagged.filter(f => f.field === "case_count").length === 3);
+  ok("malformed: bad date flagged", m.tb.flagged.some(f => f.field === "period_start" && f.value === "2025-13-01"));
+  ok("malformed: predictions bad values flagged, short row skipped", m.pred.state === "ok" && m.pred.flagged.length === 2 && m.pred.malformed.length === 1);
+  ok("malformed: evaluation with missing keys rejected", m.ev.state === "invalid" && /missing key/.test(m.ev.message));
+
+  const w = await load("wrong-header");
+  ok("wrong-header: TB rejected (order)", w.tb.state === "invalid" && /wrong order/.test(w.tb.message), w.tb.message);
+  ok("wrong-header: predictions rejected (missing columns)", w.pred.state === "invalid" && /Missing:/.test(w.pred.message));
+  ok("wrong-header: broken JSON rejected", w.ev.state === "invalid" && /Not valid JSON/.test(w.ev.message));
+
+  const pd = await load("pending");
+  ok("pending: evaluation ok with status pending", pd.ev.state === "ok" && pd.ev.data.status === "pending");
+  ok("pending: CSVs and dictionary missing", pd.tb.state === "missing" && pd.pred.state === "missing" && pd.dict.state === "missing");
+
+  /* Live folder (Device B's files) */
+  const live = await ContractLoader.listing("../data/shared/");
+  ok("live: data/shared/ listing readable", live instanceof Set, live ? [...live].join(", ") : "no listing");
+
+  const failed = results.filter(r => !r.pass);
+  document.getElementById("out").innerHTML = results.map(r => `<li class="${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"}: ${r.name}${r.info && !r.pass ? ` <small>(${r.info.replace(/</g, "&lt;")})</small>` : ""}</li>`).join("");
+  document.getElementById("sum").textContent = `${results.length - failed.length} of ${results.length} passed`;
+  window.__contractTestResults = { total: results.length, failed: failed.map(f => f.name + (f.info ? " :: " + f.info : "")) };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+prediction_id,generated_at,target_period_start,target_period_end,target_period_type,geo_level,geo_code,geo_name,target_variable,predicted_value,prediction_unit,model_name,model_version,training_data_end,lower_bound,upper_bound

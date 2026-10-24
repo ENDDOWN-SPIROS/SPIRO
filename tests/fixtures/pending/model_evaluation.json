@@ -1,0 +1,17 @@
+{
+  "status": "pending",
+  "target_variable": "case_count",
+  "prediction_horizon": "1 year",
+  "geographic_level": "city",
+  "feature_columns": null,
+  "excluded_columns": null,
+  "model_name": null,
+  "baseline_name": null,
+  "validation_method": null,
+  "training_rows": null,
+  "testing_rows": null,
+  "metrics": { "mae": null, "rmse": null, "r2": null },
+  "baseline_metrics": { "mae": null, "rmse": null, "r2": null },
+  "limitations": null,
+  "notes": "TEST FIXTURE - training not started."
+}

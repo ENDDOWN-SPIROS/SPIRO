@@ -1,0 +1,4 @@
+record_id,year,period_start,period_end,period_type,geo_level,geo_code,geo_name,province,city_municipality,barangay,case_count,population,case_rate_per_100k,source_file,source_sheet
+TEST-0001,2024,2024-01-01,2024-12-31,annual,city,1380100000,"Caloocan",,,,1000,1000000,100,TEST FIXTURE - not real data,no-2025
+TEST-0002,2024,2024-01-01,2024-12-31,annual,city,1380600000,"Manila",,,,2000,2000000,100,TEST FIXTURE - not real data,no-2025
+TEST-0003,2024,2024-01-01,2024-12-31,annual,city,1381300000,"Quezon City",,,,3000,3000000,100,TEST FIXTURE - not real data,no-2025

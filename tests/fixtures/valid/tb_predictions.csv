@@ -1,0 +1,4 @@
+prediction_id,generated_at,target_period_start,target_period_end,target_period_type,geo_level,geo_code,geo_name,target_variable,predicted_value,prediction_unit,model_name,model_version,training_data_end,lower_bound,upper_bound
+TEST-P001,2026-10-24T08:00:00+08:00,2026-01-01,2026-12-31,annual,city,1380600000,"City of Manila",case_count,3100,cases,TEST model,0.0-test,2025-12-31,2800,3400
+TEST-P002,2026-10-24T08:00:00+08:00,2026-01-01,2026-12-31,annual,city,1381300000,"Quezon City",case_count,6600,cases,TEST model,0.0-test,2025-12-31,,
+TEST-P003,2026-10-24T08:00:00+08:00,2026-01-01,2026-12-31,annual,region,1300000000,NCR,case_count,99999,cases,TEST model,0.0-test,2025-12-31,,

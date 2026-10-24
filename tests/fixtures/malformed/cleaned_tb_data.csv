@@ -1,0 +1,16 @@
+record_id,year,period_start,period_end,period_type,geo_level,geo_code,geo_name,province,city_municipality,barangay,case_count,population,case_rate_per_100k,source_file,source_sheet
+TEST-0001,2025,2025-01-01,2025-12-31,annual,city,1380600000,"City of Manila, NCR",,"Manila",,1500,1900000,78.95,"TEST FIXTURE, quoted comma",malformed
+TEST-0002,2025,2025-01-01,2025-12-31,annual,city,1381300000,"Quezon City",,,,"2,100",3000000,70,TEST FIXTURE - not real data,"multi
+line sheet name"
+TEST-0003,2025,2025-01-01,2025-12-31,annual,city,1380100000,Caloocan,,,,12a,1700000,,TEST FIXTURE - not real data,malformed
+TEST-0004,2025,2025-13-01,2025-12-31,annual,city,1381701000,Pateros,,,,-5,66000,,TEST FIXTURE - not real data,malformed
+TEST-0005,2025,2025-01-01,2025-12-31,annual,city,1381400000,San Juan,,,,300
+TEST-0006,,2025-01-01,2025-12-31,annual,city,1381500000,Taguig,,,,700,1200000,58.3,TEST FIXTURE - not real data,malformed
+TEST-0007,2025,2025-01-01,2025-12-31,annual,city,0137500000,Atlantis City,,,,800,100000,800,TEST FIXTURE - not real data,malformed
+TEST-0008,2025,2025-01-01,2025-12-31,annual,city,1380300000,Makati,,,,900,300000,300,TEST FIXTURE - not real data,malformed
+TEST-0009,2025,2025-01-01,2025-12-31,annual,city,1380300000,Makati,,,,950,300000,316.67,TEST FIXTURE - not real data,malformed
+TEST-0010,2025,2025-01-01,2025-03-31,quarterly,city,1381200000,Pasig,,,,400,840000,47.6,TEST FIXTURE - not real data,malformed
+TEST-0011,2025,2025-01-01,2025-12-31,annual,barangay,1380600001,Barangay 1,,Manila,Barangay 1,10,5000,200,TEST FIXTURE - not real data,malformed
+TEST-0012,2025,2025-01-01,2025-12-31,annual,city,1380600000,Pasig,,,,10,5000,200,TEST FIXTURE - not real data,malformed
+
+TEST-0013,2025,2025-01-01,2025-12-31,annual,city,1380900000,Navotas,,,,1200,260000,461.5,TEST FIXTURE - not real data,malformed
