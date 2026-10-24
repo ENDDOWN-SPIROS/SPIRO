@@ -20,6 +20,13 @@ export const APP_CONFIG = Object.freeze({
     publicPlaces: "data/places/public-places.json",
     facilities: "data/facilities/facilities.json"
   }),
+  /* Accounts (Supabase Auth, free plan). Paste the Project URL and the public "anon" key
+     from Supabase → Project Settings → API. The anon key is designed for website code.
+     NEVER put the service_role key here. Empty values = accounts unavailable. */
+  supabase: Object.freeze({
+    url: "https://wmjneyntxynwbacxivfu.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indtam5leW50eHlud2JhY3hpdmZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4Mzk4MzYsImV4cCI6MjEwODQxNTgzNn0.9bDfYfrdQ4LUrHAog4e1wKtQsfUx6hRnon8BDs2vHMs"
+  }),
   /* OpenStreetMap places for the foot-traffic indicator (free Overpass API, no key). */
   overpassEndpoint: "https://overpass-api.de/api/interpreter"
 });

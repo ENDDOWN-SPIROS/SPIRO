@@ -107,7 +107,7 @@ const rejects = async (p, test) => { try { await p; return false; } catch (e) { 
   ok("server: hidden files (.gitignore) are not served", [403, 404].includes(await status(".gitignore")));
   ok("server: src/ has no directory listing", (await status("src/")) !== 200);
   ok("server: data/ listing works (the loader needs it)", (await status("data/")) === 200);
-  ok("no API keys or tokens in the config", !/key|token|secret/i.test(JSON.stringify(APP_CONFIG)));
+  ok("no secret keys in the config (only the public Supabase anon key is allowed)", !/service_role|secret|token/i.test(JSON.stringify(APP_CONFIG)));
 
   /* Report */
   const all = groups.flatMap(g => g.results), failed = all.filter(r => !r.pass);

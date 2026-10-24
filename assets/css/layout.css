@@ -383,3 +383,11 @@ a.logo-ph:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); col
 .osm-ft { border-top: 1px solid var(--line); padding-top: .5rem; display: grid; gap: .25rem; }
 .osm-ft > p:first-child { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: .8125rem; color: var(--heading); }
 .osm-ft small { color: var(--muted); font-size: .75rem; }
+
+/* Sign Up beside Log In on the introduction page, and the switch link in the log-in window */
+.in-auth { display: inline-flex; align-items: center; gap: .5rem; }
+.btn.in-signup { min-height: 2.25rem; padding: .375rem 1.25rem; background: var(--surface); border-color: #1F6FA3; color: #1F6FA3; font-weight: 700; }
+.btn.in-signup:hover { background: #EAF2F8; color: #1F6FA3; }
+.lg-switch { margin: .75rem 0 0; text-align: center; }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; font-weight: 700; color: #1F6FA3; text-decoration: underline; cursor: pointer; }
+#lgForm-e { margin: .25rem 0 0; }

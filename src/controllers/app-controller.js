@@ -24,6 +24,7 @@ import { HealthGuideView } from "../views/health-guide-view.js";
 import { IntroView } from "../views/intro-view.js";
 import { applyTheme } from "../views/helpers/theme.js";
 import { LoginView } from "../views/login-view.js";
+import { AuthService } from "../services/auth-service.js";
 import { MapView } from "../views/map-view.js";
 import { NavigationView } from "../views/navigation-view.js";
 import { PlaceDetailsView } from "../views/place-details-view.js";
@@ -74,6 +75,8 @@ export class AppController {
     window.addEventListener("resize", () => { clearTimeout(this._rz); this._rz = setTimeout(() => this.rerenderCharts(), 200); });
     this.placeCardSlot();
     this.applyRoute();
+    /* Stay logged in after a reload when Supabase still has a valid session. */
+    AuthService.currentUser().then(u => { if (u) this.model.set({ isAdmin: true }); });
   }
 
   /* On wide screens the selected card floats in the top-right corner, under the logo and above
@@ -154,19 +157,35 @@ export class AppController {
   /* ---------- menu ---------- */
   closeNav(returnFocus) { if (!this.model.state.navOpen) return; this.model.set({ navOpen: false }); if (returnFocus) $("#navBtn").focus(); }
 
-  /* ---------- log in / log out (front end only) ---------- */
-  openLogin(route) {
+  /* ---------- sign up / log in / log out (Supabase Auth through AuthService) ---------- */
+  openLogin(route, mode = "login") {
     this.pendingRoute = route;
-    LoginView.open({
-      onContinue: () => {
-        this.model.set({ isAdmin: true });
-        toast("Logged in. Admin tools are open.");
-        this.navigate(this.pendingRoute || "admin/tb");
-        this.pendingRoute = null;
-      }
-    });
+    LoginView.open({ onSubmit: form => this.submitAuth(form) }, null, mode);
   }
-  logout() {
+  async submitAuth({ mode, email, password }) {
+    if (!AuthService.configured()) {
+      /* No account server set up yet: sign-up cannot work; log-in keeps the front-end-only behaviour. */
+      if (mode === "signup") throw new Error("Sign-up is not available yet. Please try again later.");
+      this.finishLogin();
+      return;
+    }
+    if (mode === "signup") {
+      const r = await AuthService.signUp(email, password);
+      if (r.needsConfirmation) { LoginView.close(); toast("Account created. Check your email and open the confirmation link, then log in."); return; }
+    } else {
+      await AuthService.logIn(email, password);
+    }
+    this.finishLogin(mode === "signup" ? "Account created. You are logged in." : "Logged in. Admin tools are open.");
+  }
+  finishLogin(msg = "Logged in. Admin tools are open.") {
+    LoginView.close();
+    this.model.set({ isAdmin: true });
+    toast(msg);
+    this.navigate(this.pendingRoute || "admin/tb");
+    this.pendingRoute = null;
+  }
+  async logout() {
+    try { await AuthService.logOut(); } catch { /* Logged out locally even if the server cannot be reached */ }
     this.model.set({ isAdmin: false });
     toast("Logged out.");
     if (this.model.state.route === "admin") this.navigate("map");
@@ -177,7 +196,7 @@ export class AppController {
     const y = DEFAULT_YEAR;
     this.introView.render(
       { year: y, firstYear: YEARS[0], total: tbVal("all", y, MAP_MEASURE), cityCount: CITIES.length, placeCount: PLACES.length, isAdmin: this.model.state.isAdmin },
-      { onNavigate: route => this.navigate(route), onLogin: () => this.openLogin(null) }
+      { onNavigate: route => this.navigate(route), onLogin: () => this.openLogin(null), onSignup: () => this.openLogin(null, "signup") }
     );
   }
 

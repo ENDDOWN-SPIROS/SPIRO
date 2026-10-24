@@ -39,11 +39,11 @@ export class IntroView {
   }
 
   /* Introduction page. Numbers come from the loaded files; nothing is typed in by hand. */
-  render({ year: y, firstYear, total: n, cityCount: nc, placeCount, isAdmin }, { onNavigate, onLogin }) {
+  render({ year: y, firstYear, total: n, cityCount: nc, placeCount, isAdmin }, { onNavigate, onLogin, onSignup }) {
     const stat = (v, l) => `<div class="in-stat"><b class="num">${v}</b><span>${l}</span></div>`;
     $("#intro").innerHTML = `${this.introMap(y)}
       <header class="in-top"><span class="in-brand"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></span>
-        ${isAdmin ? `<a class="btn np-login in-login" href="#admin/tb">Admin</a>` : `<button type="button" class="btn np-login in-login" id="inLogin">Log In</button>`}</header>
+        ${isAdmin ? `<a class="btn np-login in-login" href="#admin/tb">Admin</a>` : `<span class="in-auth"><button type="button" class="btn in-signup" id="inSignup">Sign Up</button><button type="button" class="btn np-login in-login" id="inLogin">Log In</button></span>`}</header>
       <div class="in-wrap">
         <div class="in-hero">
           <p class="eyebrow">Metro Manila · tuberculosis and crowding</p>
@@ -69,6 +69,7 @@ export class IntroView {
       </div>`;
     $$("#intro a[href^='#']").forEach(a => a.addEventListener("click", e => { e.preventDefault(); onNavigate(a.getAttribute("href").slice(1)); }));
     $("#inLogin")?.addEventListener("click", onLogin);
+    $("#inSignup")?.addEventListener("click", onSignup);
     this.initIntroMap(y);
   }
 

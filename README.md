@@ -74,8 +74,9 @@ SPIRO gives both groups that view on one map, together with plain-language guida
 **Local server**
 - ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white) (`serve.ps1`, for development only)
 
-**Data**
-- No database. The site reads CSV and JSON files from `data/` (see [Datasets](#datasets)).
+**Data and accounts**
+- The site reads CSV and JSON files from `data/` (see [Datasets](#datasets)).
+- ![Supabase](https://img.shields.io/badge/Supabase_Auth-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white) for sign-up and log-in (passwords are stored and encrypted by Supabase, never by SPIRO)
 
 **APIs**
 - **OpenStreetMap** — map tiles and foot-traffic places
@@ -92,6 +93,7 @@ SPIRO gives both groups that view on one map, together with plain-language guida
 - **TB screening facilities** with address (copy button), accreditation status, phone, email and a directions link
 - **Search** for cities, places and facilities
 - **TB Health Guide** on symptoms, prevention and free testing
+- **Sign Up and Log In** with email and password (Supabase Auth)
 - **Admin** view after log-in: TB history by city and year, a crowding report, and the 2026 model prediction on city cards
 - Introduction page, light and dark themes, and a layout that works on phones
 - Clear messages when a data file is missing or does not follow the data contract

@@ -1,6 +1,6 @@
 # Architecture
 
-SPIRO is a static website: HTML, CSS and JavaScript in the browser, with data read from files in `data/`. There is no server code and no database. `serve.ps1` is a small local web server for development.
+SPIRO is a static website: HTML, CSS and JavaScript in the browser, with data read from files in `data/`. There is no server code of its own. User accounts (sign-up and log-in) are handled by Supabase Auth; SPIRO never stores passwords. `serve.ps1` is a small local web server for development.
 
 The JavaScript uses native ES modules (no build step) and follows a Model–View–Controller split:
 
@@ -28,6 +28,7 @@ src/
   services/
     data-service.js        fetchJSON(): checks HTTP status and JSON shape for static files
     contract-loader.js     reads and validates the four cleaned data files (CSV/JSON/Markdown)
+    auth-service.js        sign-up, log-in and log-out through Supabase Auth (free plan)
   models/
     static-data-model.js   loads data/geo, data/places and data/facilities before the app starts
     tb-data-model.js       TB records and predictions: years, values, classes, trends
@@ -76,6 +77,6 @@ docs/                      data contract, method notes, this page
 ## Security notes
 
 - No API keys or secrets anywhere in the code. The only outside service called from the browser is the free Overpass API.
-- The Admin log-in is front-end only: nothing is checked or sent, so it is not real access control.
+- Accounts use Supabase Auth. Only the project URL and the public anon key are in `src/config/app-config.js`; the anon key is designed for website code. The `service_role` key must never be added. Until the URL and key are filled in, sign-up says it is not available and log-in stays front-end only.
 - Test fixtures load only on localhost and only for names matching `^[a-z0-9-]{1,40}$`, so a URL cannot point outside `tests/fixtures/`.
 - Text from data files is escaped before it is put on the page.
