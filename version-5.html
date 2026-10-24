@@ -1338,22 +1338,25 @@ function toast(msg) {
    ===================================================================== */
 "use strict";
 
-/* ---------- Cities: PSA 2020 Census of Population and Housing totals ---------- */
+/* ---------- Cities: 2025 projected population (DOH FHSIS Annual 2025); pop2020 = PSA 2020 Census ---------- */
 const CITIES = [
-  { id: "caloocan", name: "Caloocan", pop: 1661584 }, { id: "laspinas", name: "Las Piñas", pop: 606293 },
-  { id: "makati", name: "Makati", pop: 629616 }, { id: "malabon", name: "Malabon", pop: 380522 },
-  { id: "mandaluyong", name: "Mandaluyong", pop: 425758 }, { id: "manila", name: "Manila", pop: 1846513 },
-  { id: "marikina", name: "Marikina", pop: 456059 }, { id: "muntinlupa", name: "Muntinlupa", pop: 543445 },
-  { id: "navotas", name: "Navotas", pop: 247543 }, { id: "paranaque", name: "Parañaque", pop: 689992 },
-  { id: "pasay", name: "Pasay", pop: 440656 }, { id: "pasig", name: "Pasig", pop: 803159 },
-  { id: "qc", name: "Quezon City", pop: 2960048 }, { id: "sanjuan", name: "San Juan", pop: 126347 },
-  { id: "taguig", name: "Taguig", pop: 886722 }, { id: "valenzuela", name: "Valenzuela", pop: 714978 },
-  { id: "pateros", name: "Pateros", pop: 65227, muni: true }
+  { id: "caloocan", name: "Caloocan", pop: 1743812, pop2020: 1661584 }, { id: "laspinas", name: "Las Piñas", pop: 628652, pop2020: 606293 },
+  { id: "makati", name: "Makati", pop: 294960, pop2020: 629616 }, { id: "malabon", name: "Malabon", pop: 396996, pop2020: 380522 },
+  { id: "mandaluyong", name: "Mandaluyong", pop: 442115, pop2020: 425758 }, { id: "manila", name: "Manila", pop: 1911556, pop2020: 1846513 },
+  { id: "marikina", name: "Marikina", pop: 471918, pop2020: 456059 }, { id: "muntinlupa", name: "Muntinlupa", pop: 561640, pop2020: 543445 },
+  { id: "navotas", name: "Navotas", pop: 260395, pop2020: 247543 }, { id: "paranaque", name: "Parañaque", pop: 716560, pop2020: 689992 },
+  { id: "pasay", name: "Pasay", pop: 452062, pop2020: 440656 }, { id: "pasig", name: "Pasig", pop: 842708, pop2020: 803159 },
+  { id: "qc", name: "Quezon City", pop: 3079478, pop2020: 2960048 }, { id: "sanjuan", name: "San Juan", pop: 128083, pop2020: 126347 },
+  { id: "taguig", name: "Taguig", pop: 1271871, pop2020: 886722 }, { id: "valenzuela", name: "Valenzuela", pop: 745850, pop2020: 714978 },
+  { id: "pateros", name: "Pateros", pop: 66990, pop2020: 65227, muni: true }
 ];
-/* Module 5.1: source of the populations above (checked against the official table).
-   PSA, 2020 Census of Population and Housing, made official by Proclamation No. 1179 (2021).
-   Reference date: 1 May 2020. NCR total 13,484,462. */
-const POP_SOURCE = { short: "PSA 2020 Census (1 May 2020)", long: "Philippine Statistics Authority, 2020 Census of Population and Housing (Proclamation No. 1179, s. 2021). Reference date 1 May 2020.", url: "https://psa.gov.ph/population-and-housing/node/164811" };
+/* Module 5.1 (updated at Nea's request): pop = "Projected Population (All Ages)" for 2025 from
+   DOH FHSIS Annual 2025, Table 2.F.7.1 (file "FINAL Tuberculosis_EB_2025.xlsx"), the same table as the
+   2025 TB counts. NCR total 14,015,646 (equals the sum of the 17 rows). FHSIS projections follow the
+   current city limits, so the EMBO barangays count under Taguig (Makati 294,960). pop2020 = PSA 2020
+   Census of Population and Housing (Proclamation No. 1179, s. 2021), kept for reference. */
+const NCR_POP = 14015646;
+const POP_SOURCE = { short: "2025 projected (DOH FHSIS)", long: "DOH Field Health Services Information System (FHSIS) Annual 2025, Table 2.F.7.1, projected population (all ages), 2025." };
 const CITY = Object.fromEntries(CITIES.map(c => [c.id, c]));
 const cityName = id => id === "all" ? "All of NCR" : CITY[id].name + (CITY[id].muni ? " (municipality)" : "");
 
@@ -1817,6 +1820,7 @@ class MapView {
       h = `<h3 class="lg-title">TB cases, ${s.year}</h3>
         ${empty ? `<p class="lg-note">${esc(st.note)}</p>` : `<ul class="lg-classes">${tbLegendRows(MAP_MEASURE).map((r, i) => `<li><span class="sw" style="background:${r.color}"></span><span class="lg-long">${r.long}</span>${cnt(n[i])}<span class="lg-short" aria-hidden="true">${r.short}</span></li>`).join("")}<li><span class="sw sw-na"></span><span class="lg-long">No data</span>${cnt(n[TB_COLORS.length])}<span class="lg-short" aria-hidden="true">None</span></li></ul>`}
         ${!empty && st.label !== "Full year" ? `<p class="lg-note">${esc(st.note)}</p>` : ""}
+        <p class="lg-note">NCR population: ${fmt(NCR_POP)} (2025 projected, DOH FHSIS).</p>
         ${empty ? "" : `<p class="lg-note">Source: cleaned_tb_data.csv${TbData.sourceText(s.year) ? ` (${esc(TbData.sourceText(s.year))})` : ""}.</p>`}
         ${more(`<p class="lg-note">Whole-city totals (case_count), on the same scale for every year.${empty ? "" : " The number after each class is how many of the 17 cities are in it."}</p><p class="lg-note">Shown only at city or municipality level. Boundaries are PSGC 2023 and still draw Fort Bonifacio inside Makati, although the 2023 Supreme Court ruling placed it in Taguig.</p>`)}`;
     } else {
@@ -2030,7 +2034,7 @@ class PlaceDetailsView {
           ? `<p class="empty-state">${noFile ? "No TB case data has been loaded yet." : `No TB case count for ${esc(CITY[id].name)} in ${y}.`}</p>`
           : `<div class="kpi"><span class="kpi-l">TB cases, ${y}</span><span class="kpi-v"><span class="sw" style="background:${TB_COLORS[k]}"></span>${fmt(d.count)}</span></div>`}
         <dl class="pc-kv">
-          <dt>Population</dt><dd>${fmt(CITY[id].pop)} <small class="muted">(2020)</small></dd>
+          <dt>Population</dt><dd>${fmt(CITY[id].pop)} <small class="muted">(2025 projected)</small></dd>
           <dt>Last updated</dt><dd>${last ? `${esc(last.text)}${last.sub ? `<br><small class="muted">${esc(last.sub)}</small>` : ""}` : "No observation available"}</dd>
           ${admin && d.rate != null ? `<dt>Per 100,000</dt><dd>${fmt(d.rate, 1)}</dd><dt>Rank by rate</dt><dd>${rk + 1} of ${ranked.length}</dd><dt>Trend ${TREND_FROM ?? "–"}–${TREND_TO ?? "–"}</dt><dd>${this.trendText(tr)}</dd>` : ""}
         </dl>

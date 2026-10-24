@@ -15,31 +15,31 @@ Date: 2026-10-24. Replaces the earlier partial 5.1 report.
 - Basemap: standard OpenStreetMap tiles kept (Nea's choice). **Water lines and ports cannot be removed** from these raster tiles without overlays, which the brief forbids. The only free alternative (CARTO Voyager) now needs an API key that would be visible in the page.
 - Removed the "whole Philippines" map button. Zoom in/out and "Metro Manila" remain. Attribution: Leaflet, OpenStreetMap contributors, PSGC 2023 (PSA).
 
-## 3. Population source
-Philippine Statistics Authority, 2020 Census of Population and Housing, made official by Proclamation No. 1179, s. 2021. Reference date 1 May 2020. Coverage: total population of each NCR city and the municipality of Pateros, matched to the city ids that carry PSGC codes.
+## 3. Population source (updated: 2025, at Nea's request)
+DOH Field Health Services Information System (FHSIS) Annual 2025, Table 2.F.7.1, column "Projected Population (All Ages)". This is the same table and file as the 2025 TB counts ("FINAL Tuberculosis_EB_2025.xlsx"). The values are projections for 2025, not a census count. Rows are matched by PSGC code.
 
-| City / municipality | Population (1 May 2020) |
-|---|---:|
-| Caloocan | 1,661,584 |
-| Las Piñas | 606,293 |
-| Makati | 629,616 |
-| Malabon | 380,522 |
-| Mandaluyong | 425,758 |
-| Manila | 1,846,513 |
-| Marikina | 456,059 |
-| Muntinlupa | 543,445 |
-| Navotas | 247,543 |
-| Parañaque | 689,992 |
-| Pasay | 440,656 |
-| Pasig | 803,159 |
-| Quezon City | 2,960,048 |
-| San Juan | 126,347 |
-| Taguig | 886,722 |
-| Valenzuela | 714,978 |
-| Pateros | 65,227 |
-| **NCR total** | **13,484,462** |
+| City / municipality | 2025 projected | PSA 2020 Census |
+|---|---:|---:|
+| Caloocan | 1,743,812 | 1,661,584 |
+| Las Piñas | 628,652 | 606,293 |
+| Makati | 294,960 | 629,616 |
+| Malabon | 396,996 | 380,522 |
+| Mandaluyong | 442,115 | 425,758 |
+| Manila | 1,911,556 | 1,846,513 |
+| Marikina | 471,918 | 456,059 |
+| Muntinlupa | 561,640 | 543,445 |
+| Navotas | 260,395 | 247,543 |
+| Parañaque | 716,560 | 689,992 |
+| Pasay | 452,062 | 440,656 |
+| Pasig | 842,708 | 803,159 |
+| Quezon City | 3,079,478 | 2,960,048 |
+| San Juan | 128,083 | 126,347 |
+| Taguig | 1,271,871 | 886,722 |
+| Valenzuela | 745,850 | 714,978 |
+| Pateros | 66,990 | 65,227 |
+| **NCR** | **14,015,646** | **13,484,462** |
 
-Note: the 2020 census counted the EMBO barangays under Makati (before the 2023 Supreme Court ruling). Population is never shown as zero; it is not mixed with TB counts. A case rate is shown only to staff, and only when the cleaned file gives one.
+The 17 rows add up exactly to the NCR row in the file. The 2025 figures follow current city limits, so the EMBO barangays count under Taguig. That is why Makati drops to 294,960 and Taguig rises to 1,271,871. The map polygons (PSGC 2023) still draw that area inside Makati. The card shows "(2025 projected)", and the TB legend shows the NCR total. The PSA 2020 values stay in the code as `pop2020` for reference.
 
 ## 4. Cards
 - City heading only (no "City" label), in primary teal.
