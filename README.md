@@ -6,7 +6,7 @@ nothing else from earlier rounds is applied.
 ## Run
 
 ```powershell
-cd "C:\Users\eau\OneDrive\Documents\MSEUF\PROXIMITY"
+cd "C:\Users\eau\Documents\MSEUF\SPIRO"
 powershell -ExecutionPolicy Bypass -File serve.ps1
 ```
 

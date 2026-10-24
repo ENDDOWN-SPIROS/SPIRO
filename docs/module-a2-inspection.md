@@ -10,7 +10,7 @@ requested earlier and **denied** in the approval dialog, so nothing here was see
 
 ## 1. Entry point
 
-- **The real entry point is `PROXIMITY\version-5.html`.** There is no `index.html` in the active
+- **The real entry point is `SPIRO\version-5.html`.** There is no `index.html` in the active
   project. `serve.ps1` serves `version-5.html` when you open `/`.
 - Other HTML files:
   - `tests\contract-tests.html`: Module 1 loader tests, test data only.
@@ -156,7 +156,7 @@ files "missing", no console errors.
 
 ## 8. Device B data paths and source data
 
-- **Agreed drop folder:** `PROXIMITY\data\shared\`.
+- **Agreed drop folder:** `SPIRO\data\shared\`.
 - **The four files:** `cleaned_tb_data.csv`, `tb_predictions.csv`, `model_evaluation.json`,
   `data_dictionary.md`.
 - **Format:** UTF-8; exact headers in order; `YYYY-MM-DD` dates; ISO 8601 timestamps; empty CSV field
