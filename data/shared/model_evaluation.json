@@ -1,0 +1,60 @@
+{
+  "status": "completed",
+  "target_variable": "case_rate_per_100k",
+  "prediction_horizon": "1 year ahead (annual notified TB case rate, all forms)",
+  "geographic_level": "city_municipality",
+  "feature_columns": [
+    "log_rate_dev_from_ncr_mean_lag1",
+    "case_rate_per_100k_lag1 (persistence anchor; offset, not a fitted coefficient)"
+  ],
+  "excluded_columns": [
+    "record_id",
+    "period_start",
+    "period_end",
+    "period_type",
+    "province",
+    "barangay",
+    "population (used only as the rate denominator)",
+    "case_count (used only via the rate)",
+    "source_file",
+    "source_sheet",
+    "geo_name",
+    "geo_code (identifier only)"
+  ],
+  "model_name": "ridge_mean_reversion_log_ratio",
+  "baseline_name": "persistence (predict previous year's observed case_rate_per_100k)",
+  "validation_method": "Rolling-origin (expanding window) by year: for each test year in 2023, 2024, 2025, train on all consecutive-year transitions with target year < test year; metrics pooled over the three test years on the case_rate_per_100k scale.",
+  "training_rows": 83,
+  "testing_rows": 49,
+  "metrics": {
+    "mae": 96.912,
+    "rmse": 135.782,
+    "r2": 0.2508
+  },
+  "baseline_metrics": {
+    "mae": 95.493,
+    "rmse": 136.161,
+    "r2": 0.2466
+  },
+  "limitations": [
+    "Very small dataset: 17 NCR LGUs x 7 observed years (2018, 2020-2025); 2019 data was not supplied, so only 5 consecutive-year transitions exist (83 modelling rows after exclusions).",
+    "The model does NOT outperform the persistence baseline on pooled MAE; predictions should be treated as roughly equivalent to 'next year looks like this year, nudged slightly toward the NCR average'.",
+    "Model configuration (no intercept, single mean-reversion feature, alpha=5) was chosen after comparing several Ridge variants on the same 2023-2025 test years, so reported metrics are optimistic. Ridge models with an intercept or lagged-growth features performed substantially worse than persistence.",
+    "2020-2022 notifications were heavily disrupted by COVID-19 (drop then rebound); these transitions are in the training data and the model cannot represent such shocks.",
+    "Makati and Taguig population denominators change sharply between 2023 and 2024 (Makati ~638k -> ~298k; Taguig ~917k -> ~1.27M), consistent with the Makati-Taguig EMBO barangay jurisdiction change; the 2023->2024 transitions for these two LGUs are excluded from training and evaluation.",
+    "Predicts notified case rate (a measure of detection/reporting as well as disease burden), not true incidence. Changes in case-finding effort change the target.",
+    "No 2026 population projection was supplied, so case counts are not predicted; only rates are exported.",
+    "No barangay-level data and no overcrowding/occupancy data exist in the supplied files; the model uses no such features.",
+    "Scope: predictions are LGU-level aggregate notification rates only. They do not detect or measure TB transmission, do not diagnose individuals, and do not identify or prove TB hotspots; overcrowding is not used and no claim is made that it predicts TB cases.",
+    "Prediction intervals (lower_bound/upper_bound) are empirical 10th-90th percentile ranges of out-of-fold log-ratio residuals (n=49); they are approximate 80% intervals, not calibrated guarantees."
+  ],
+  "notes": [
+    "Model: Ridge regression (scikit-learn, alpha=5, fit_intercept=False). Target = log(rate_t / rate_{t-1}). Feature = log(rate_{t-1}) minus the NCR cross-LGU mean of log(rate_{t-1}). Prediction = rate_{t-1} * exp(coef * feature).",
+    "Final fitted coefficient on the mean-reversion feature: -0.1744 (negative = LGUs above the NCR average are predicted to move toward it).",
+    "Final model trained on all 83 transitions with target years 2021-2025; predictions are for calendar year 2026 for the 17 NCR LGUs only. NCR region-level, barangay-level and other periods are not predicted.",
+    "Per-test-year results: {\"2023\": {\"model\": {\"mae\": 131.878, \"rmse\": 186.316, \"r2\": -1.1427}, \"persistence\": {\"mae\": 132.202, \"rmse\": 190.448, \"r2\": -1.2388}, \"train_rows\": 34, \"test_rows\": 17}, \"2024\": {\"model\": {\"mae\": 89.595, \"rmse\": 104.509, \"r2\": 0.3397}, \"persistence\": {\"mae\": 94.005, \"rmse\": 112.537, \"r2\": 0.2344}, \"train_rows\": 51, \"test_rows\": 15}, \"2025\": {\"model\": {\"mae\": 68.402, \"rmse\": 93.757, \"r2\": 0.7706}, \"persistence\": {\"mae\": 60.097, \"rmse\": 77.417, \"r2\": 0.8436}, \"train_rows\": 66, \"test_rows\": 17}}",
+    "Observed data source: case_rate_per_100k in cleaned_tb_data.csv (notified TB, all forms / projected population x 100,000).",
+    "Run identifier: 2026-10-24T02:44:52+00:00_b4e7aa486b8b (generated_at plus the first 12 hex digits of the SHA-256 of the input cleaned_tb_data.csv). The fitted model is not saved as a file: it has one coefficient (above) and is reproduced exactly by re-running model.py on the same input.",
+    "Generated at 2026-10-24T02:44:52+00:00."
+  ]
+}

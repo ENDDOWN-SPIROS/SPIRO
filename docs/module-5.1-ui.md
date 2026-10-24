@@ -52,7 +52,7 @@ The 17 rows add up exactly to the NCR row in the file. The 2025 figures follow c
 - Left column, in order: layer toggle (with Settings button), Find a city or public place (all 17 cities and the listed places), then the time box.
 - Time box: TB mode shows Reporting year. Crowding mode shows a calendar date plus Hour, Minute and Second (24-hour). It is labelled illustrative: the date sets the weekday and the hour picks the assumed typical-week pattern, and minutes and seconds don't change it.
 - On wide screens the selected card sits under the time box. On phones it sits under the map.
-- The "TB Hotspot Map" box and the header Log in button were removed. A logo placeholder (the existing pin mark plus "Proximity", dashed border) sits at top right.
+- The "TB Hotspot Map" box and the header Log in button were removed. A logo placeholder (the existing pin mark plus "SPIRO", dashed border) sits at top right.
 - Settings is an overlay popup centred over the map (a bottom sheet on phones). It contains Pages (Map, TB Health Guide), Display (theme, city labels, place markers) and one Log In entry ("Log In", for health office staff). Overview and the Data dictionary link were removed from it. The dictionary page itself and the data files are kept.
 - Auto-close: switching layer closes the card and Settings. Leaving the map closes the card and Settings. Selecting a city or place closes Settings. Clicking outside or pressing Esc closes Settings. Changing the date or time updates an open place card.
 - Community reporting removed: menu, cards, staff tab, form, photo viewer, storage code and styles. `#report` and `#overview` now open the map.
@@ -81,4 +81,4 @@ powershell -ExecutionPolicy Bypass -File serve.ps1
 Open http://localhost:8000/version-5.html and press Ctrl+Shift+R.
 
 ## 9. For the next Git commit
-`version-5.html` (large diff), `docs/module-5.1-ui.md`, `backup/module5.1-partial/`. The localStorage key `tbmap.communityReports.v1` is no longer read. The new key `proximity.settings.v1` holds display preferences.
+`version-5.html` (large diff), `docs/module-5.1-ui.md`, `backup/module5.1-partial/`. The localStorage key `tbmap.communityReports.v1` is no longer read. The new key `spiro.settings.v1` holds display preferences.

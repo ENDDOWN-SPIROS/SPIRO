@@ -64,6 +64,8 @@ const TbData = {
     if (res && res.state === "ok") {
       const skipLevel = {}, skipPeriod = {}, unmatched = [], conflicts = new Set(); let dups = 0;
       for (const r of res.rows) {
+        /* NCR region totals are expected in the file (contract); they are not drawn per city, so skip them quietly. */
+        if (r.geo_level.toLowerCase() === "region" && r.geo_code === "1300000000") continue;
         if (!MAP_GEO_LEVELS.includes(r.geo_level.toLowerCase())) { skipLevel[r.geo_level] = (skipLevel[r.geo_level] || 0) + 1; continue; }
         const pt = (r.period_type || "").toLowerCase();
         if (!ANNUAL_PERIODS.includes(pt)) { const k = r.period_type || "(empty)"; skipPeriod[k] = (skipPeriod[k] || 0) + 1; continue; }

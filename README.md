@@ -1,6 +1,6 @@
-# Metro Manila TB Hotspot Map (version 5 + Module 1)
+# SPIRO: Metro Manila TB hotspot map (version 5 + modules)
 
-The working page is `version-5.html`. Module 1 adds the shared data contract on top of it;
+The working page is `SPIRO.html` (renamed from `version-5.html` on 2026-10-24). Module 1 adds the shared data contract on top of it;
 nothing else from earlier rounds is applied.
 
 ## Run
@@ -10,7 +10,7 @@ cd "C:\Users\eau\Documents\MSEUF\SPIRO"
 powershell -ExecutionPolicy Bypass -File serve.ps1
 ```
 
-Then open <http://localhost:8000> (it serves `version-5.html`). A server is required: the page
+Then open <http://localhost:8000> (it serves `SPIRO.html`). A server is required: the page
 reads its data files with `fetch()`, which browsers block for pages opened as files.
 
 ## Shared data (Device B → Device A)
@@ -44,12 +44,12 @@ serve.ps1                             local server
 
 ## Test mode
 
-On localhost only, `version-5.html?fixtures=<case>` reads `tests/fixtures/<case>/` instead of
+On localhost only, `SPIRO.html?fixtures=<case>` reads `tests/fixtures/<case>/` instead of
 `data/shared/`. A "Test mode" banner appears and the tab title starts with `[TEST DATA]`.
 Automated checks: <http://localhost:8000/tests/contract-tests.html>.
 
 ## Backups
 
 - `backup/version-5.original.html`: the original, byte-identical.
-- `backup/round5-2026-10-24/` and `backup/round5-2026-10-24-working/`: the earlier "Proximity"
+- `backup/round5-2026-10-24/` and `backup/round5-2026-10-24-working/`: the earlier "Proximity" (now SPIRO)
   round, kept but not used.

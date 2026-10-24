@@ -10,7 +10,7 @@
 "use strict";
 
 const DataModelView = {
-  /* ---------- whole "Data and model" tab in LGU tools ---------- */
+  /* ---------- whole "Data and model" tab in staff tools ---------- */
   html() {
     return `${this.sourceHTML()}${this.filesHTML()}${this.noticesHTML()}${this.evaluationHTML()}${this.predictionsHTML()}
       <div class="card"><h3>Data dictionary</h3><p class="small">${ContractData.dict?.state === "ok" ? `Provided. <a href="#dictionary" data-dict-link>Open the data dictionary</a>.` : "Not yet provided."}</p></div>`;
@@ -32,7 +32,7 @@ const DataModelView = {
     return `<div class="card"><h3>Shared data files</h3>
       <div class="table-wrap"><table class="data cs-table"><thead><tr><th scope="col">File</th><th scope="col">Status</th><th scope="col">Details</th></tr></thead><tbody>
         ${row(ContractData.tb, "TB map, place details, TB history")}
-        ${row(ContractData.pred, "Predictions (LGU tools only)")}
+        ${row(ContractData.pred, "Predictions (staff tools only)")}
         ${row(ContractData.eval, "Model status below")}
         ${row(ContractData.dict, "Data dictionary page")}
       </tbody></table></div></div>`;

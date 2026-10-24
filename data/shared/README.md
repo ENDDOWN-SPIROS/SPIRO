@@ -8,6 +8,6 @@ docs/data-contract.md):
 - model_evaluation.json
 - data_dictionary.md
 
-The website (version-5.html, served by serve.ps1) reads them on page load. Until a file is here,
+The website (SPIRO.html, served by serve.ps1) reads them on page load. Until a file is here,
 the site shows "not yet provided" for it; nothing is filled in. Do not put test data in this folder;
 test fixtures live in tests/fixtures/.

@@ -6,7 +6,7 @@
 # Why a server: the page reads the shared data files in data/shared/ with fetch(),
 # which browsers block for pages opened from a file. Map tiles also need a normal
 # Referer, which file:// pages don't send.
-# "/" opens version-5.html. With Python, "python -m http.server 8000" works too.
+# "/" opens SPIRO.html. With Python, "python -m http.server 8000" works too.
 param([int]$Port = 8000)
 $root = (Resolve-Path $PSScriptRoot).Path
 $types = @{
@@ -26,7 +26,7 @@ try {
     $res = $ctx.Response
     try {
       $rel = [Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath).TrimStart("/")
-      if ($rel -eq "") { $rel = if (Test-Path (Join-Path $root "index.html")) { "index.html" } else { "version-5.html" } }
+      if ($rel -eq "") { $rel = if (Test-Path (Join-Path $root "index.html")) { "index.html" } else { "SPIRO.html" } }
       $path = [IO.Path]::GetFullPath((Join-Path $root $rel))
       # Only files inside this folder; never .env files, hidden folders or backups.
       $blocked = -not $path.StartsWith($root, [StringComparison]::OrdinalIgnoreCase) -or $rel -match '(^|/)\.' -or $rel -match '\.env' -or $rel -match '^backup(/|$)'

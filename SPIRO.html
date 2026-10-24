@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
-<title>Metro Manila TB Hotspot Map</title>
+<title>SPIRO</title>
 <meta name="description" content="Map of tuberculosis case patterns and crowding in Metro Manila, with TB health guidance.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -838,27 +838,26 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 /* layer bar */
 
 /* map controls: right side, under the top bar */
-.map-ctrls { position: absolute; right: .75rem; top: 4.25rem; z-index: 780; display: flex; flex-direction: column; background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.br-stack { position: absolute; right: .75rem; bottom: 1.75rem; z-index: 775; display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; max-height: calc(100% - 5rem); pointer-events: none; }
+.br-stack > * { pointer-events: auto; }
+.map-ctrls { flex: none; display: flex; flex-direction: column; background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
 .map-ctrls button { width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border: 0; border-bottom: 1px solid var(--line); background: var(--surface); color: var(--heading); cursor: pointer; }
 .map-ctrls button:last-child { border-bottom: 0; }
 .map-ctrls button:hover { color: var(--primary); background: var(--surface-2); }
 
 /* legend: always visible, bottom right */
-.legend { position: absolute; right: .75rem; bottom: 1.75rem; z-index: 770; width: 15.5rem; max-width: calc(100% - 1.5rem); max-height: calc(100% - var(--top-offset) - 13rem); overflow: auto; background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); padding: .625rem .75rem; font-size: .8125rem; }
-.lg-title { font-size: .875rem; margin-bottom: .375rem; }
-.lg-classes { list-style: none; display: grid; gap: .2rem; }
+.legend { flex: 0 1 auto; min-height: 0; width: 12.5rem; max-width: calc(100vw - 1.5rem); overflow: visible; background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); padding: .5rem .625rem; font-size: .75rem; }
+.lg-title { font-size: .8125rem; margin-bottom: .25rem; }
+.lg-classes { list-style: none; display: grid; gap: .1rem; margin: 0; padding: 0; font-size: .75rem; line-height: 1.3; }
+.sw-dot { width: .75rem; height: .75rem; border-radius: 50%; }
 .lg-classes li { display: flex; align-items: center; gap: .5rem; }
-.sw { display: inline-block; width: 1.125rem; height: .875rem; border-radius: .2rem; flex: none; border: 1px solid rgba(18,45,64,.15); }
+.sw { display: inline-block; width: .875rem; height: .75rem; border-radius: .2rem; flex: none; border: 1px solid rgba(18,45,64,.15); }
 .sw-na { background: repeating-linear-gradient(45deg, #9AA6AE 0 3px, #D4DBE0 3px 6px); }
 .lg-ramp { height: .75rem; border-radius: .375rem; }
 .lg-ends { display: flex; justify-content: space-between; color: var(--muted); font-size: .75rem; margin-top: .15rem; }
-.lg-note { font-size: .75rem; color: var(--muted); margin-top: .375rem; line-height: 1.4; }
+.lg-note { font-size: .6875rem; color: var(--muted); margin-top: .25rem; line-height: 1.35; }
 .lg-remind { color: var(--heading); font-weight: 600; }
-.lg-short { display: none; }
-.lg-n { margin-left: auto; font-size: .75rem; color: var(--muted); }
-.lg-more { margin-top: .25rem; }
-.lg-more { margin-top: .25rem; }
-.lg-more summary { cursor: pointer; font-size: .75rem; font-weight: 600; color: var(--primary); min-height: 1.75rem; display: flex; align-items: center; }
+.lg-n { margin-left: auto; font-size: .6875rem; color: var(--muted); }
 .map-status { position: absolute; left: 50%; transform: translateX(-50%); bottom: 1.75rem; z-index: 760; max-width: calc(100% - 20rem); }
 .pill { display: inline-flex; gap: .4rem; align-items: center; background: var(--surface); padding: .375rem .75rem; border-radius: 999px; box-shadow: var(--shadow); font-size: .8125rem; }
 .map-loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 750; font-weight: 600; color: var(--muted); pointer-events: none; }
@@ -965,7 +964,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 /* ---------- tablets and phones ---------- */
 @media (max-width: 899.98px) {
   .place-card { flex: none; max-height: 50%; border-top: 1px solid var(--line-2); box-shadow: 0 -6px 20px rgba(18,45,64,.14); position: relative; z-index: 5; }
-  .legend { width: 13.5rem; bottom: 1.5rem; }
+  .legend { width: 12rem; }
+  .br-stack { bottom: 1.5rem; }
   .map-status { max-width: calc(100% - 16rem); left: .75rem; transform: none; }
 }
 @media (max-width: 640px) {
@@ -977,15 +977,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
   .tf select, .tf input { min-height: 2.25rem; font-size: .875rem; }
   .ctrl-note { display: none; }
   .logo-ph { top: .5rem; right: .5rem; padding: .25rem; } .logo-ph b { display: none; }
-  .map-ctrls { top: 3.75rem; }
-  .map-ctrls { right: .5rem; }
-  .legend { right: .5rem; bottom: 1.5rem; width: 13rem; padding: .5rem .625rem; max-height: calc(100% - var(--top-offset) - 1rem); }
+  .br-stack { right: .5rem; flex-direction: row-reverse; align-items: flex-end; max-height: calc(100% - 13rem); }
+  .legend { width: 10.5rem; padding: .375rem .5rem; }
+  .lg-classes { font-size: .6875rem; }
   .lg-title { font-size: .8125rem; margin-bottom: .25rem; }
-  .lg-classes { display: flex; gap: .125rem; }
-  .lg-classes li { flex: 1; flex-direction: column; align-items: stretch; gap: .1rem; text-align: center; font-size: .625rem; line-height: 1.1; }
-  .lg-classes .sw { width: 100%; height: .625rem; border-radius: .125rem; }
-  .lg-long, .lg-n { display: none; }
-  .lg-short { display: block; white-space: nowrap; }
   .lg-note { margin-top: .25rem; }
   .map-ctrls button { width: 2.5rem; height: 2.5rem; }
   .leaflet-control-attribution { max-width: calc(100vw - 1rem); font-size: .625rem !important; }
@@ -1186,8 +1181,10 @@ table.data td.partial { font-style: italic; }
         </div>
         <section class="ctrl-card ctrl-time" id="timeBox" aria-labelledby="timeTitle"></section>
       </div>
-      <div class="logo-ph" role="img" aria-label="Proximity logo (placeholder)" title="Logo placeholder"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>Proximity</b></div>
+      <div class="logo-ph" role="img" aria-label="SPIRO logo (placeholder)" title="Logo placeholder"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></div>
 
+      <!-- Module A2: map controls and legend share the bottom-right corner -->
+      <div class="br-stack">
       <div class="map-ctrls" id="mapCtrls" role="group" aria-label="Map controls">
         <button type="button" id="zIn" aria-label="Zoom in" title="Zoom in"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
         <button type="button" id="zOut" aria-label="Zoom out" title="Zoom out"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button>
@@ -1195,6 +1192,7 @@ table.data td.partial { font-style: italic; }
       </div>
 
       <div id="legend" class="legend" role="region" aria-label="Map legend" aria-live="polite"></div>
+      </div>
       <div id="mapStatus" class="map-status" role="status"></div>
       <div id="mapLoading" class="map-loading">Loading map…</div>
     </div>
@@ -1759,7 +1757,7 @@ class MapView {
     if (this.mode !== "leaflet") return;
     if (this.layers.labels) this.map.removeLayer(this.layers.labels);
     const s = this.model.state, z = this.map.getZoom();
-    if (z < 11 || window.PROXIMITY_SETTINGS?.labels === false) { this.layers.labels = null; return; }
+    if (z < 11 || window.SPIRO_SETTINGS?.labels === false) { this.layers.labels = null; return; }
     this.layers.labels = L.layerGroup(Object.entries(window.CITY_LABEL_PT).map(([id, ll]) => {
       const v = s.layer === "tb" ? tbVal(id, s.year, MAP_MEASURE) : null;
       const val = s.layer === "tb" ? `<em>${v == null ? "No data" : shortNum(v)}</em>` : "";
@@ -1774,7 +1772,7 @@ class MapView {
     if (this.layers.places) this.map.removeLayer(this.layers.places);
     this.layers.places = null;
     const s = this.model.state;
-    if (s.layer !== "crowd" || window.PROXIMITY_SETTINGS?.markers === false) return;
+    if (s.layer !== "crowd" || window.SPIRO_SETTINGS?.markers === false) return;
     const z = this.map.getZoom(), size = z >= 13 ? 18 : z >= 12 ? 14 : 11;
     this.layers.places = L.layerGroup(PLACES.map(p => {
       const b = this.model.busyAt(p), lv = busyLevel(b), sel = s.selected?.type === "place" && s.selected.id === p.id;
@@ -1807,28 +1805,24 @@ class MapView {
   }
 
   /* ---------- legend (bottom right) ---------- */
+  /* Legend: only the keys, always fully shown, compact (Nea, 2026-10-24: no sources, no NCR
+     population, no "More about this layer"). */
   renderLegend() {
     const s = this.model.state;
-    const more = notes => `<details class="lg-more"><summary>More about this layer</summary>${notes}</details>`;
     let h;
     if (s.layer === "tb") {
       const st = yStatus(s.year), empty = tbVal("all", s.year, MAP_MEASURE) == null;
-      /* How many of the 17 cities fall in each class this year (from the loaded data). */
       const n = Array(TB_COLORS.length + 1).fill(0);
       if (!empty) for (const c of CITIES) { const k = tbClass(tbVal(c.id, s.year, MAP_MEASURE), MAP_MEASURE); n[k < 0 ? TB_COLORS.length : k]++; }
-      const cnt = x => `<span class="lg-n num" title="${x} of 17 cities">${x}</span>`;
-      h = `<h3 class="lg-title">TB cases, ${s.year}</h3>
-        ${empty ? `<p class="lg-note">${esc(st.note)}</p>` : `<ul class="lg-classes">${tbLegendRows(MAP_MEASURE).map((r, i) => `<li><span class="sw" style="background:${r.color}"></span><span class="lg-long">${r.long}</span>${cnt(n[i])}<span class="lg-short" aria-hidden="true">${r.short}</span></li>`).join("")}<li><span class="sw sw-na"></span><span class="lg-long">No data</span>${cnt(n[TB_COLORS.length])}<span class="lg-short" aria-hidden="true">None</span></li></ul>`}
-        ${!empty && st.label !== "Full year" ? `<p class="lg-note">${esc(st.note)}</p>` : ""}
-        <p class="lg-note">NCR population: ${fmt(NCR_POP)} (2025 projected, DOH FHSIS).</p>
-        ${empty ? "" : `<p class="lg-note">Source: cleaned_tb_data.csv${TbData.sourceText(s.year) ? ` (${esc(TbData.sourceText(s.year))})` : ""}.</p>`}
-        ${more(`<p class="lg-note">Whole-city totals (case_count), on the same scale for every year.${empty ? "" : " The number after each class is how many of the 17 cities are in it."}</p><p class="lg-note">Shown only at city or municipality level. Boundaries are PSGC 2023 and still draw Fort Bonifacio inside Makati, although the 2023 Supreme Court ruling placed it in Taguig.</p>`)}`;
+      const row = (sw, label, x) => `<li>${sw}<span>${label}</span><span class="lg-n num" title="${x} of 17 cities">${x}</span></li>`;
+      h = `<h3 class="lg-title">Notified TB cases, ${s.year}</h3>
+        ${empty ? `<p class="lg-note">No data for ${s.year}.</p>` : `<ul class="lg-classes">${tbLegendRows(MAP_MEASURE).map((r, i) => row(`<span class="sw" style="background:${r.color}"></span>`, r.long, n[i])).join("")}${row('<span class="sw sw-na"></span>', "No data", n[TB_COLORS.length])}</ul>`}
+        ${!empty && st.label !== "Full year" ? `<p class="lg-note">${esc(st.label)}</p>` : ""}`;
     } else {
-      h = `<h3 class="lg-title">Crowding, ${esc(whenLabel(s))}</h3>
-        <div class="lg-ramp" style="background:${CROWD_GRADIENT}"></div>
-        <div class="lg-ends"><span>Less busy</span><span>Busier</span></div>
-        <p class="lg-note">Proxy, not measured occupancy. Typical week, not live.</p>
-        ${more(`<p class="lg-note">Each listed place uses an assumed weekly pattern for its type (mall, market, transit station, tourist spot), shown as a share of its busiest hour. Not a headcount. Colour appears only around the listed places; elsewhere there is no crowd data.</p><p class="lg-note">Marker levels: Low under 40%, Moderate 40–69%, High 70–89%, Very high 90% or more of that busiest hour.</p><p class="lg-note lg-remind">Reminder: A busy place is not evidence that TB is spreading there.</p>`)}`;
+      const lv = [["Low", "under 40%"], ["Moderate", "40–69%"], ["High", "70–89%"], ["Very high", "90%+"], ["Closed", "closed"]];
+      h = `<h3 class="lg-title">Crowding (estimated)</h3>
+        <ul class="lg-classes">${lv.map(([k, t]) => `<li><span class="sw sw-dot" style="background:${LEVEL_COLOR[k]}"></span><span>${k}</span><span class="lg-n">${t}</span></li>`).join("")}</ul>
+        <p class="lg-note">Typical week, not live.</p>`;
     }
     $("#legend").innerHTML = h;
   }
@@ -1837,8 +1831,8 @@ class MapView {
   renderFallback() {
     const y = this.model.state.year, rows = CITIES.map(c => [cityName(c.id), tbVal(c.id, y, MAP_MEASURE)]);
     const any = rows.some(r => r[1] != null);
-    $("#mapFallback").innerHTML = `<div class="fb-inner"><h2>TB cases by city, ${y}</h2>
-      ${any ? `<table class="fb-table"><thead><tr><th scope="col">City or municipality</th><th scope="col" class="num">TB cases (case_count)</th></tr></thead>
+    $("#mapFallback").innerHTML = `<div class="fb-inner"><h2>Notified TB cases by city, ${y}</h2>
+      ${any ? `<table class="fb-table"><thead><tr><th scope="col">City or municipality</th><th scope="col" class="num">Notified TB cases</th></tr></thead>
       <tbody>${rows.map(([n, v]) => `<tr><td>${esc(n)}</td><td class="num">${v == null ? "No data" : fmt(v)}</td></tr>`).join("")}</tbody></table>
       <p class="xs muted">Whole-city totals from cleaned_tb_data.csv. No map is drawn, so no locations are implied.</p>`
       : `<p class="small muted">${esc(yStatus(y).note)}</p>`}</div>`;
@@ -1898,7 +1892,7 @@ class NavigationView {
   }
 
   renderPanel() {
-    const s = this.model.state, cur = s.route === "admin" ? "admin/" + s.adminTab : s.route, v = window.PROXIMITY_SETTINGS || {};
+    const s = this.model.state, cur = s.route === "admin" ? "admin/" + s.adminTab : s.route, v = window.SPIRO_SETTINGS || {};
     const item = (route, ic, label, sub) => `<a class="np-item${cur === route ? " on" : ""}" href="#${route}" data-route="${route}"${cur === route ? ' aria-current="page"' : ""}>${icon(ic)}<span><b>${label}</b>${sub ? `<small>${sub}</small>` : ""}</span></a>`;
     const o = (val, l) => opt(val, l, (v.theme || "system") === val);
     $("#navPanel").innerHTML = `
@@ -2032,13 +2026,13 @@ class PlaceDetailsView {
       <section class="pc-sec" aria-label="TB summary">
         ${d.count == null
           ? `<p class="empty-state">${noFile ? "No TB case data has been loaded yet." : `No TB case count for ${esc(CITY[id].name)} in ${y}.`}</p>`
-          : `<div class="kpi"><span class="kpi-l">TB cases, ${y}</span><span class="kpi-v"><span class="sw" style="background:${TB_COLORS[k]}"></span>${fmt(d.count)}</span></div>`}
+          : `<div class="kpi"><span class="kpi-l">Notified TB cases, ${y}</span><span class="kpi-v"><span class="sw" style="background:${TB_COLORS[k]}"></span>${fmt(d.count)}</span></div>`}
         <dl class="pc-kv">
-          <dt>Population</dt><dd>${fmt(CITY[id].pop)} <small class="muted">(2025 projected)</small></dd>
+          ${d.population != null ? `<dt>Population, ${y}</dt><dd>${fmt(d.population)} <small class="muted">(projected)</small></dd>` : `<dt>Population</dt><dd>${fmt(CITY[id].pop)} <small class="muted">(2025 projected)</small></dd>`}
           <dt>Last updated</dt><dd>${last ? `${esc(last.text)}${last.sub ? `<br><small class="muted">${esc(last.sub)}</small>` : ""}` : "No observation available"}</dd>
           ${admin && d.rate != null ? `<dt>Per 100,000</dt><dd>${fmt(d.rate, 1)}</dd><dt>Rank by rate</dt><dd>${rk + 1} of ${ranked.length}</dd><dt>Trend ${TREND_FROM ?? "–"}–${TREND_TO ?? "–"}</dt><dd>${this.trendText(tr)}</dd>` : ""}
         </dl>
-        <p class="pc-src">Cases: observed counts from cleaned_tb_data.csv. Population: ${esc(POP_SOURCE.long)}</p>
+        <p class="pc-src">Notified cases (all forms), not incidence. Source: cleaned_tb_data.csv${d.row?.source_file ? ` (${esc(d.row.source_file)})` : ""}. Population: ${d.population != null ? `the projected population in the same DOH FHSIS table for ${y}` : esc(POP_SOURCE.long)}.</p>
         ${admin ? DataModelView.cityPredictionsHTML(id) : ""}
         ${admin ? `<div class="chart" id="pcSpark" data-city="${id}"></div>` : ""}
       </section>
@@ -2419,7 +2413,7 @@ class MapController {
 "use strict";
 
 /* Module 5.1: display preferences shown in the Settings overlay. Per-browser conveniences in localStorage. */
-const SETTINGS_KEY = "proximity.settings.v1";
+const SETTINGS_KEY = "spiro.settings.v1";
 const Prefs = {
   defaults: { theme: "system", labels: true, markers: true },
   load() { const v = safeStorage("localStorage").get(SETTINGS_KEY, {}); return { ...this.defaults, ...(v && typeof v === "object" ? v : {}) }; },
@@ -2435,7 +2429,7 @@ class AppController {
     this.placeView = new PlaceDetailsView(this.model);
     this.adminView = new AdminView(this.model);
     this.mapCtl = new MapController(this.model, this.mapView, this.placeView, this);
-    this.settings = Prefs.load(); Prefs.apply(this.settings); window.PROXIMITY_SETTINGS = this.settings;
+    this.settings = Prefs.load(); Prefs.apply(this.settings); window.SPIRO_SETTINGS = this.settings;
     this.pendingRoute = null;
   }
 
@@ -2447,7 +2441,7 @@ class AppController {
       onFind: sel => { this.closeNav(false); this.navigate("map"); this.mapCtl.select(sel, true); setTimeout(() => $("#placeTitle")?.focus({ preventScroll: true }), 350); },
       onLogin: () => { this.closeNav(false); this.openLogin(null); },
       onLogout: () => { this.closeNav(false); this.logout(); },
-      onPrefs: v => { this.settings = v; window.PROXIMITY_SETTINGS = v; Prefs.save(v); Prefs.apply(v); this.mapView.drawLabels(); this.mapView.drawPlaces(); }
+      onPrefs: v => { this.settings = v; window.SPIRO_SETTINGS = v; Prefs.save(v); Prefs.apply(v); this.mapView.drawLabels(); this.mapView.drawPlaces(); }
     });
     this.mapCtl.init();
     this.adminView.init({
@@ -2513,7 +2507,7 @@ class AppController {
     document.body.classList.toggle("sheet-open", sheetOpen);
     if (sheetOpen) { this.renderSheet(false); $("#sheet").focus({ preventScroll: true }); }
     this.placeView.render();
-    document.title = { map: "Proximity", guide: "TB Health Guide · Proximity", admin: "Staff tools · Proximity", dictionary: "Data dictionary · Proximity" }[route];
+    document.title = { map: "SPIRO", guide: "TB Health Guide · SPIRO", admin: "Staff tools · SPIRO", dictionary: "Data dictionary · SPIRO" }[route];
     if (ContractData.source.test) document.title = "[TEST DATA] " + document.title;
   }
 

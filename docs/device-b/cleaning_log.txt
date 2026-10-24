@@ -1,0 +1,16 @@
+output rows: 126
+ID TB 2018.xlsx / Table 2H.1: 202 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+ID TB 2020.xlsx / TB Table 1: 207 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+ID TB 2021.xlsx / TB Table 1: 208 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+ID TB 2022.xlsx / Copy of cnr All Forms: 208 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+ID TB 2023.xlsx / Copy of Copy of cnr All Forms: 149 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+Tuberculosis_EB 2024.xlsx / CNR: 1750 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+FINAL Tuberculosis_EB_2025.xlsx / Annual: 1753 non-empty source rows (all of PH, incl. titles, headers, notes) -> 18 NCR rows kept (1 region + 17 LGUs)
+2018: sum of 17 LGUs = 51755, NCR total row = 51755, diff = 0
+2020: sum of 17 LGUs = 34554, NCR total row = 34554, diff = 0
+2021: sum of 17 LGUs = 57982, NCR total row = 57982, diff = 0
+2022: sum of 17 LGUs = 99466, NCR total row = 99466, diff = 0
+2023: sum of 17 LGUs = 111228, NCR total row = 111228, diff = 0
+2024 City of Manila: calc rate 764.4248 != source rate 765.49
+2024: sum of 17 LGUs = 100324, NCR total row = 100324, diff = 0
+2025: sum of 17 LGUs = 101500, NCR total row = 101500, diff = 0

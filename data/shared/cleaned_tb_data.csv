@@ -1,0 +1,127 @@
+record_id,year,period_start,period_end,period_type,geo_level,geo_code,geo_name,province,city_municipality,barangay,case_count,population,case_rate_per_100k,source_file,source_sheet
+2018-1300000000-annual,2018,2018-01-01,2018-12-31,annual,region,1300000000,National Capital Region (NCR),,,,51755,13481036,383.9097,ID TB 2018.xlsx,Table 2H.1
+2018-1380400000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,1896,382664,495.4738,ID TB 2018.xlsx,Table 2H.1
+2018-1380900000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,1323,261160,506.586,ID TB 2018.xlsx,Table 2H.1
+2018-1381600000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,3809,649512,586.4403,ID TB 2018.xlsx,Table 2H.1
+2018-1380100000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,5398,1658247,325.5245,ID TB 2018.xlsx,Table 2H.1
+2018-1380700000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,1919,471875,406.6755,ID TB 2018.xlsx,Table 2H.1
+2018-1381200000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,2728,790714,345.0046,ID TB 2018.xlsx,Table 2H.1
+2018-1381701000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,174,66833,260.3504,ID TB 2018.xlsx,Table 2H.1
+2018-1381500000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,3476,842656,412.5052,ID TB 2018.xlsx,Table 2H.1
+2018-1381300000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,11947,3073783,388.6742,ID TB 2018.xlsx,Table 2H.1
+2018-1380300000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,1866,609919,305.9423,ID TB 2018.xlsx,Table 2H.1
+2018-1380500000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,2231,404389,551.6965,ID TB 2018.xlsx,Table 2H.1
+2018-1381400000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,292,127907,228.2909,ID TB 2018.xlsx,Table 2H.1
+2018-1380600000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,7650,1863615,410.4925,ID TB 2018.xlsx,Table 2H.1
+2018-1380200000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,1289,616506,209.0815,ID TB 2018.xlsx,Table 2H.1
+2018-1380800000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,2066,528164,391.1664,ID TB 2018.xlsx,Table 2H.1
+2018-1381000000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,2013,697040,288.7926,ID TB 2018.xlsx,Table 2H.1
+2018-1381100000-annual,2018,2018-01-01,2018-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,1678,436052,384.8165,ID TB 2018.xlsx,Table 2H.1
+2020-1300000000-annual,2020,2020-01-01,2020-12-31,annual,region,1300000000,National Capital Region (NCR),,,,34554,13694816.13,252.3145,ID TB 2020.xlsx,TB Table 1
+2020-1380400000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,1228,373283.84,328.9722,ID TB 2020.xlsx,TB Table 1
+2020-1380900000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,681,248638.21,273.8919,ID TB 2020.xlsx,TB Table 1
+2020-1381600000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,2374,653304.74,363.3832,ID TB 2020.xlsx,TB Table 1
+2020-1380100000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,4177,1651493.17,252.9226,ID TB 2020.xlsx,TB Table 1
+2020-1380700000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,1975,469180.85,420.9464,ID TB 2020.xlsx,TB Table 1
+2020-1381200000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,2230,822853.62,271.0081,ID TB 2020.xlsx,TB Table 1
+2020-1381701000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,86,63375.74,135.6986,ID TB 2020.xlsx,TB Table 1
+2020-1381500000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,2782,947362.23,293.6575,ID TB 2020.xlsx,TB Table 1
+2020-1381300000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,6558,3065597.42,213.9224,ID TB 2020.xlsx,TB Table 1
+2020-1380300000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,1559,624587.4,249.6048,ID TB 2020.xlsx,TB Table 1
+2020-1380500000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,1327,438677.01,302.5005,ID TB 2020.xlsx,TB Table 1
+2020-1381400000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,293,122504.99,239.1739,ID TB 2020.xlsx,TB Table 1
+2020-1380600000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,4721,1880120.17,251.101,ID TB 2020.xlsx,TB Table 1
+2020-1380200000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,1128,614860.3,183.4563,ID TB 2020.xlsx,TB Table 1
+2020-1380800000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,1318,556831.15,236.6965,ID TB 2020.xlsx,TB Table 1
+2020-1381000000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,998,728176.06,137.0548,ID TB 2020.xlsx,TB Table 1
+2020-1381100000-annual,2020,2020-01-01,2020-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,1119,433969.23,257.8524,ID TB 2020.xlsx,TB Table 1
+2021-1300000000-annual,2021,2021-01-01,2021-12-31,annual,region,1300000000,National Capital Region (NCR),,,,57982,13966223.42,415.1588,ID TB 2021.xlsx,TB Table 1
+2021-1380400000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,1365,396434,344.3196,ID TB 2021.xlsx,TB Table 1
+2021-1380900000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,1637,270559,605.0436,ID TB 2021.xlsx,TB Table 1
+2021-1381600000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,3462,672888,514.4987,ID TB 2021.xlsx,TB Table 1
+2021-1380100000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,6322,1717928.39,368.0014,ID TB 2021.xlsx,TB Table 1
+2021-1380700000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,2495,488857,510.3742,ID TB 2021.xlsx,TB Table 1
+2021-1381200000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,3083,819171,376.3561,ID TB 2021.xlsx,TB Table 1
+2021-1381701000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,99,69239,142.983,ID TB 2021.xlsx,TB Table 1
+2021-1381500000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,4025,872980,461.0644,ID TB 2021.xlsx,TB Table 1
+2021-1381300000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,11807,3184407,370.7755,ID TB 2021.xlsx,TB Table 1
+2021-1380300000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,2614,631867,413.6947,ID TB 2021.xlsx,TB Table 1
+2021-1380500000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,1948,418942,464.9808,ID TB 2021.xlsx,TB Table 1
+2021-1381400000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,803,132512,605.9829,ID TB 2021.xlsx,TB Table 1
+2021-1380600000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,11165,1930696.02,578.2889,ID TB 2021.xlsx,TB Table 1
+2021-1380200000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,1645,638694,257.5568,ID TB 2021.xlsx,TB Table 1
+2021-1380800000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,1844,547173,337.0049,ID TB 2021.xlsx,TB Table 1
+2021-1381000000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,1716,722126,237.6317,ID TB 2021.xlsx,TB Table 1
+2021-1381100000-annual,2021,2021-01-01,2021-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,1952,451750,432.0974,ID TB 2021.xlsx,TB Table 1
+2022-1300000000-annual,2022,2022-01-01,2022-12-31,annual,region,1300000000,National Capital Region (NCR),,,,99466,14118672.98,704.4996,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380400000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,3711,400763,925.9837,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380900000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,2568,273513,938.895,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381600000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,5474,680233,804.7243,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380100000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,11042,1736680,635.8109,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380700000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,3613,494193,731.0909,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381200000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,6016,828114,726.47,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381701000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,236,69994,337.1718,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381500000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,6012,882512,681.2372,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381300000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,22094,3219173,686.3253,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380300000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,3984,638764,623.7045,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380500000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,3067,423514,724.1791,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381400000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,978,133959,730.0741,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380600000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,17218,1951757.98,882.179,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380200000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,3514,645666,544.2442,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1380800000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,3318,553146,599.8416,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381000000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,3525,730009,482.8708,ID TB 2022.xlsx,Copy of cnr All Forms
+2022-1381100000-annual,2022,2022-01-01,2022-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,3096,456682,677.9334,ID TB 2022.xlsx,Copy of cnr All Forms
+2023-1300000000-annual,2023,2023-01-01,2023-12-31,annual,region,1300000000,National Capital Region (NCR),,,,111228,13802335,805.8636,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380400000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,4100,389819,1051.7702,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380900000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,2361,254778,926.6891,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381600000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,5459,732364,745.3944,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380100000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,11797,1708376,690.5389,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380700000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,3139,464962,675.1089,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381200000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,6538,825380,792.12,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381701000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,652,66279,983.7203,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381500000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,6780,917267,739.1523,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381300000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,26437,3027195,873.3167,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380300000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,5049,637870,791.5406,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380500000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,3537,434978,813.1446,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381400000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,1178,127452,924.2695,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380600000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,18558,1889338,982.2488,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380200000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,4057,618866,655.5539,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1380800000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,3903,553660,704.9453,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381000000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,4153,704904,589.1582,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2023-1381100000-annual,2023,2023-01-01,2023-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,3530,448847,786.4595,ID TB 2023.xlsx,Copy of Copy of cnr All Forms
+2024-1300000000-annual,2024,2024-01-01,2024-12-31,annual,region,1300000000,National Capital Region (NCR),,,,100324,13902112,721.6457,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380100000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,12099,1724390,701.6394,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380200000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,3530,623636,566.0353,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380300000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,3469,297966,1164.2268,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380400000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,3968,393282,1008.9452,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380500000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,3330,438436,759.5179,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380600000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,14456,1891095,764.4248,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380700000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,3527,468372,753.0339,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380800000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,3284,557576,588.978,Tuberculosis_EB 2024.xlsx,CNR
+2024-1380900000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,2547,257469,989.2453,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381000000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,4130,710582,581.2137,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381100000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,3729,448353,831.7107,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381200000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,5274,833749,632.5645,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381300000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,22703,3052364,743.7842,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381400000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,930,127586,728.9201,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381500000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,7714,1271862,606.5123,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381600000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,5074,738827,686.7643,Tuberculosis_EB 2024.xlsx,CNR
+2024-1381701000-annual,2024,2024-01-01,2024-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,560,66567,841.2577,Tuberculosis_EB 2024.xlsx,CNR
+2025-1300000000-annual,2025,2025-01-01,2025-12-31,annual,region,1300000000,National Capital Region (NCR),,,,101500,14015646,724.1907,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380100000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380100000,City of Caloocan,,City of Caloocan,,13241,1743812,759.3135,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380200000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380200000,City of Las Piñas,,City of Las Piñas,,4077,628652,648.5305,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380300000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380300000,City of Makati,,City of Makati,,3653,294960,1238.473,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380400000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380400000,City of Malabon,,City of Malabon,,4846,396996,1220.6672,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380500000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380500000,City of Mandaluyong,,City of Mandaluyong,,3081,442115,696.8775,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380600000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380600000,City of Manila,,City of Manila,,15245,1911556,797.5178,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380700000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380700000,City of Marikina,,City of Marikina,,2954,471918,625.9562,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380800000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380800000,City of Muntinlupa,,City of Muntinlupa,,3393,561640,604.1236,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1380900000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1380900000,City of Navotas,,City of Navotas,,2474,260395,950.095,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381000000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381000000,City of Parañaque,,City of Parañaque,,4468,716560,623.5347,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381100000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381100000,Pasay City,,Pasay City,,3798,452062,840.1502,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381200000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381200000,City of Pasig,,City of Pasig,,5031,842708,597.0039,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381300000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381300000,Quezon City,,Quezon City,,21524,3079478,698.9496,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381400000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381400000,City of San Juan,,City of San Juan,,1064,128083,830.7113,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381500000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381500000,City of Taguig,,City of Taguig,,7109,1271871,558.9403,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381600000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381600000,City of Valenzuela,,City of Valenzuela,,4967,745850,665.9516,FINAL Tuberculosis_EB_2025.xlsx,Annual
+2025-1381701000-annual,2025,2025-01-01,2025-12-31,annual,city_municipality,1381701000,Pateros,,Pateros,,575,66990,858.3371,FINAL Tuberculosis_EB_2025.xlsx,Annual
