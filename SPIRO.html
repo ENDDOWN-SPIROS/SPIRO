@@ -823,7 +823,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .logo { width: 1.875rem; height: 1.875rem; color: var(--primary); flex: none; }
 
 /* Module 5.1: left control column (toggle, search, date/time, then the selected card) */
-.ctrl-col { position: absolute; top: .75rem; left: .75rem; bottom: 1.75rem; z-index: 790; width: 16rem; max-width: calc(100% - 4.75rem); display: flex; flex-direction: column; gap: .5rem; pointer-events: none; }
+.ctrl-col { position: absolute; top: .75rem; left: .75rem; bottom: 1.75rem; z-index: 790; width: 17.5rem; max-width: calc(100% - 4.75rem); display: flex; flex-direction: column; gap: .5rem; pointer-events: none; }
 .ctrl-col > * { pointer-events: auto; }
 .ctrl-card { flex: none; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: .375rem .5rem .5rem; }
 /* compact controls (Nea: "make all these much smaller") */
@@ -841,7 +841,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .ctrl-mode { display: flex; gap: .375rem; align-items: center; padding: .25rem; }
 .ctrl-mode .hamb { width: 2.125rem; height: 2.125rem; box-shadow: none; background: var(--surface-2); border: 1px solid var(--line); }
 .ctrl-mode .hamb svg { width: 1.375rem; height: 1.375rem; }
-.ctrl-mode .seg { flex: 1; } .ctrl-mode .seg button { flex: 1; justify-content: center; }
+.ctrl-mode .seg { flex: 1; min-width: 0; } .ctrl-mode .seg button { flex: 1 1 0; min-width: 0; justify-content: center; }
+.ctrl-col .ctrl-mode .seg button { padding: .125rem .3rem; gap: .2rem; font-size: .75rem; } .ctrl-col .ctrl-mode .seg button svg { width: .85rem; height: .85rem; }
 .ctrl-title { display: block; font: 700 .625rem/1.3 var(--f-body); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
 .time-grid { display: grid; grid-template-columns: 1fr; gap: .375rem; }
 .tf-box { position: relative; display: flex; align-items: center; }
@@ -1028,20 +1029,25 @@ label.check { display: inline-flex; align-items: center; gap: .5rem; }
   radial-gradient(60rem 30rem at 85% -10%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 70%),
   radial-gradient(40rem 24rem at -10% 110%, color-mix(in srgb, #F28A1E 14%, transparent), transparent 70%), var(--bg); }
 .intro:focus { outline: none; }
-.in-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .875rem clamp(1rem, 4vw, 2.5rem); }
+.in-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .875rem .75rem .875rem clamp(1rem, 4vw, 2.5rem); }
 .in-brand { display: inline-flex; align-items: center; gap: .5rem; color: var(--heading); } .in-brand .logo { width: 1.75rem; height: 1.75rem; color: var(--primary); } .in-brand b { font: 800 1.25rem var(--f-display); letter-spacing: .02em; }
 .in-wrap { max-width: 64rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 3rem; }
 .in-hero { position: relative; isolation: isolate; }
 .in-hero > :not(.in-map) { position: relative; z-index: 1; }
-.in-map { position: absolute; z-index: 0; top: -1.5rem; bottom: -1.5rem; right: 6%; width: 55%; margin: 0; display: flex; flex-direction: column; align-items: center; pointer-events: none; opacity: .55; animation: inMap 1s cubic-bezier(.2,.8,.2,1) both; }
-.in-map svg { flex: 1; min-height: 0; width: 100%; height: 100%; filter: drop-shadow(0 10px 24px rgba(18,45,64,.18)); }
-.in-map path { stroke: var(--bg); stroke-width: 1.2; stroke-linejoin: round; }
-.in-map figcaption { flex: none; font-size: .75rem; font-weight: 600; color: var(--muted); margin-top: .25rem; }
+.in-map { position: absolute; z-index: 0; top: 0; left: 0; right: 0; height: max(100vh, 40rem); margin: 0; pointer-events: none; animation: inMap .9s ease both; }
+.in-map .in-lf { position: absolute; inset: 0; background: #E9EEF0; }
+.in-map::after { content: ""; position: absolute; inset: 0; z-index: 500; pointer-events: none;
+  background: linear-gradient(to right, var(--bg) 0, color-mix(in srgb, var(--bg) 82%, transparent) 30%, color-mix(in srgb, var(--bg) 20%, transparent) 55%, transparent 70%),
+              linear-gradient(to bottom, transparent 70%, var(--bg) 100%); }
+.in-map figcaption { position: absolute; z-index: 600; right: clamp(1rem, 4vw, 2.5rem); bottom: 12%; font-size: .75rem; font-weight: 700; color: var(--heading); background: var(--surface); padding: .25rem .6rem; border-radius: 999px; box-shadow: 0 1px 4px rgba(18,45,64,.2); }
+.in-map .leaflet-control-attribution { pointer-events: auto; font-size: .625rem; }
+.intro > .in-top, .intro > .in-wrap { position: relative; z-index: 1; }
+@keyframes inMap { from { opacity: 0; } to { opacity: 1; } }
 .in-hero h1, .in-lead, .in-hero .eyebrow { text-shadow: 0 0 18px var(--bg), 0 0 6px var(--bg); }
 .intro { overflow-x: hidden; }
-@keyframes inMap { from { opacity: 0; transform: scale(.96); } to { opacity: .55; transform: none; } }
 @media (max-width: 900px) {
-  .in-map { right: -3rem; width: 75%; opacity: .3; animation: none; }
+  .in-map { height: 28rem; animation: none; }
+  .in-map::after { background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 35%, transparent) 0, color-mix(in srgb, var(--bg) 70%, transparent) 45%, var(--bg) 100%); }
   .in-map figcaption { display: none; }
 }
 .in-hero h1 { font: 800 clamp(3rem, 10vw, 5.5rem)/1 var(--f-display); letter-spacing: .04em; color: var(--heading); margin: .25rem 0 .75rem; }
@@ -1132,11 +1138,22 @@ a.logo-ph:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); col
 .fc-dot svg { width: .95rem; height: .95rem; }
 .lg-fp { width: .95rem; height: .95rem; } .lg-fp svg { width: .65rem; height: .65rem; }
 .lg-kinds { margin-top: .35rem; }
-.fac-sum { margin: 0 0 .5rem; font-size: .8125rem; color: var(--heading); line-height: 1.35; }
-.fac-filter { display: grid; gap: .375rem; }
+.fac-title { margin-bottom: .5rem; }
+.ctrl-src { margin: .375rem 0 0; font-size: .625rem; line-height: 1.35; color: var(--muted); }
+.fac-stats { display: grid; grid-template-columns: 1.6fr 1fr; gap: .5rem; margin: 0 0 .875rem; }
+.fac-stats p { margin: 0; display: flex; flex-direction: column; gap: .2rem; padding: .55rem .625rem; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); }
+.fac-stats b { font: 700 1.125rem/1.1 var(--f-display); color: #5B3CC4; }
+.fac-stats span { font-size: .6875rem; line-height: 1.35; color: var(--muted); }
+.fc-addr { display: flex; align-items: flex-start; gap: .375rem; }
+.fc-addr span { flex: 1; user-select: text; }
+.fc-kv .icon-btn.fc-copy { flex: none; width: 1.625rem; height: 1.625rem; min-width: 0; min-height: 0; padding: 0; margin-top: -.15rem; border-radius: var(--r-sm); background: transparent; border: 1px solid var(--line); box-shadow: none; color: var(--muted); }
+.fc-kv .icon-btn.fc-copy:hover { color: var(--primary); border-color: var(--primary); }
+.fc-kv .fc-copy svg { width: .85rem; height: .85rem; }
+.fc-kv .fc-copy.done { color: #2E6B3A; border-color: #2E6B3A; }
+.fac-filter { display: grid; gap: .5rem; }
 .fac-cap { display: flex; justify-content: space-between; margin: 0 0 .3rem; padding-right: 2.75rem; font-size: .6875rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; } .fac-cap span { text-transform: none; font-weight: 600; }
 .lg-kinds { display: flex; flex-wrap: wrap; gap: .15rem .6rem; }
-@media (max-width: 899px) { .lg-kinds + .lg-note { display: none; } .fac-sum { margin-bottom: .35rem; } }
+@media (max-width: 899px) { .lg-kinds + .lg-note { display: none; } .fac-stats { margin-bottom: .45rem; } }
 .fac-ft { display: flex; align-items: center; gap: .5rem; font-size: .8125rem; color: var(--heading); cursor: pointer; }
 .fac-ft > span:nth-child(2) { flex: 1; display: flex; justify-content: space-between; gap: .25rem; }
 .fac-ft small { color: var(--muted); font-size: .75rem; }
@@ -1159,6 +1176,12 @@ a.logo-ph:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); col
 .fc-row b { display: block; font-size: .8125rem; } .fc-row small { display: block; font-size: .6875rem; color: var(--muted); }
 .fc-h { margin: .25rem 0 0; font-size: .8125rem; color: var(--heading); }
 @media (prefers-reduced-motion: reduce) { .fp { transition: none; } }
+
+/* ---------- OpenStreetMap foot traffic ---------- */
+.lg-src { font-size: .625rem; color: var(--muted); margin: .25rem 0 0; line-height: 1.35; } .lg-src a { color: inherit; }
+.osm-ft { border-top: 1px solid var(--line); padding-top: .5rem; display: grid; gap: .25rem; }
+.osm-ft > p:first-child { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: .8125rem; color: var(--heading); }
+.osm-ft small { color: var(--muted); font-size: .75rem; }
 </style>
 <style>
 /* =====================================================================
@@ -1212,8 +1235,13 @@ a.logo-ph:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); col
 .g-btn span { display: flex; flex-direction: column; min-width: 0; } .g-btn b { font-size: .9375rem; } .g-btn small { font-size: .75rem; color: var(--muted); }
 .g-btn:hover { transform: translateY(-2px); border-color: var(--primary-2); color: var(--heading); }
 .g-btn.on { border-color: var(--primary); background: var(--tint); }
-.g-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 1rem; align-items: start; }
-.g-grid #g-prev { grid-column: 1 / -1; }
+.g-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 1rem; align-items: stretch; }
+.g-grid #g-prev, .g-grid #g-more { grid-column: 1 / -1; }
+.g-grid .g-sec { height: 100%; box-sizing: border-box; }
+.g-lead { max-width: none; font-size: .9375rem; }
+@media (min-width: 900px) { .g-lead { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
+.g-nav .g-btn { height: 100%; box-sizing: border-box; }
+#g-more .res-list { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
 .g-grid .g-prev { grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
 .g-grid .g-sec { scroll-margin-top: 6.5rem; }
 @media (max-width: 640px) {
@@ -1323,6 +1351,7 @@ table.data td.partial { font-style: italic; }
     <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></g></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></g></symbol>
     <symbol id="i-swap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></g></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="12" rx="2"/><path d="M15.5 8.5V5.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/></g></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -1330,9 +1359,10 @@ table.data td.partial { font-style: italic; }
     <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></g></symbol>
-    <symbol id="f-hosp" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm5.5 4v3.5H7v3h3.5V17h3v-3.5H17v-3h-3.5V7h-3Z"/></symbol>
+    <symbol id="f-hosp" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M4 21V8.5L8 6V3h8v3l4 2.5V21H4Zm4.5-13v9h2.25v-3.4h2.5V17h2.25V8h-2.25v3.4h-2.5V8H8.5Z"/></symbol>
     <symbol id="f-center" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5 2.5 10H5v10.5h14V10h2.5L12 2.5Zm-1.25 8h2.5v2.25h2.25v2.5h-2.25v2.25h-2.5v-2.25H8.5v-2.5h2.25V10.5Z"/></symbol>
     <symbol id="f-clinic" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3h6a1 1 0 0 1 1 1v2h3.5A1.5 1.5 0 0 1 21 7.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-11A1.5 1.5 0 0 1 4.5 6H8V4a1 1 0 0 1 1-1Zm1 1.75V6h4V4.75h-4Zm.75 4.75v2.75H8v2.5h2.75v2.75h2.5v-2.75H16v-2.5h-2.75V9.5h-2.5Z"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 10h4a1 1 0 0 1 1 1v10M2.5 21h19"/><path d="M8 8h3M8 12h3M8 16h3M17.5 14v.01M17.5 17.5v.01"/></g></symbol>
     <symbol id="i-hosp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M8 12h8" stroke-linecap="round"/></g></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></g></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></g></symbol>
@@ -1813,15 +1843,16 @@ class MapView {
   renderLayerBar() {
     const s = this.model.state;
     const seg = items => items.map(([v, l, ic]) => `<button type="button" role="radio" aria-checked="${s.layer === v}" data-layer="${v}">${icon(ic)}<span>${l}</span></button>`).join("");
-    $("#layerSeg").innerHTML = seg([["tb", "TB cases", "i-map"], ["crowd", "Crowding", "i-people"], ["fac", "Facilities", "i-hosp"]]);
+    $("#layerSeg").innerHTML = seg([["tb", "TB cases", "i-map"], ["crowd", "Crowding", "i-people"], ["fac", "Facilities", "i-building"]]);
     $$("[data-layer]", $("#layerSeg")).forEach(b => b.addEventListener("click", () => this.handlers.onLayer(b.dataset.layer)));
     const box = $("#timeBox");
     if (s.layer === "fac") { this.renderFacBox(box); return; }
     if (s.layer === "tb") {
-      const years = YEARS.map(y => opt(y, y + (yStatus(y).s === "complete" ? "" : ` (${yStatus(y).label.toLowerCase()})`), y === s.year)).join("");
+      const years = YEARS.map(y => opt(y, y + (["complete", "missing", "unavailable"].includes(yStatus(y).s) ? "" : ` (${yStatus(y).label.toLowerCase()})`), y === s.year)).join("");
       box.innerHTML = `<h2 class="ctrl-title" id="timeTitle">Reporting year</h2>
         <select id="lbYear" aria-labelledby="timeTitle">${years}</select>
-        <p class="ctrl-note">TB data are yearly totals per city, so there is no date or time to choose here.</p>`;
+        <p class="ctrl-note">TB data are yearly totals per city, so there is no date or time to choose here.</p>
+        <p class="ctrl-src">Source: DOH Field Health Services Information System (FHSIS) TB tables, NCR (cleaned_tb_data.csv)</p>`;
       $("#lbYear").addEventListener("change", e => this.handlers.onYear(+e.target.value));
       return;
     }
@@ -1921,12 +1952,16 @@ class MapView {
         const S = 4, w = Math.ceil(size.x / S) + 1, h = Math.ceil(size.y / S) + 1, n = w * h;
         const mpp = 156543.03 * Math.cos(14.6 * Math.PI / 180) / Math.pow(2, map.getZoom());
         const eps2 = Math.pow(400 / mpp / S, 2);   // 400 m smoothing so a cell on a place is not a hard spike
-        const pts = PLACES.map(p => { const b = view.model.busyAt(p), q = map.latLngToContainerPoint([p.lat, p.lng]); return [q.x / S, q.y / S, (b == null ? 0 : b) / 100]; });
+        /* With OpenStreetMap places loaded, the surface is the foot-traffic indicator (OsmFoot);
+           until then (or if the download fails) it falls back to the 52 listed places. */
+        const osm = window.OsmFoot?.ready() ? OsmFoot.grid(map, view.model.state, w, h, S) : null;
+        const pts = osm ? [] : PLACES.map(p => { const b = view.model.busyAt(p), q = map.latLngToContainerPoint([p.lat, p.lng]); return [q.x / S, q.y / S, (b == null ? 0 : b) / 100]; });
         const f = document.createElement("canvas"); f.width = w; f.height = h;
         const fx = f.getContext("2d"), out = fx.createImageData(w, h), o = out.data;
         for (let y = 0, i = 0; y < h; y++) for (let x = 0; x < w; x++, i++) {
           let num = 0, den = 0;
-          for (const [px, py, v] of pts) { const d2 = (x - px) * (x - px) + (y - py) * (y - py) + eps2, k = 1 / (d2 * d2); num += v * k; den += k; }
+          if (osm) { num = osm[i]; den = 1; }
+          else for (const [px, py, v] of pts) { const d2 = (x - px) * (x - px) + (y - py) * (y - py) + eps2, k = 1 / (d2 * d2); num += v * k; den += k; }
           const [R, G, B] = crowdRGB(den ? num / den : 0);
           o[i * 4] = R; o[i * 4 + 1] = G; o[i * 4 + 2] = B; o[i * 4 + 3] = 168;
         }
@@ -1992,6 +2027,7 @@ class MapView {
     if (["layer", "year", "isAdmin"].some(k => c.has(k))) this.renderLayerBar();
     if (["layer", "year", "day", "hour", "date", "minute", "second"].some(k => c.has(k))) this.renderLegend();
     if (["layer", "year", "day", "hour", "selected"].some(k => c.has(k))) this.draw();
+    if (this.model.state.layer === "crowd" && window.OsmFoot) OsmFoot.ensure(() => { this.draw(); this.renderLegend(); window.tbApp?.placeView.render(); });
   }
 
   /* ---------- legend (bottom right) ---------- */
@@ -2010,14 +2046,19 @@ class MapView {
         ${empty ? `<p class="lg-note">No data for ${s.year}.</p>` : `<ul class="lg-classes">${tbLegendRows(MAP_MEASURE).map((r, i) => row(`<span class="sw" style="background:${r.color}"></span>`, r.long, n[i])).join("")}${row('<span class="sw sw-na"></span>', "No data", n[TB_COLORS.length])}</ul>`}
         ${!empty && st.label !== "Full year" ? `<p class="lg-note">${esc(st.label)}</p>` : ""}`;
     } else {
-      const lv = [["Low", "under 40%"], ["Moderate", "40–69%"], ["High", "70–89%"], ["Very high", "90%+"], ["Closed", "closed"]];
-      h = `<h3 class="lg-title">Crowding (estimated)</h3>
+      const lv = [["Low", "under 40%"], ["Moderate", "40–69%"], ["High", "70–89%"], ["Very high", "90%+"]];
+      const st = window.OsmFoot ? OsmFoot.status() : { state: "error" }, ok = st.state === "ok";
+      h = `<h3 class="lg-title">${ok ? "Foot traffic (OpenStreetMap)" : "Crowding (estimated)"}</h3>
         <div class="lg-grad" style="background:${CROWD_GRADIENT}"></div>
         <ul class="lg-ticks">${[0, 40, 70, 90].map(t => `<li style="left:${t}%">${t}%</li>`).join("")}</ul>
-        <ul class="lg-classes">${lv.slice(0, 4).map(([k, t]) => `<li><span class="sw" style="background:${LEVEL_COLOR[k]}"></span><span>${k}</span><span class="lg-n">${t}</span></li>`).join("")}</ul>
-        <p class="lg-note">Share of each place's busiest hour, blended between ${PLACES.length} listed places (closed counts as 0%). Typical week, not live.</p>`;
+        <ul class="lg-classes">${lv.map(([k, t]) => `<li><span class="sw" style="background:${LEVEL_COLOR[k]}"></span><span>${k}</span><span class="lg-n">${t}</span></li>`).join("")}</ul>
+        ${ok ? `<p class="lg-note">Built from ${fmt(st.n)} OpenStreetMap places that draw foot traffic (malls, markets, stations, schools, places of worship), weighted by type and typical hour. 100% = the busiest 5% of NCR. Not counted, not live.</p>
+          <p class="lg-src">${OsmFoot.sourceHTML()}</p>`
+        : st.state === "loading" || st.state === "idle" ? `<p class="lg-note">Downloading foot-traffic places from OpenStreetMap…</p>`
+        : `<p class="lg-note">OpenStreetMap places could not be downloaded${st.error ? ` (${esc(st.error)})` : ""}, so this shows the typical-week estimate for ${PLACES.length} listed places. <button type="button" class="link" id="osmRetry">Try again</button></p>`}`;
     }
     $("#legend").innerHTML = h;
+    $("#osmRetry")?.addEventListener("click", () => { OsmFoot.retry(() => { this.draw(); this.renderLegend(); window.tbApp?.placeView.render(); }); this.renderLegend(); });
   }
 
   /* Shown when the map library cannot load: the same city-level records as a table, no map. */
@@ -2150,8 +2191,8 @@ class NavigationView {
     const paint = () => {
       let g = "";
       list.innerHTML = hits.map((o, i) => {
-        const head = o.group !== g ? `<li class="ts-group" role="presentation">${o.group === "Public place" ? "Public places" : o.group === "TB facility" ? "TB screening facilities" : "Cities and municipality"}</li>` : ""; g = o.group;
-        return `${head}<li role="option" id="tsOpt${i}" data-i="${i}" aria-selected="${i === act}" class="ts-opt${i === act ? " on" : ""}">${icon(o.sel.type === "city" ? "i-map" : o.sel.type === "fac" ? "i-hosp" : "i-pin")}<span><b>${hl(o.name)}</b><small>${esc(o.addr)}</small></span></li>`;
+        const head = o.group !== g ? `<li class="ts-group" role="presentation">${o.group === "Public place" ? "Public places" : o.group === "TB facility" ? "TB Screening Facilities" : "Cities and municipality"}</li>` : ""; g = o.group;
+        return `${head}<li role="option" id="tsOpt${i}" data-i="${i}" aria-selected="${i === act}" class="ts-opt${i === act ? " on" : ""}">${icon(o.sel.type === "city" ? "i-map" : o.sel.type === "fac" ? "i-building" : "i-pin")}<span><b>${hl(o.name)}</b><small>${esc(o.addr)}</small></span></li>`;
       }).join("");
       list.hidden = !hits.length; box.classList.toggle("open", !!hits.length); inp.setAttribute("aria-expanded", String(!!hits.length));
       if (act >= 0) { inp.setAttribute("aria-activedescendant", "tsOpt" + act); $("#tsOpt" + act)?.scrollIntoView({ block: "nearest" }); } else inp.removeAttribute("aria-activedescendant");
@@ -2269,8 +2310,6 @@ class PlaceDetailsView {
         <h3 id="pcRisk">Crowding risk level</h3>
         <p><span class="risk-badge">Unavailable</span></p>
         <p class="small">Overcrowding risk cannot be assessed from the currently available data.</p>
-        <dl class="pc-kv"><dt>Observation period</dt><dd>None</dd><dt>Data type</dt><dd>Unavailable (no measured data)</dd></dl>
-        <p class="pc-src">There are no measured occupancy or headcount data for NCR cities here. The coloured halos are an assumed typical week for listed places only, so they are not used to rate a city.</p>
       </section>
       ${this.preventionHTML()}`;
   }
@@ -2283,6 +2322,8 @@ class PlaceDetailsView {
         <p class="big-num"><span class="lvl" style="--c:${LEVEL_COLOR[lv]}">${lv}</span><small>${b == null ? "usually closed at this hour" : `${b}% of its busiest hour`}</small></p>
         <div class="chart" id="pcDay" data-place="${p.id}"></div>
         <p class="pc-src">Estimated: the assumed typical week for a ${esc(CATEGORY[p.cat].label.toLowerCase())}, not measured here and not live.</p>
+        ${(() => { const f = window.OsmFoot?.levelAt(p.lat, p.lng, s); if (f == null) return ""; const fl = f < 1 ? "Low" : busyLevel(f);
+          return `<div class="osm-ft"><p><b>Foot traffic around here</b><span class="lvl" style="--c:${LEVEL_COLOR[fl]}">${fl}</span><small>${f}% of NCR's busiest areas</small></p><p class="pc-src">${OsmFoot.sourceHTML()}</p></div>`; })()}
         <p class="remind">Reminder: A busy place is not evidence that TB is spreading there.</p>
       </section>
       ${this.preventionHTML()}`;
@@ -2303,6 +2344,13 @@ class PlaceDetailsView {
 
   bind(card, sel) {
     $("#pcClose", card).addEventListener("click", () => this.handlers.onClose());
+    $$("[data-copy]", card).forEach(b => b.addEventListener("click", async () => {
+      const t = b.dataset.copy;
+      try { await navigator.clipboard.writeText(t); }
+      catch (e) { const ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } finally { ta.remove(); } }
+      b.innerHTML = icon("i-check"); b.classList.add("done"); b.setAttribute("aria-label", "Address copied"); toast("Address copied.");
+      setTimeout(() => { b.innerHTML = icon("i-copy"); b.classList.remove("done"); b.setAttribute("aria-label", "Copy address"); }, 1600);
+    }));
     $$("[data-fac]", card).forEach(b => b.addEventListener("click", () => this.handlers.onSelect({ type: b.dataset.factype || "fac", id: b.dataset.fac })));
     $$("[data-place]", card).forEach(b => b.tagName === "BUTTON" && b.addEventListener("click", () => this.handlers.onSelect({ type: "place", id: b.dataset.place })));
     $$("[data-route]", card).forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.handlers.onNavigate(a.dataset.route); }));
@@ -2337,10 +2385,10 @@ class PlaceDetailsView {
 "use strict";
 
 const HealthGuideView = {
-  title: "Learn about Tuberculosis",
+  title: "Learn About Tuberculosis",
   html() {
     return `<div class="guide">
-      <p class="lead">General information for residents and visitors of Metro Manila. For advice about your own health, talk to a health worker.</p>
+      <p class="lead g-lead">General information for residents and visitors of Metro Manila. For advice about your own health, talk to a health worker.</p>
       <nav class="g-nav" aria-label="Guide sections">
         <a class="g-btn" href="#g-sym" data-jump="g-sym">${icon("p-cough", 26)}<span><b>Symptoms</b><small>Signs to watch for</small></span></a>
         <a class="g-btn" href="#g-prev" data-jump="g-prev">${icon("p-mask", 26)}<span><b>How to prevent TB</b><small>Everyday steps</small></span></a>
@@ -2540,7 +2588,7 @@ const LoginView = {
       <div class="modal-head"><h2 id="loginTitle">Log In</h2>
         <button type="button" class="icon-btn" id="loginClose" aria-label="Close log in">${icon("i-close")}</button></div>
       <form id="loginForm" novalidate>
-        <div class="field"><label for="lgEmail">Work email</label><input type="email" id="lgEmail" autocomplete="off" aria-describedby="lgEmail-e"><span class="err" id="lgEmail-e" hidden></span></div>
+        <div class="field"><label for="lgEmail">Email</label><input type="email" id="lgEmail" autocomplete="off" aria-describedby="lgEmail-e"><span class="err" id="lgEmail-e" hidden></span></div>
         <div class="field"><label for="lgPass">Password</label><input type="password" id="lgPass" autocomplete="off" aria-describedby="lgPass-e"><span class="err" id="lgPass-e" hidden></span></div>
         <div class="form-actions"><button type="submit" class="btn np-login" id="loginSubmit">Log-In</button></div>
       </form>
@@ -2778,37 +2826,49 @@ class AppController {
   }
 
   /* ---------- keyboard ---------- */
-  /* Background map for the introduction: the same city polygons and TB classes as the map's
-     TB layer for the given year, drawn as a static SVG (no tiles). */
+  /* Background map for the introduction: a Leaflet map with the same OpenStreetMap tiles,
+     grey outside-NCR mask, NCR outline and TB classes as the map's overview, for the given year.
+     It is a still picture: no dragging or zooming, only the attribution links are clickable. */
   introMap(y) {
-    const feats = window.NCR_GEO.features, k = Math.cos(14.6 * Math.PI / 180);
-    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-    for (const f of feats) for (const poly of f.geometry.coordinates) for (const [lng, lat] of poly[0]) { x0 = Math.min(x0, lng); x1 = Math.max(x1, lng); y0 = Math.min(y0, lat); y1 = Math.max(y1, lat); }
-    const W = 400, sc = W / ((x1 - x0) * k), H = Math.round((y1 - y0) * sc);
-    const pt = ([lng, lat]) => `${((lng - x0) * k * sc).toFixed(1)},${((y1 - lat) * sc).toFixed(1)}`;
-    const paths = feats.map(f => {
-      const id = f.properties.id, v = tbVal(id, y, MAP_MEASURE), c = tbClass(v, MAP_MEASURE);
-      const d = f.geometry.coordinates.map(poly => poly.map(r => "M" + r.map(pt).join("L") + "Z").join("")).join("");
-      return `<path d="${d}" fill="${c < 0 ? "#9AA6AE" : TB_COLORS[c]}"><title>${esc(cityName(id))}: ${v == null ? "no data" : fmt(v) + " TB cases"}, ${y}</title></path>`;
-    }).join("");
-    return `<figure class="in-map" aria-hidden="true"><svg viewBox="-6 -6 ${W + 12} ${H + 12}" preserveAspectRatio="xMidYMid meet">${paths}</svg>
+    return `<figure class="in-map" aria-hidden="true"><div class="in-lf" id="inLeaflet"></div>
       <figcaption>Notified TB cases by city, ${y}</figcaption></figure>`;
+  }
+  initIntroMap(y) {
+    if (this.introLf) { this.introLf.remove(); this.introLf = null; }
+    const el = $("#inLeaflet");
+    if (!el || typeof L === "undefined") return;
+    const m = L.map(el, { zoomControl: false, attributionControl: true, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, tap: false, zoomSnap: 0.25 });
+    m.attributionControl.setPrefix(false);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, referrerPolicy: "strict-origin-when-cross-origin", attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(m);
+    const WORLD = [[-10, 90], [-10, 150], [35, 150], [35, 90]];
+    L.polygon([WORLD, ...window.NCR_OUTLINE], { interactive: false, stroke: false, fillColor: "#7D8A92", fillOpacity: 0.5 }).addTo(m);
+    const geo = L.geoJSON(window.NCR_GEO, { interactive: false, style: f => {
+      const v = tbVal(f.properties.id, y, MAP_MEASURE), k = tbClass(v, MAP_MEASURE);
+      return { color: "#FFFFFF", weight: 1.1, opacity: 0.9, fillColor: k < 0 ? "#9AA6AE" : TB_COLORS[k], fillOpacity: k < 0 ? 0.35 : 0.8 };
+    } }).addTo(m);
+    L.polygon(window.NCR_OUTLINE, { interactive: false, fill: false, color: "#FFFFFF", weight: 6, opacity: 0.85 }).addTo(m);
+    L.polygon(window.NCR_OUTLINE, { interactive: false, fill: false, color: "#122D40", weight: 2, opacity: 1 }).addTo(m);
+    const fit = () => { m.invalidateSize(); const W = el.clientWidth, wide = W >= 900;
+      m.fitBounds(geo.getBounds(), wide ? { paddingTopLeft: [Math.round(W * 0.48), 70], paddingBottomRight: [Math.round(W * 0.06), 40], animate: false } : { paddingTopLeft: [16, 60], paddingBottomRight: [16, 24], animate: false }); };
+    fit(); setTimeout(fit, 80);
+    if (!this.introRO && window.ResizeObserver) { this.introRO = new ResizeObserver(() => this.introLf && fit()); }
+    this.introRO?.disconnect(); this.introRO?.observe(el);
+    this.introLf = m;
   }
 
   /* Introduction page. Numbers come from the loaded files; nothing is typed in by hand. */
   renderIntro() {
     const y = DEFAULT_YEAR, n = tbVal("all", y, MAP_MEASURE), nc = CITIES.length;
     const stat = (v, l) => `<div class="in-stat"><b class="num">${v}</b><span>${l}</span></div>`;
-    $("#intro").innerHTML = `
+    $("#intro").innerHTML = `${this.introMap(y)}
       <header class="in-top"><span class="in-brand"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></span>
         ${this.model.state.isAdmin ? `<a class="btn np-login in-login" href="#admin/tb">Admin</a>` : `<button type="button" class="btn np-login in-login" id="inLogin">Log In</button>`}</header>
       <div class="in-wrap">
         <div class="in-hero">
-          ${this.introMap(y)}
           <p class="eyebrow">Metro Manila · tuberculosis and crowding</p>
           <h1 id="introTitle">SPIRO</h1>
           <p class="in-lead">A map that shows where tuberculosis (TB) cases are reported across the 17 cities and municipality of Metro Manila, and when busy public places tend to be crowded, so people and health offices can plan safer visits and focus prevention.</p>
-          <div class="cta"><a class="btn primary in-go" href="#map">${icon("i-map")}Explore the map${icon("i-arrow")}</a><a class="btn" href="#guide">${icon("i-book")}Learn about Tuberculosis</a></div>
+          <div class="cta"><a class="btn primary in-go" href="#map">${icon("i-map")}Explore the map${icon("i-arrow")}</a><a class="btn" href="#guide">${icon("i-book")}Learn About Tuberculosis</a></div>
         </div>
         <div class="in-stats">
           ${stat(n == null ? "—" : fmt(n), n == null ? `notified TB cases, ${y} (data not loaded)` : `notified TB cases in Metro Manila, ${y}`)}
@@ -2828,6 +2888,7 @@ class AppController {
       </div>`;
     $$("#intro a[href^='#']").forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.navigate(a.getAttribute("href").slice(1)); }));
     $("#inLogin")?.addEventListener("click", () => this.openLogin(null));
+    this.initIntroMap(y);
   }
 
   onKey(e) {
@@ -2861,7 +2922,7 @@ const FAC = window.TB_FACILITIES || [];
 const FAC_BY = Object.fromEntries(FAC.map(f => [String(f.id), f]));
 const FAC_KIND = {
   hospital: { label: "Hospital", icon: "f-hosp", rank: 3 },
-  clinic: { label: "Clinic or other facility", icon: "f-clinic", rank: 2 },
+  clinic: { label: "Clinic", icon: "f-clinic", rank: 2 },
   center: { label: "Health center", icon: "f-center", rank: 1 }
 };
 const FAC_SECTOR = { G: { label: "Government", color: "#5B3CC4" }, P: { label: "Private", color: "#B5338A" } };
@@ -2953,7 +3014,7 @@ Object.assign(PlaceDetailsView.prototype, {
       <section class="pc-sec fc">
         <p class="fc-status${st.ok ? "" : " past"}">${icon(st.ok ? "i-check" : "i-info")}<span>${esc(st.text)}</span></p>
         <dl class="fc-kv">
-          <dt>Address</dt><dd>${esc(facAddress(f))}</dd>
+          <dt>Address</dt><dd class="fc-addr"><span>${esc(facAddress(f))}</span><button type="button" class="icon-btn fc-copy" data-copy="${esc(facAddress(f))}" aria-label="Copy address" title="Copy address">${icon("i-copy")}</button></dd>
           <dt>TB services</dt><dd>TB-DOTS clinic (TB treatment under the DOTS strategy), PhilHealth-accredited</dd>
           <dt>Phone</dt><dd>${f.t ? facPhone(f.t) : `<span class="muted">Not provided in the list</span>`}</dd>
           <dt>Email</dt><dd>${f.em ? f.em.split(" / ").map(e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`).join("<br>") : `<span class="muted">Not provided in the list</span>`}</dd>
@@ -2967,7 +3028,7 @@ Object.assign(PlaceDetailsView.prototype, {
   facRow(f) {
     const st = facStatus(f);
     return `<li><button type="button" class="fc-row" data-fac="${f.id}"><span class="fc-dot" style="--c:${facColor(f)}">${icon(FAC_KIND[f.k].icon)}</span>
-      <span><b>${esc(facName(f))}</b><small>${esc(FAC_KIND[f.k].label)} · ${esc(FAC_SECTOR[f.g].label)}${st.ok ? "" : " · accreditation date passed"}</small></span></button></li>`;
+      <span><b>${esc(facName(f))}</b><small>${esc(FAC_KIND[f.k].label)} · ${esc(FAC_SECTOR[f.g].label)}${st.ok ? "" : " · expired"}</small></span></button></li>`;
   },
   facGroupHTML(key) {
     const g = FAC_GROUP[key], fs = g.ids.map(id => FAC_BY[id]);
@@ -2994,7 +3055,6 @@ Object.assign(PlaceDetailsView.prototype, {
     return `${this.head("", cityName(id))}
       <section class="pc-sec fc">
         <div class="kpi"><span class="kpi-l">PhilHealth-accredited TB-DOTS facilities</span><span class="kpi-v">${fs.length}</span></div>
-        <p class="small muted">${on} on the map${fs.length - on ? `, ${fs.length - on} without a pin` : ""}.</p>
         ${fs.length ? `<ul class="fc-list">${fs.sort((a, b) => FAC_KIND[b.k].rank - FAC_KIND[a.k].rank || facName(a).localeCompare(facName(b))).map(f => this.facRow(f)).join("")}</ul>` : `<p class="empty-state">No facility in this city is on the list.</p>`}
         ${this.facSrc(null)}
       </section>`;
@@ -3007,25 +3067,23 @@ Object.assign(MapView.prototype, {
     const on = FAC.filter(f => f.lat != null), miss = FAC.length - on.length;
     const past = FAC.filter(f => !facStatus(f).ok).length;
     const cnt = k => on.filter(f => f.k === k).length;
-    box.innerHTML = `<h2 class="ctrl-title" id="timeTitle">TB screening facilities</h2>
-      <p class="fac-sum"><b class="num">${FAC.length}</b> PhilHealth-accredited TB-DOTS facilities in NCR · <b class="num">${on.length}</b> on the map</p>
+    box.innerHTML = `<h2 class="ctrl-title fac-title" id="timeTitle">TB Screening Facilities</h2>
+      <div class="fac-stats"><p><b class="num">${FAC.length}</b><span>PhilHealth-accredited TB-DOTS in NCR</span></p><p><b class="num">${on.length}</b><span>on the map</span></p></div>
       <p class="fac-cap" id="facCap">Show on the map <span>pins</span></p>
       <div class="fac-filter" role="group" aria-labelledby="facCap">
         ${["hospital", "center", "clinic"].map(k => `<label class="fac-ft"><span class="fc-dot" style="--c:${FAC_SECTOR.G.color}">${icon(FAC_KIND[k].icon)}</span><span>${FAC_KIND[k].label}<small class="num">${cnt(k)}</small></span><input type="checkbox" role="switch" class="switch" data-fk="${k}"${FAC_FILTER[k] !== false ? " checked" : ""}></label>`).join("")}
       </div>
-      ${miss ? `<button type="button" class="link fac-miss" id="facMiss">${miss} listed facilities are not on the map</button>` : ""}
-      <p class="ctrl-note">Pins mark the centre of the facility's barangay, not the exact building. List updated ${facIsoLabel(FAC_META.updated)}${past ? `; ${past} accreditations end before today and show grey` : ""}.</p>`;
+`;
     $$("[data-fk]", box).forEach(c => c.addEventListener("change", () => { FAC_FILTER[c.dataset.fk] = c.checked; this.drawFacilities(); }));
-    $("#facMiss", box)?.addEventListener("click", () => this.handlers.onSelect({ type: "facmiss", id: "all" }));
   },
   facLegend() {
     const past = FAC.some(f => !facStatus(f).ok);
     const pin = (c, ic) => `<span class="fc-dot lg-fp" style="--c:${c}">${ic ? icon(ic) : ""}</span>`;
-    return `<h3 class="lg-title">TB screening facilities</h3>
+    return `<h3 class="lg-title">TB Screening Facilities</h3>
       <ul class="lg-classes">
         <li>${pin(FAC_SECTOR.G.color)}<span>Government</span><span class="lg-n num">${FAC.filter(f => f.g === "G").length}</span></li>
         <li>${pin(FAC_SECTOR.P.color)}<span>Private</span><span class="lg-n num">${FAC.filter(f => f.g === "P").length}</span></li>
-        ${past ? `<li>${pin(FAC_PAST)}<span>Accreditation date passed</span><span class="lg-n num">${FAC.filter(f => !facStatus(f).ok).length}</span></li>` : ""}
+        ${past ? `<li>${pin(FAC_PAST)}<span>Expired</span><span class="lg-n num">${FAC.filter(f => !facStatus(f).ok).length}</span></li>` : ""}
       </ul>
       <ul class="lg-classes lg-kinds">${["hospital", "center", "clinic"].map(k => `<li>${pin("#5E6E78", FAC_KIND[k].icon)}<span>${FAC_KIND[k].label}</span></li>`).join("")}</ul>
       <p class="lg-note">A number on a pin = facilities sharing one barangay. PhilHealth list, ${facIsoLabel(FAC_META.updated)}.</p>`;
@@ -3047,6 +3105,153 @@ Object.assign(MapView.prototype, {
     return true;
   }
 });
+
+</script>
+<script>
+/* =====================================================================
+   Foot-traffic indicator from OpenStreetMap (added 2026-10-24, Nea: "foot traffic
+   will be the indicator for overcrowding").
+   OpenStreetMap has no visitor counts. What it does have is where the places that
+   draw foot traffic are: malls, supermarkets, public markets, train and bus stations,
+   schools and universities, and places of worship. The browser downloads those places
+   for Metro Manila from the free Overpass API (no key), keeps them for 7 days, and the
+   crowding heatmap becomes: sum over nearby places of (type weight x typical share of
+   that type's busiest hour) x distance falloff (sigma 350 m). Type weights and hourly
+   shapes are stated assumptions, not measurements.
+   Source: (c) OpenStreetMap contributors, ODbL, https://www.openstreetmap.org/copyright
+   ===================================================================== */
+"use strict";
+const OsmFoot = (() => {
+  const KEY = "spiro.osm.foot.v1", MAX_AGE = 7 * 864e5, SIGMA = 350;
+  const ENDPOINT = "https://overpass-api.de/api/interpreter";
+  const BBOX = "14.34,120.88,14.79,121.14";
+  const QUERY = `[out:json][timeout:90];(
+    nwr["shop"~"^(mall|department_store|supermarket)$"](${BBOX});
+    nwr["amenity"~"^(marketplace|bus_station|university|college|school|place_of_worship)$"](${BBOX});
+    nwr["railway"="station"](${BBOX});
+    nwr["public_transport"="station"](${BBOX});
+  );out center tags;`;
+  const g = (h, mu, s) => Math.exp(-((h - mu) ** 2) / (2 * s * s));
+  /* Type, assumed relative pull at its busiest hour, opening hours, and typical-day shape. */
+  const TYPES = {
+    mall: { label: "Malls and department stores", w: 10, open: [10, 22], f: (h, we, d) => we ? .45 + .9 * g(h, 15.5, 3) : (.25 + .45 * g(h, 13, 2.5) + .75 * g(h, 18.5, 2)) * (d === 5 && h >= 17 ? 1.12 : 1) },
+    rail: { label: "Train stations", w: 9, open: [5, 23], f: (h, we) => we ? .15 + .55 * g(h, 15, 4) : .22 + 1.0 * g(h, 7.5, 1.3) + .95 * g(h, 18, 1.5) },
+    market: { label: "Public markets", w: 7, open: [4, 20], f: (h, we) => we ? .2 + 1.0 * g(h, 7.5, 2.2) + .45 * g(h, 16, 2) : .15 + .9 * g(h, 7, 2) + .4 * g(h, 17, 2) },
+    bus: { label: "Bus terminals and other stations", w: 5, open: [4, 23], f: (h, we) => we ? .15 + .55 * g(h, 15, 4) : .22 + 1.0 * g(h, 7.5, 1.3) + .95 * g(h, 18, 1.5) },
+    college: { label: "Universities and colleges", w: 5, open: [7, 21], f: (h, we, d) => d === 0 ? 0 : (we ? .25 : 1) * (.3 + .8 * g(h, 10, 2.5) + .6 * g(h, 16, 2.5)) },
+    supermarket: { label: "Supermarkets", w: 2, open: [8, 22], f: (h, we) => (we ? 1.1 : 1) * (.3 + .6 * g(h, 11, 2.5) + .8 * g(h, 18, 2)) },
+    school: { label: "Schools", w: 2, open: [6, 18], f: (h, we) => we ? 0 : .2 + 1.0 * g(h, 7, 1) + .8 * g(h, 16.5, 1.2) + .3 * g(h, 12, 1) },
+    worship: { label: "Places of worship", w: 1.5, open: [5, 21], f: (h, we, d) => d === 0 ? .2 + 1.0 * g(h, 9, 2) + .6 * g(h, 17, 2) : .1 + .25 * g(h, 18, 1.5) }
+  };
+  const ORDER = Object.keys(TYPES);
+  /* each type's shape as a share (0..1) of its own busiest hour in the week */
+  const PEAK = Object.fromEntries(ORDER.map(k => { let m = 0; for (let d = 0; d < 7; d++) for (let h = 0; h < 24; h++) m = Math.max(m, TYPES[k].f(h, d === 0 || d === 6, d)); return [k, m]; }));
+  const share = (k, d, h) => { const t = TYPES[k]; return h >= t.open[0] && h < t.open[1] ? Math.max(0, t.f(h, d === 0 || d === 6, d)) / PEAK[k] : 0; };
+
+  function classify(t) {
+    if (!t) return null;
+    if (t.shop === "mall" || t.shop === "department_store") return "mall";
+    if (t.shop === "supermarket") return "supermarket";
+    if (t.amenity === "marketplace") return "market";
+    if (t.railway === "station" || (t.public_transport === "station" && (t.train === "yes" || t.subway === "yes" || t.light_rail === "yes" || t.monorail === "yes"))) return "rail";
+    if (t.amenity === "bus_station" || t.public_transport === "station") return "bus";
+    if (t.amenity === "university" || t.amenity === "college") return "college";
+    if (t.amenity === "school") return "school";
+    if (t.amenity === "place_of_worship") return "worship";
+    return null;
+  }
+  /* keep only points inside the NCR city polygons */
+  function inNCR(lat, lng) {
+    for (const f of window.NCR_GEO.features) for (const poly of f.geometry.coordinates) {
+      let inside = false; const r = poly[0];
+      for (let i = 0, j = r.length - 1; i < r.length; j = i++) { const [xi, yi] = r[i], [xj, yj] = r[j]; if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside; }
+      if (inside) { for (let k = 1; k < poly.length; k++) { let hole = false; const hr = poly[k]; for (let i = 0, j = hr.length - 1; i < hr.length; j = i++) { const [xi, yi] = hr[i], [xj, yj] = hr[j]; if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) hole = !hole; } if (hole) inside = false; } }
+      if (inside) return true;
+    }
+    return false;
+  }
+
+  let data = null, state = "idle", error = "", waiters = [], ref = 1;
+  function setData(d) {
+    data = d; state = "ok";
+    /* Reference level: the 95th percentile of the indicator at the places themselves,
+       each type at its busiest hour. 100% on the scale = that level, so the colours do
+       not depend on zoom or on the chosen hour. */
+    const pts = d.items, cosk = Math.cos(14.6 * Math.PI / 180), vals = [];
+    const cell = 0.02, grid = new Map();
+    pts.forEach((p, i) => { const k = Math.floor(p[0] / cell) + ":" + Math.floor(p[1] / cell); (grid.get(k) || grid.set(k, []).get(k)).push(i); });
+    for (const p of pts) {
+      let v = 0; const gy = Math.floor(p[0] / cell), gx = Math.floor(p[1] / cell);
+      for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (const j of grid.get((gy + a) + ":" + (gx + b)) || []) {
+        const q = pts[j], dy = (q[0] - p[0]) * 111320, dx = (q[1] - p[1]) * 111320 * cosk;
+        v += TYPES[ORDER[q[2]]].w * Math.exp(-(dx * dx + dy * dy) / (2 * SIGMA * SIGMA));
+      }
+      vals.push(v);
+    }
+    vals.sort((a, b) => a - b);
+    ref = vals.length ? vals[Math.floor(vals.length * 0.95)] || 1 : 1;
+  }
+  function load() {
+    try { const c = JSON.parse(localStorage.getItem(KEY) || "null"); if (c && c.items?.length && Date.now() - Date.parse(c.fetched) < MAX_AGE) { setData(c); return Promise.resolve(); } } catch (e) { /* storage unavailable */ }
+    state = "loading";
+    return fetch(ENDPOINT, { method: "POST", body: "data=" + encodeURIComponent(QUERY), headers: { "Content-Type": "application/x-www-form-urlencoded" } })
+      .then(r => { if (!r.ok) throw new Error("Overpass API answered " + r.status); return r.json(); })
+      .then(j => {
+        const seen = new Set(), items = [];
+        for (const e of j.elements || []) {
+          const lat = e.lat ?? e.center?.lat, lng = e.lon ?? e.center?.lon, k = classify(e.tags);
+          if (lat == null || lng == null || !k || !inNCR(lat, lng)) continue;
+          const key = k + ":" + lat.toFixed(4) + "," + lng.toFixed(4);
+          if (seen.has(key)) continue; seen.add(key);   // a station mapped as node and area counts once
+          items.push([+lat.toFixed(5), +lng.toFixed(5), ORDER.indexOf(k)]);
+        }
+        if (!items.length) throw new Error("no places returned");
+        const d = { fetched: new Date().toISOString(), osmBase: j.osm3s?.timestamp_osm_base || null, items };
+        try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) { /* too big or blocked: keep in memory only */ }
+        setData(d);
+      })
+      .catch(e => { state = "error"; error = e.message || String(e); });
+  }
+  return {
+    TYPES, ORDER,
+    ready: () => state === "ok",
+    status: () => ({ state, error, n: data?.items.length || 0, fetched: data?.fetched, osmBase: data?.osmBase }),
+    counts: () => { const c = Object.fromEntries(ORDER.map(k => [k, 0])); (data?.items || []).forEach(p => c[ORDER[p[2]]]++); return c; },
+    ensure(cb) {
+      if (state === "ok" || state === "error") return;
+      if (cb) waiters.push(cb);
+      if (state === "loading") return;
+      load().then(() => { const w = waiters; waiters = []; w.forEach(f => f()); });
+    },
+    retry(cb) { state = "idle"; this.ensure(cb); },
+    /* indicator (0..1, 1 = reference level) for each cell of a w x h grid of S-pixel cells */
+    grid(map, s, w, h, S) {
+      const out = new Float32Array(w * h), mpp = 156543.03 * Math.cos(14.6 * Math.PI / 180) / Math.pow(2, map.getZoom());
+      const sig = SIGMA / mpp / S, R = Math.ceil(sig * 3), inv = 1 / (2 * sig * sig);
+      const sh = ORDER.map(k => TYPES[k].w * share(k, s.day, s.hour));
+      for (const p of data.items) {
+        const v = sh[p[2]]; if (!v) continue;
+        const q = map.latLngToContainerPoint([p[0], p[1]]), cx = q.x / S, cy = q.y / S;
+        if (cx < -R || cy < -R || cx > w + R || cy > h + R) continue;
+        const x0 = Math.max(0, Math.floor(cx - R)), x1 = Math.min(w - 1, Math.ceil(cx + R)), y0 = Math.max(0, Math.floor(cy - R)), y1 = Math.min(h - 1, Math.ceil(cy + R));
+        for (let y = y0; y <= y1; y++) { const dy = y - cy, row = y * w; for (let x = x0; x <= x1; x++) { const dx = x - cx; out[row + x] += v * Math.exp(-(dx * dx + dy * dy) * inv); } }
+      }
+      for (let i = 0; i < out.length; i++) out[i] = Math.min(1, out[i] / ref);
+      return out;
+    },
+    levelAt(lat, lng, s) {
+      if (state !== "ok") return null;
+      const cosk = Math.cos(14.6 * Math.PI / 180); let v = 0;
+      for (const p of data.items) { const dy = (p[0] - lat) * 111320, dx = (p[1] - lng) * 111320 * cosk, d2 = dx * dx + dy * dy; if (d2 < 9 * SIGMA * SIGMA) v += TYPES[ORDER[p[2]]].w * share(ORDER[p[2]], s.day, s.hour) * Math.exp(-d2 / (2 * SIGMA * SIGMA)); }
+      return Math.round(100 * Math.min(1, v / ref));
+    },
+    sourceHTML() {
+      const st = this.status(), d = st.fetched ? new Date(st.fetched).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" }) : "";
+      return `Source: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), ${fmt(st.n)} places downloaded ${d} via the <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>.`;
+    }
+  };
+})();
+window.OsmFoot = OsmFoot;
 
 </script>
 <!-- Entry point -->
