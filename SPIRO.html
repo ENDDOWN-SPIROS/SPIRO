@@ -769,10 +769,15 @@ svg.i { width: 1.125rem; height: 1.125rem; flex: none; }
 .field { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
 .field label, .field .label { font-weight: 600; font-size: .9375rem; color: var(--heading); }
 .req { font-weight: 400; color: var(--muted); font-size: .8125rem; }
-input[type="text"], input[type="email"], input[type="password"], select, textarea {
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], select, textarea {
   width: 100%; min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: 400 1rem/1.4 var(--f-body);
 }
-select { padding-right: 2rem; }
+select { -webkit-appearance: none; appearance: none; padding-right: 2.5rem; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237D8F9B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .8rem center; background-size: 1rem; }
+select::-ms-expand { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) input[type=date] { color-scheme: dark; } }
+:root[data-theme="dark"] input[type=date] { color-scheme: dark; }
 textarea { resize: vertical; min-height: 6rem; }
 input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 [aria-invalid="true"] { border-color: var(--bad) !important; }
@@ -827,7 +832,34 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .ctrl-mode .seg { flex: 1; } .ctrl-mode .seg button { flex: 1; justify-content: center; }
 .ctrl-title { display: block; font: 700 .75rem/1.3 var(--f-body); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 .375rem; }
 .time-grid { display: grid; grid-template-columns: 1fr; gap: .375rem; }
-.time-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .375rem; }
+.tf-box { position: relative; display: flex; align-items: center; }
+.tf-box > svg { position: absolute; left: .65rem; width: 1.05rem; height: 1.05rem; color: var(--primary); pointer-events: none; }
+.tf .tf-box input[type=date] { padding-left: 2.2rem; border: 1px solid var(--line); border-radius: var(--r); color: var(--ink); font-family: var(--f-body); cursor: pointer; accent-color: var(--primary); }
+.tf .tf-box input[type=date]::-webkit-calendar-picker-indicator { opacity: .55; cursor: pointer; }
+.tf .tf-box input[type=date]:hover, .tf-hm:hover { border-color: var(--line-2); }
+.tf .tf-box input[type=date]:focus { outline: 2px solid var(--primary-2); outline-offset: 1px; border-color: var(--line); }
+.tf-hm { gap: .25rem; min-height: 2.5rem; padding: 0 .375rem 0 2.2rem; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.tf-hm:focus-within { outline: 2px solid var(--primary-2); outline-offset: 1px; }
+.tf .tf-hm select { flex: 1; width: auto; min-height: 2.25rem; border: 0; background-color: transparent; background-position: right .6rem center; background-size: .9rem; padding: 0 1.9rem 0 .5rem; font: 600 1rem var(--f-body); font-variant-numeric: tabular-nums; text-align: center; cursor: pointer; }
+.tf .tf-hm select:focus { outline: none; background-color: var(--surface-2); border-radius: var(--r-sm); }
+.tf-hm b { font: 700 1.05rem var(--f-body); color: var(--heading); }
+.ts-list { position: static; margin: 0; padding: .25rem; list-style: none; max-height: min(20rem, 55vh); overflow: auto; overscroll-behavior: contain; background: var(--surface); border: 1px solid var(--primary-2); border-top: 1px solid var(--line); border-radius: 0 0 var(--r) var(--r); scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; transform-origin: top; animation: tsOpen .2s cubic-bezier(.2,.8,.2,1); }
+@keyframes tsOpen { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: min(20rem, 55vh); } }
+.top-search.open input { border-color: var(--primary-2); border-bottom-color: transparent; border-radius: var(--r) var(--r) 0 0; outline: none; }
+.top-search.open input:focus { outline: none; box-shadow: none; }
+.ts-group { padding: .45rem .5rem .2rem; font: 700 .6875rem var(--f-body); letter-spacing: .05em; text-transform: uppercase; color: var(--primary); }
+.ts-opt { display: flex; gap: .5rem; align-items: flex-start; padding: .4rem .5rem; border-radius: var(--r-sm); cursor: pointer; border-left: 3px solid transparent; transition: background .12s; }
+.top-search .ts-opt svg { position: static; transform: none; pointer-events: none; flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: var(--primary); }
+.ts-opt span { min-width: 0; display: flex; flex-direction: column; }
+.ts-opt b { font-size: .875rem; color: var(--heading); font-weight: 600; }
+.ts-opt small { font-size: .72rem; color: var(--muted); line-height: 1.3; }
+.ts-opt:hover { background: var(--surface-2); }
+.ts-opt.on { background: var(--tint); border-left-color: var(--primary); }
+.ts-opt mark { background: none; color: var(--primary); font-weight: 700; }
+@keyframes pcIn { from { opacity: 0; transform: translateX(1.5rem) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes pcUp { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: none; } }
+.place-card.pc-enter { animation: pcUp .28s cubic-bezier(.2,.8,.2,1); }
+@media (prefers-reduced-motion: reduce) { .place-card.pc-enter { animation: none; } }
 .tf { display: flex; flex-direction: column; gap: .125rem; font-size: .6875rem; color: var(--muted); font-weight: 600; min-width: 0; }
 .tf select, .tf input, .ctrl-time > select { width: 100%; min-height: 2.5rem; font-size: .9375rem; font-weight: 600; }
 .ctrl-note { font-size: .6875rem; color: var(--muted); margin: .375rem 0 0; line-height: 1.35; }
@@ -850,6 +882,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .lg-title { font-size: .8125rem; margin-bottom: .25rem; }
 .lg-classes { list-style: none; display: grid; gap: .1rem; margin: 0; padding: 0; font-size: .75rem; line-height: 1.3; }
 .sw-dot { width: .75rem; height: .75rem; border-radius: 50%; }
+.lg-grad { height: .6rem; border-radius: 3px; margin: .3rem 0 .15rem; opacity: .85; }
+.lg-ticks { list-style: none; margin: 0 0 .3rem; padding: 0; position: relative; height: .9rem; font-size: .625rem; line-height: 1; opacity: .8; }
+.lg-ticks li { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.lg-ticks li:first-child { transform: none; }
 .lg-classes li { display: flex; align-items: center; gap: .5rem; }
 .sw { display: inline-block; width: .875rem; height: .75rem; border-radius: .2rem; flex: none; border: 1px solid rgba(18,45,64,.15); }
 .sw-na { background: repeating-linear-gradient(45deg, #9AA6AE 0 3px, #D4DBE0 3px 6px); }
@@ -898,7 +934,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .top-search { min-width: 0; position: relative; }
 .top-search input { width: 100%; height: 2.5rem; padding: 0 .75rem 0 2.25rem; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); font: 500 .9375rem var(--f-body); color: var(--ink); }
 .top-search input:focus { outline: 2px solid var(--primary-2); outline-offset: 1px; }
-.top-search svg { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.top-search > svg { position: absolute; left: .7rem; top: 1.25rem; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.top-search.open > svg { color: var(--primary); }
+@media (prefers-reduced-motion: reduce) { .ts-list { animation: none; } }
 .ts-msg { margin: .375rem 0 0; font-size: .75rem; color: var(--muted); }
 /* Module 5.1: Settings overlay */
 .pc-head { display: flex; align-items: flex-start; gap: .5rem; padding: .625rem .75rem .5rem .875rem; position: sticky; top: 0; background: var(--surface); z-index: 2; border-bottom: 1px solid var(--line); }
@@ -930,7 +968,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .np-set { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .5rem; font-size: .875rem; color: var(--heading); }
 .np-set small { display: block; color: var(--muted); font-size: .75rem; }
 .np-set select { max-width: 9rem; }
-.np-set input[type=checkbox] { width: 1.125rem; height: 1.125rem; accent-color: var(--primary); flex: none; }
+/* toggle switches (replace the plain checkmark boxes) */
+input.switch { -webkit-appearance: none; appearance: none; position: relative; flex: none; width: 2.5rem; height: 1.4rem; margin: 0; border-radius: 999px; background: var(--line-2); cursor: pointer; transition: background .2s; vertical-align: middle; }
+input.switch::before { content: ""; position: absolute; top: .15rem; left: .15rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+input.switch:checked { background: var(--primary); }
+input.switch:checked::before { transform: translateX(1.1rem); }
+input.switch:focus-visible { outline: 3px solid var(--primary-2); outline-offset: 2px; }
+label.check { display: inline-flex; align-items: center; gap: .5rem; }
+/* Log In: blue button */
+.btn.np-login { width: 100%; background: #1F6FA3; border-color: #1F6FA3; color: #fff; font-weight: 700; transition: filter .15s, transform .15s; }
+.btn.np-login:hover { filter: brightness(.9); color: #fff; } .btn.np-login:active { transform: translateY(1px); }
+@media (prefers-reduced-motion: reduce) { input.switch, input.switch::before { transition: none; } }
 .np-head { display: flex; align-items: center; justify-content: space-between; padding: .75rem .75rem .75rem 1rem; border-bottom: 1px solid var(--line); }
 .np-group { border: 0; margin: 0; padding: .75rem; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: .125rem; min-width: 0; }
 .np-label { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding: .25rem .5rem; }
@@ -951,14 +999,53 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
 .sheet-head h2 { flex: 1; min-width: 0; font-size: 1.25rem; }
 .sheet-body { flex: 1; overflow: auto; padding: 1.25rem; overscroll-behavior: contain; }
 
-/* ---------- overview page ---------- */
+/* ---------- introduction page ---------- */
 .cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+.intro { position: fixed; inset: 0; z-index: 1200; overflow: auto; background:
+  radial-gradient(60rem 30rem at 85% -10%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 70%),
+  radial-gradient(40rem 24rem at -10% 110%, color-mix(in srgb, #F28A1E 14%, transparent), transparent 70%), var(--bg); }
+.intro:focus { outline: none; }
+.in-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .875rem clamp(1rem, 4vw, 2.5rem); }
+.in-brand { display: inline-flex; align-items: center; gap: .5rem; color: var(--heading); } .in-brand .logo { width: 1.75rem; height: 1.75rem; color: var(--primary); } .in-brand b { font: 800 1.25rem var(--f-display); letter-spacing: .02em; }
+.in-wrap { max-width: 64rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 3rem; }
+.in-hero h1 { font: 800 clamp(3rem, 10vw, 5.5rem)/1 var(--f-display); letter-spacing: .04em; color: var(--heading); margin: .25rem 0 .75rem; }
+.in-lead { font-size: clamp(1.0625rem, 2.2vw, 1.25rem); max-width: 44rem; color: var(--ink); margin: 0; }
+.in-go .i:last-child { transition: transform .2s; } .in-go:hover .i:last-child { transform: translateX(3px); }
+.in-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin: 2.25rem 0 .5rem; }
+.in-stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: .875rem 1rem; box-shadow: var(--shadow); }
+.in-stat b { display: block; font: 800 clamp(1.5rem, 4vw, 2.125rem)/1.1 var(--f-display); color: var(--primary); }
+.in-stat span { font-size: .875rem; color: var(--muted); }
+.in-sec { margin-top: 2.25rem; } .in-sec h2 { font: 700 1.375rem var(--f-display); color: var(--heading); margin: 0 0 .5rem; } .in-sec > p { max-width: 46rem; margin: 0; }
+.in-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.in-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1rem; }
+.in-card > svg { color: var(--primary); } .in-card h3 { font-size: 1.0625rem; margin: .375rem 0 .25rem; color: var(--heading); } .in-card p { margin: 0; font-size: .9375rem; color: var(--ink); }
+.in-note { display: flex; gap: .5rem; align-items: flex-start; margin: 2rem 0 0; padding: .75rem 1rem; border-left: 4px solid var(--primary); background: var(--tint); border-radius: var(--r-sm); font-size: .9375rem; color: var(--heading); }
+.in-note svg { flex: none; margin-top: .2rem; color: var(--primary); }
+.in-src { margin: 1.25rem 0 0; font-size: .8125rem; color: var(--muted); }
+@keyframes inUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.intro:not([hidden]) .in-hero, .intro:not([hidden]) .in-stats, .intro:not([hidden]) .in-sec, .intro:not([hidden]) .in-note { animation: inUp .5s cubic-bezier(.2,.8,.2,1) both; }
+.intro .in-stats { animation-delay: .08s !important; } .intro .in-sec { animation-delay: .16s !important; } .intro .in-note { animation-delay: .24s !important; }
+@media (max-width: 720px) { .in-stats, .in-cards { grid-template-columns: 1fr; } .in-top .btn { display: none; } }
+/* hamburger: three lines that turn into an X while the menu is open */
+.hb { position: relative; display: block; width: 1.25rem; height: .875rem; }
+.hb i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform .28s cubic-bezier(.2,.8,.2,1), opacity .2s, top .28s cubic-bezier(.2,.8,.2,1), width .2s; }
+.hb i:nth-child(1) { top: 0; } .hb i:nth-child(2) { top: calc(50% - 1px); } .hb i:nth-child(3) { top: calc(100% - 2px); }
+.hamb:hover .hb i:nth-child(2) { width: 70%; }
+.hamb[aria-expanded="true"] .hb i:nth-child(1) { top: calc(50% - 1px); transform: rotate(45deg); }
+.hamb[aria-expanded="true"] .hb i:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamb[aria-expanded="true"] .hb i:nth-child(3) { top: calc(50% - 1px); transform: rotate(-45deg); }
+.hamb[aria-expanded="true"] { color: var(--primary); }
+/* SPIRO logo button */
+a.logo-ph { border-style: solid; border-color: var(--line); text-decoration: none; transition: transform .15s, box-shadow .15s, color .15s; }
+a.logo-ph .logo { color: var(--primary); }
+a.logo-ph:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); color: var(--primary); }
+@media (prefers-reduced-motion: reduce) { .intro *, .hb i, a.logo-ph { animation: none !important; transition: none !important; } }
 
 /* ---------- wide screens: card floats over the map on the left ---------- */
 @media (min-width: 900px) {
-  .ctrl-col .place-card { position: relative; flex: 0 1 auto; min-height: 0; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+  .place-card { position: absolute; top: 4.25rem; right: .75rem; z-index: 800; width: 22rem; max-width: calc(100% - 23.5rem); max-height: calc(100% - 4.25rem - var(--br-h, 0px) - 2.5rem); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+  .place-card.pc-enter { animation-name: pcIn; }
   .pc-head { border-radius: var(--r-lg) var(--r-lg) 0 0; }
-  body.has-card .map-status { left: calc(50% + 13rem); }
 }
 
 /* ---------- tablets and phones ---------- */
@@ -973,7 +1060,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); }
   .ctrl-card { padding: .375rem .5rem .5rem; }
   .ctrl-find .ctrl-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
   .ctrl-time .ctrl-title { margin-bottom: .25rem; }
-  .tf span { display: none; }
+  .tf > span:first-child { display: none; }
   .tf select, .tf input { min-height: 2.25rem; font-size: .875rem; }
   .ctrl-note { display: none; }
   .logo-ph { top: .5rem; right: .5rem; padding: .25rem; } .logo-ph b { display: none; }
@@ -1142,6 +1229,8 @@ table.data td.partial { font-style: italic; }
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></g></symbol>
     <symbol id="i-hosp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M8 12h8" stroke-linecap="round"/></g></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></g></symbol>
@@ -1159,6 +1248,7 @@ table.data td.partial { font-style: italic; }
 
 <div id="app">
   <!-- 1. Map stage: the first thing on the page -->
+  <section id="intro" class="intro" hidden aria-labelledby="introTitle" tabindex="-1"></section>
   <main id="mapStage" class="stage">
     <div class="map-wrap">
       <div id="map" role="region" aria-label="Map of the Philippines with Metro Manila highlighted"></div>
@@ -1167,21 +1257,21 @@ table.data td.partial { font-style: italic; }
       <!-- Module 5.1: primary map controls, in order: layer toggle, search, date/time -->
       <div class="ctrl-col" id="ctrlCol">
         <div class="ctrl-card ctrl-mode">
-          <button type="button" id="navBtn" class="hamb" aria-label="Open settings" aria-expanded="false" aria-controls="navPanel"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></button>
+          <button type="button" id="navBtn" class="hamb" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel"><span class="hb" aria-hidden="true"><i></i><i></i><i></i></span></button>
           <div class="seg layer-seg" id="layerSeg" role="radiogroup" aria-label="Map layer"></div>
         </div>
         <div class="ctrl-card ctrl-find" role="search">
-          <label class="ctrl-title" for="topFind">Find a city or public place</label>
+          <label class="ctrl-title" for="topFind" id="topFindLbl">Search Location</label>
           <div class="top-search">
             <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
-            <input id="topFind" type="search" list="topFindList" placeholder="City or place name" autocomplete="off">
-            <datalist id="topFindList"></datalist>
+            <input id="topFind" type="search" placeholder="Type a city or place" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="topFindList">
+            <ul id="topFindList" class="ts-list" role="listbox" aria-labelledby="topFindLbl" hidden></ul>
           </div>
           <p class="ts-msg" id="topFindMsg" hidden role="status"></p>
         </div>
         <section class="ctrl-card ctrl-time" id="timeBox" aria-labelledby="timeTitle"></section>
       </div>
-      <div class="logo-ph" role="img" aria-label="SPIRO logo (placeholder)" title="Logo placeholder"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></div>
+      <a class="logo-ph" href="#intro" aria-label="SPIRO, open the introduction" title="About SPIRO"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></a>
 
       <!-- Module A2: map controls and legend share the bottom-right corner -->
       <div class="br-stack">
@@ -1283,7 +1373,7 @@ const pad2 = n => String(n).padStart(2, "0");
 const isoDate = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 const parseIso = iso => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); if (!m) return null; const d = new Date(+m[1], +m[2] - 1, +m[3]); return d.getMonth() === +m[2] - 1 ? d : null; };
 const dateLabel = iso => { const d = parseIso(iso); return d ? d.toLocaleDateString("en-PH", { weekday: "short", day: "numeric", month: "short", year: "numeric" }) : "No date"; };
-const timeLabel = s => `${pad2(s.hour)}:${pad2(s.minute)}:${pad2(s.second)}`;
+const timeLabel = s => `${pad2(s.hour)}:${pad2(s.minute)}`;
 const whenLabel = s => `${dateLabel(s.date)}, ${timeLabel(s)}`;
 
 /* Real date and time of an ISO timestamp, in the viewer's locale and time zone. */
@@ -1415,7 +1505,7 @@ class AppModel extends Emitter {
       // removed; per-100k values stay in the staff tables, card and charts.
       date: isoDate(now),     // Module 5.1: chosen calendar date (sets the weekday)
       day: now.getDay(),
-      hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds(),
+      hour: now.getHours(), minute: now.getMinutes(), second: 0,
       selected: null,         // { type: "city" | "place", id }
       navOpen: false,
       isAdmin: session.get("tbmap.adminSession", false) === true
@@ -1636,22 +1726,14 @@ class MapView {
     const nums = (n, cur) => [...Array(n).keys()].map(i => opt(i, pad2(i), i === cur)).join("");
     box.innerHTML = `<h2 class="ctrl-title" id="timeTitle">Date and time</h2>
       <div class="time-grid">
-        <label class="tf"><span>Date</span><input type="date" id="lbDate" value="${s.date}" aria-label="Date" required></label>
-        <div class="time-row" role="group" aria-label="Time, 24-hour clock">
-          <label class="tf"><span>Hour</span><select id="lbH" aria-label="Hour">${nums(24, s.hour)}</select></label>
-          <label class="tf"><span>Minute</span><select id="lbM" aria-label="Minute">${nums(60, s.minute)}</select></label>
-          <label class="tf"><span>Second</span><select id="lbS" aria-label="Second">${nums(60, s.second)}</select></label>
+        <label class="tf tf-date"><span>Date</span><span class="tf-box">${icon("i-calendar")}<input type="date" id="lbDate" value="${s.date}" aria-label="Date" required></span></label>
+        <div class="tf tf-time" role="group" aria-labelledby="lbTimeLbl"><span id="lbTimeLbl">Time (24-hour)</span>
+          <span class="tf-box tf-hm">${icon("i-clock")}<select id="lbH" aria-label="Hour, 00 to 23">${nums(24, s.hour)}</select><b aria-hidden="true">:</b><select id="lbM" aria-label="Minute, 00 to 59">${nums(60, s.minute)}</select></span>
         </div>
-      </div>
-      <p class="ctrl-note" id="timeNote"></p>`;
+      </div>`;
     $("#lbDate").addEventListener("change", e => { if (parseIso(e.target.value)) this.handlers.onDate(e.target.value); else e.target.value = this.model.state.date; });
-    const t = () => this.handlers.onTime(+$("#lbH").value, +$("#lbM").value, +$("#lbS").value);
-    ["#lbH", "#lbM", "#lbS"].forEach(id => $(id).addEventListener("change", t));
-    this.renderTimeNote();
-  }
-  renderTimeNote() {
-    const n = $("#timeNote"), s = this.model.state; if (!n) return;
-    n.innerHTML = `<b>${esc(whenLabel(s))}</b>. Illustrative only: the date sets the weekday and the hour picks the assumed typical-week pattern. Minutes and seconds do not change it. Not live.`;
+    const t = () => this.handlers.onTime(+$("#lbH").value, +$("#lbM").value, 0);
+    ["#lbH", "#lbM"].forEach(id => $(id).addEventListener("change", t));
   }
 
   /* ---------- base layers ---------- */
@@ -1713,32 +1795,20 @@ class MapView {
         c.width = Math.round(size.x * dpr); c.height = Math.round(size.y * dpr); c.style.width = size.x + "px"; c.style.height = size.y + "px";
         const ctx = c.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, size.x, size.y);
         if (view.model.state.layer !== "crowd") return;
-        const S = 3, w = Math.ceil(size.x / S) + 1, h = Math.ceil(size.y / S) + 1, n = w * h;
-        const P = new Float32Array(n), NUM = new Float32Array(n), DEN = new Float32Array(n);
+        /* Module 5.2: one continuous surface over all of NCR. Every cell takes the
+           distance-weighted average of the estimated crowding at all listed places
+           (closed = 0%), so colours between places are interpolated, not measured. */
+        const S = 4, w = Math.ceil(size.x / S) + 1, h = Math.ceil(size.y / S) + 1, n = w * h;
         const mpp = 156543.03 * Math.cos(14.6 * Math.PI / 180) / Math.pow(2, map.getZoom());
-        const sig = Math.max(6, Math.min(60, 300 / mpp)) / S, rad = Math.ceil(sig * 3), inv = 1 / (2 * sig * sig);
-        for (const p of PLACES) {
-          const b = view.model.busyAt(p); if (b == null) continue;
-          const pt = map.latLngToContainerPoint([p.lat, p.lng]), cx = pt.x / S, cy = pt.y / S, v = b / 100;
-          if (cx < -rad || cy < -rad || cx > w + rad || cy > h + rad) continue;
-          const x0 = Math.max(0, Math.floor(cx - rad)), x1 = Math.min(w - 1, Math.ceil(cx + rad));
-          const y0 = Math.max(0, Math.floor(cy - rad)), y1 = Math.min(h - 1, Math.ceil(cy + rad));
-          for (let y = y0; y <= y1; y++) {
-            const dy = (y - cy) * (y - cy), o = y * w;
-            for (let x = x0; x <= x1; x++) {
-              const k = Math.exp(-((x - cx) * (x - cx) + dy) * inv); if (k < 0.01) continue;
-              const i = o + x, k2 = k * k;
-              if (k > P[i]) P[i] = k;
-              NUM[i] += v * k2; DEN[i] += k2;
-            }
-          }
-        }
+        const eps2 = Math.pow(400 / mpp / S, 2);   // 400 m smoothing so a cell on a place is not a hard spike
+        const pts = PLACES.map(p => { const b = view.model.busyAt(p), q = map.latLngToContainerPoint([p.lat, p.lng]); return [q.x / S, q.y / S, (b == null ? 0 : b) / 100]; });
         const f = document.createElement("canvas"); f.width = w; f.height = h;
         const fx = f.getContext("2d"), out = fx.createImageData(w, h), o = out.data;
-        for (let i = 0; i < n; i++) {
-          if (P[i] < 0.03) continue;
-          const [R, G, B] = crowdRGB(NUM[i] / DEN[i]);
-          o[i * 4] = R; o[i * 4 + 1] = G; o[i * 4 + 2] = B; o[i * 4 + 3] = Math.round(255 * Math.min(1, P[i] * 1.25) * 0.8);
+        for (let y = 0, i = 0; y < h; y++) for (let x = 0; x < w; x++, i++) {
+          let num = 0, den = 0;
+          for (const [px, py, v] of pts) { const d2 = (x - px) * (x - px) + (y - py) * (y - py) + eps2, k = 1 / (d2 * d2); num += v * k; den += k; }
+          const [R, G, B] = crowdRGB(den ? num / den : 0);
+          o[i * 4] = R; o[i * 4 + 1] = G; o[i * 4 + 2] = B; o[i * 4 + 3] = 168;
         }
         fx.putImageData(out, 0, 0);
         ctx.imageSmoothingEnabled = true; ctx.drawImage(f, 0, 0, w * S, h * S);
@@ -1772,9 +1842,9 @@ class MapView {
     if (this.layers.places) this.map.removeLayer(this.layers.places);
     this.layers.places = null;
     const s = this.model.state;
-    if (s.layer !== "crowd" || window.SPIRO_SETTINGS?.markers === false) return;
+    if (s.layer !== "crowd" || s.selected?.type !== "place") return;
     const z = this.map.getZoom(), size = z >= 13 ? 18 : z >= 12 ? 14 : 11;
-    this.layers.places = L.layerGroup(PLACES.map(p => {
+    this.layers.places = L.layerGroup(PLACES.filter(p => p.id === s.selected.id).map(p => {
       const b = this.model.busyAt(p), lv = busyLevel(b), sel = s.selected?.type === "place" && s.selected.id === p.id;
       const label = `${p.name}, ${CATEGORY[p.cat].label}. ${b == null ? "Usually closed" : `${lv} (${b}% of its busiest hour)`} on ${DOW[s.day]} at ${pad2(s.hour)}:00. Proxy: assumed typical pattern for this type of place, not measured.`;
       const mk = L.marker([p.lat, p.lng], { keyboard: true, title: label, alt: label, riseOnHover: true, zIndexOffset: sel ? 900 : 300,
@@ -1799,7 +1869,6 @@ class MapView {
   render(changed) {
     const c = new Set(changed);
     if (["layer", "year", "isAdmin"].some(k => c.has(k))) this.renderLayerBar();
-    else if (["date", "hour", "minute", "second"].some(k => c.has(k))) this.renderTimeNote();
     if (["layer", "year", "day", "hour", "date", "minute", "second"].some(k => c.has(k))) this.renderLegend();
     if (["layer", "year", "day", "hour", "selected"].some(k => c.has(k))) this.draw();
   }
@@ -1821,8 +1890,10 @@ class MapView {
     } else {
       const lv = [["Low", "under 40%"], ["Moderate", "40–69%"], ["High", "70–89%"], ["Very high", "90%+"], ["Closed", "closed"]];
       h = `<h3 class="lg-title">Crowding (estimated)</h3>
-        <ul class="lg-classes">${lv.map(([k, t]) => `<li><span class="sw sw-dot" style="background:${LEVEL_COLOR[k]}"></span><span>${k}</span><span class="lg-n">${t}</span></li>`).join("")}</ul>
-        <p class="lg-note">Typical week, not live.</p>`;
+        <div class="lg-grad" style="background:${CROWD_GRADIENT}"></div>
+        <ul class="lg-ticks">${[0, 40, 70, 90].map(t => `<li style="left:${t}%">${t}%</li>`).join("")}</ul>
+        <ul class="lg-classes">${lv.slice(0, 4).map(([k, t]) => `<li><span class="sw" style="background:${LEVEL_COLOR[k]}"></span><span>${k}</span><span class="lg-n">${t}</span></li>`).join("")}</ul>
+        <p class="lg-note">Share of each place's busiest hour, blended between ${PLACES.length} listed places (closed counts as 0%). Typical week, not live.</p>`;
     }
     $("#legend").innerHTML = h;
   }
@@ -1902,14 +1973,14 @@ class NavigationView {
       </div>
       <div class="np-group">
         <p class="np-label">Pages</p>
+        ${item("intro", "i-info", "Introduction", "What SPIRO is and the problem it addresses")}
         ${item("map", "i-map", "Map", "TB cases and crowding")}
         ${item("guide", "i-book", "TB Health Guide", "Symptoms, prevention, getting checked")}
       </div>
       <div class="np-group">
         <p class="np-label">Display</p>
         <label class="np-set"><span>Theme</span><select id="setTheme">${o("system", "Device setting")}${o("light", "Light")}${o("dark", "Dark")}</select></label>
-        <label class="np-set"><span>City names and values<small>Shown when zoomed in</small></span><input type="checkbox" id="setLabels"${v.labels !== false ? " checked" : ""}></label>
-        <label class="np-set"><span>Place markers<small>Crowding layer</small></span><input type="checkbox" id="setMarkers"${v.markers !== false ? " checked" : ""}></label>
+        <label class="np-set"><span>City names and values<small>Shown when zoomed in</small></span><input type="checkbox" role="switch" class="switch" id="setLabels"${v.labels !== false ? " checked" : ""}></label>
       </div>
       <div class="np-group">
         ${s.isAdmin ? `
@@ -1918,13 +1989,13 @@ class NavigationView {
           ${item("admin/crowd", "i-people", "Crowding report", "Busy hours by place")}
           ${item("admin/data", "i-info", "Data and model", "Shared files and model status")}
           <button type="button" class="np-item" id="npLogout">${icon("i-logout")}<span><b>Log out</b></span></button>`
-        : `<button type="button" class="np-item" id="npLogin">${icon("i-lock")}<span><b>Log In</b><small>For health office staff</small></span></button>`}
+        : `<button type="button" class="btn np-login" id="npLogin">Log In</button>`}
       </div>`;
     const p = $("#navPanel");
     $("#navClose").addEventListener("click", () => this.handlers.onCloseNav());
     $$("[data-route]", p).forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.handlers.onNavigate(a.dataset.route); }));
-    const upd = () => this.handlers.onPrefs({ theme: $("#setTheme").value, labels: $("#setLabels").checked, markers: $("#setMarkers").checked });
-    ["#setTheme", "#setLabels", "#setMarkers"].forEach(id => $(id).addEventListener("change", upd));
+    const upd = () => this.handlers.onPrefs({ theme: $("#setTheme").value, labels: $("#setLabels").checked });
+    ["#setTheme", "#setLabels"].forEach(id => $(id).addEventListener("change", upd));
     $("#npLogin")?.addEventListener("click", () => this.handlers.onLogin());
     $("#npLogout")?.addEventListener("click", () => this.handlers.onLogout());
   }
@@ -1932,21 +2003,47 @@ class NavigationView {
   /* Module 5.1: search box in the top bar. Same sources as before: cities with TB records in
      cleaned_tb_data.csv, plus the listed public places. */
   renderSearch() {
-    const ids = CITIES.map(c => c.id);
-    this.findIndex = [...ids.map(id => ({ label: cityName(id), sel: { type: "city", id } })),
-      ...PLACES.map(p => ({ label: `${p.name} (${cityName(p.city)})`, sel: { type: "place", id: p.id } }))];
-    $("#topFindList").innerHTML = this.findIndex.map(o => `<option value="${esc(o.label)}"></option>`).join("");
-    const inp = $("#topFind"), msg = $("#topFindMsg");
-    const go = () => {
-      const q = inp.value.trim().toLowerCase(); msg.hidden = true; if (!q) return;
-      const hit = this.findIndex.find(o => o.label.toLowerCase() === q) || this.findIndex.find(o => o.label.toLowerCase().startsWith(q)) || this.findIndex.find(o => o.label.toLowerCase().includes(q));
-      if (hit) { inp.value = hit.label; inp.blur(); this.handlers.onFind(hit.sel); }
-      else { msg.textContent = "No matching city or listed place."; msg.hidden = false; }
+    /* Cities first, then listed public places. Each row shows the name and its address as far
+       as the data goes (city, Metro Manila); the place list has no street addresses. */
+    const NCR_ADDR = "Metro Manila (NCR), Philippines";
+    const cities = CITIES.map(c => ({ name: cityName(c.id), addr: NCR_ADDR, group: "City / municipality", sel: { type: "city", id: c.id } }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const places = PLACES.map(p => ({ name: p.name, addr: `${CATEGORY[p.cat].label} · ${cityName(p.city)}, ${NCR_ADDR}`, group: "Public place", sel: { type: "place", id: p.id } }))
+      .sort((a, b) => cityName(PLACE[a.sel.id].city).localeCompare(cityName(PLACE[b.sel.id].city)) || a.name.localeCompare(b.name));
+    this.findIndex = [...cities, ...places];
+    const inp = $("#topFind"), list = $("#topFindList"), msg = $("#topFindMsg");
+    let hits = [], act = -1;
+    const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const match = q => {
+      if (!q) return cities;
+      const n = norm(q);
+      const score = o => { const a = norm(o.name), b = norm(o.addr); return a.startsWith(n) ? 0 : a.split(/[\s(-]+/).some(w => w.startsWith(n)) ? 1 : a.includes(n) ? 2 : b.includes(n) ? 3 : -1; };
+      return this.findIndex.map((o, i) => [o, score(o), i]).filter(x => x[1] >= 0).sort((x, y) => (x[0].group === y[0].group ? 0 : x[0].group === "Public place" ? 1 : -1) || x[1] - y[1] || x[2] - y[2]).map(x => x[0]).slice(0, 12);
     };
-    inp.addEventListener("change", go);
-    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); go(); } if (e.key === "Escape") { inp.value = ""; msg.hidden = true; } });
-    inp.addEventListener("input", () => { msg.hidden = true; });
-    inp.addEventListener("blur", () => setTimeout(() => { msg.hidden = true; }, 150));
+    const box = inp.closest(".top-search");
+    const close = () => { list.hidden = true; box.classList.remove("open"); inp.setAttribute("aria-expanded", "false"); inp.removeAttribute("aria-activedescendant"); act = -1; };
+    const hl = t => { const q = inp.value.trim(); if (!q) return esc(t); const i = norm(t).indexOf(norm(q)); return i < 0 ? esc(t) : esc(t.slice(0, i)) + "<mark>" + esc(t.slice(i, i + q.length)) + "</mark>" + esc(t.slice(i + q.length)); };
+    const paint = () => {
+      let g = "";
+      list.innerHTML = hits.map((o, i) => {
+        const head = o.group !== g ? `<li class="ts-group" role="presentation">${o.group === "Public place" ? "Public places" : "Cities and municipality"}</li>` : ""; g = o.group;
+        return `${head}<li role="option" id="tsOpt${i}" data-i="${i}" aria-selected="${i === act}" class="ts-opt${i === act ? " on" : ""}">${icon(o.sel.type === "city" ? "i-map" : "i-pin")}<span><b>${hl(o.name)}</b><small>${esc(o.addr)}</small></span></li>`;
+      }).join("");
+      list.hidden = !hits.length; box.classList.toggle("open", !!hits.length); inp.setAttribute("aria-expanded", String(!!hits.length));
+      if (act >= 0) { inp.setAttribute("aria-activedescendant", "tsOpt" + act); $("#tsOpt" + act)?.scrollIntoView({ block: "nearest" }); } else inp.removeAttribute("aria-activedescendant");
+    };
+    const suggest = () => { msg.hidden = true; hits = match(inp.value.trim()); act = -1; paint(); if (!hits.length && inp.value.trim()) { msg.textContent = "No matching city or listed place."; msg.hidden = false; } };
+    const pick = o => { inp.value = o.name; close(); inp.blur(); this.handlers.onFind(o.sel); };
+    inp.addEventListener("input", suggest);
+    inp.addEventListener("focus", suggest);
+    inp.addEventListener("keydown", e => {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); if (list.hidden) suggest(); if (!hits.length) return; act = (act + (e.key === "ArrowDown" ? 1 : -1) + hits.length) % hits.length; paint(); }
+      else if (e.key === "Enter") { e.preventDefault(); const o = hits[act >= 0 ? act : 0]; if (o) pick(o); else if (inp.value.trim()) { msg.textContent = "No matching city or listed place."; msg.hidden = false; } }
+      else if (e.key === "Escape") { if (!list.hidden) close(); else { inp.value = ""; msg.hidden = true; } }
+    });
+    list.addEventListener("mousedown", e => e.preventDefault());
+    list.addEventListener("click", e => { const li = e.target.closest("[data-i]"); if (li) pick(hits[+li.dataset.i]); });
+    inp.addEventListener("blur", () => setTimeout(() => { close(); msg.hidden = true; }, 150));
   }
 
   /* Module 4: cities come only from cleaned_tb_data.csv (cities with at least one valid case
@@ -1955,7 +2052,7 @@ class NavigationView {
     const p = $("#navPanel"), btn = $("#navBtn");
     p.hidden = !open; $("#navScrim").hidden = !open;
     btn.setAttribute("aria-expanded", open);
-    btn.setAttribute("aria-label", open ? "Close settings" : "Open settings");
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     if (open) { requestAnimationFrame(() => (p.querySelector(".np-item.on") || p.querySelector(".np-item"))?.focus()); }
   }
 }
@@ -1985,12 +2082,14 @@ class PlaceDetailsView {
 
   render() {
     const s = this.model.state, card = $("#placeCard");
-    if (!s.selected || !this.model.placeExists(s.selected) || s.route !== "map") { card.hidden = true; card.innerHTML = ""; document.body.classList.remove("has-card"); return; }
+    if (!s.selected || !this.model.placeExists(s.selected) || s.route !== "map") { card.hidden = true; card.innerHTML = ""; card.classList.remove("pc-enter"); document.body.classList.remove("has-card"); this.lastKey = null; return; }
     const sel = s.selected, key = sel.type + ":" + sel.id, y = card.scrollTop;
     card.innerHTML = sel.type === "city" ? this.cityHTML(sel.id) : this.placeHTML(PLACE[sel.id]);
     card.hidden = false; document.body.classList.add("has-card");
     this.bind(card, sel);
     card.scrollTop = key === this.lastKey ? y : 0;
+    /* slide in when a new city or place opens, not on every time change */
+    if (key !== this.lastKey) { card.classList.remove("pc-enter"); void card.offsetWidth; card.classList.add("pc-enter"); }
     this.lastKey = key;
   }
 
@@ -2223,7 +2322,7 @@ class AdminView {
         <div class="field"><label for="afCity">City or municipality</label><select id="afCity">${cityOpts}</select></div>
         <div class="field"><span class="label" id="afMeasL">Measure</span><div class="seg" role="radiogroup" aria-labelledby="afMeasL">
           <button type="button" role="radio" aria-checked="${f.measure === "count"}" data-afm="count">Cases</button><button type="button" role="radio" aria-checked="${f.measure === "rate"}" data-afm="rate">Per 100,000</button></div></div>
-        ${f.city !== "all" && f.measure === "rate" ? `<label class="check"><input type="checkbox" id="afCompare" ${f.compare ? "checked" : ""}> Compare with all of NCR</label>` : ""}
+        ${f.city !== "all" && f.measure === "rate" ? `<label class="check"><input type="checkbox" role="switch" class="switch" id="afCompare" ${f.compare ? "checked" : ""}> Compare with all of NCR</label>` : ""}
       </div>
       <div class="card">
         <h3>${f.measure === "rate" ? "TB cases per 100,000 people" : "TB cases"}: ${esc(cityName(f.city))}, ${YEARS[0]}–${YEARS[YEARS.length - 1]}</h3>
@@ -2467,12 +2566,12 @@ class AppController {
     this.applyRoute();
   }
 
-  /* Module 5.1: on wide screens the selected card sits in the left control column, under the
-     date/time box; on narrow screens it sits under the map. */
+  /* On wide screens the selected card floats in the top-right corner, under the logo and above
+     the map controls; on narrow screens it sits under the map. */
   placeCardSlot() {
-    const mq = window.matchMedia("(min-width: 900px)");
-    const put = () => { (mq.matches ? $("#ctrlCol") : $("#mapStage")).appendChild($("#placeCard")); this.mapView.invalidate(); };
-    mq.addEventListener ? mq.addEventListener("change", put) : mq.addListener(put); put();
+    const br = $(".br-stack"), set = () => document.documentElement.style.setProperty("--br-h", (br ? br.offsetHeight : 0) + "px");
+    if (br && window.ResizeObserver) new ResizeObserver(set).observe(br); set();
+    this.mapView.invalidate();
   }
 
   /* ---------- routing ---------- */
@@ -2483,6 +2582,7 @@ class AppController {
     const h = location.hash.replace(/^#/, "");
     if (h.startsWith("admin")) return { route: "admin", tab: ADMIN_TABS[h.split("/")[1]] ? h.split("/")[1] : "tb" };
     if (["guide", "dictionary"].includes(h)) return { route: h };  /* Module 5.1: #report and #overview removed; they open the map */
+    if (h === "" || h === "intro") return { route: "intro" };       /* the introduction is the first page on opening the site */
     return { route: "map" };
   }
   applyRoute() {
@@ -2506,8 +2606,11 @@ class AppController {
     $("#sheet").hidden = !sheetOpen; $("#sheetScrim").hidden = !sheetOpen;
     document.body.classList.toggle("sheet-open", sheetOpen);
     if (sheetOpen) { this.renderSheet(false); $("#sheet").focus({ preventScroll: true }); }
+    const intro = route === "intro", ib = $("#intro");
+    if (intro) { this.renderIntro(); if (ib.hidden) { ib.hidden = false; ib.scrollTop = 0; ib.focus({ preventScroll: true }); } } else ib.hidden = true;
+    $("#mapStage").toggleAttribute("inert", intro); $("#mapStage").setAttribute("aria-hidden", String(intro));
     this.placeView.render();
-    document.title = { map: "SPIRO", guide: "TB Health Guide · SPIRO", admin: "Staff tools · SPIRO", dictionary: "Data dictionary · SPIRO" }[route];
+    document.title = { intro: "SPIRO · Metro Manila TB map", map: "SPIRO", guide: "TB Health Guide · SPIRO", admin: "Staff tools · SPIRO", dictionary: "Data dictionary · SPIRO" }[route];
     if (ContractData.source.test) document.title = "[TEST DATA] " + document.title;
   }
 
@@ -2560,6 +2663,39 @@ class AppController {
   }
 
   /* ---------- keyboard ---------- */
+  /* Introduction page. Numbers come from the loaded files; nothing is typed in by hand. */
+  renderIntro() {
+    const y = DEFAULT_YEAR, n = tbVal("all", y, MAP_MEASURE), nc = CITIES.length;
+    const stat = (v, l) => `<div class="in-stat"><b class="num">${v}</b><span>${l}</span></div>`;
+    $("#intro").innerHTML = `
+      <header class="in-top"><span class="in-brand"><svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg><b>SPIRO</b></span>
+        <a class="btn" href="#guide">${icon("i-book")}TB Health Guide</a></header>
+      <div class="in-wrap">
+        <div class="in-hero">
+          <p class="eyebrow">Metro Manila · tuberculosis and crowding</p>
+          <h1 id="introTitle">SPIRO</h1>
+          <p class="in-lead">A map that shows where tuberculosis (TB) cases are reported across the 17 cities and municipality of Metro Manila, and when busy public places tend to be crowded, so people and health offices can plan safer visits and focus prevention.</p>
+          <div class="cta"><a class="btn primary in-go" href="#map">${icon("i-map")}Explore the map${icon("i-arrow")}</a><a class="btn" href="#guide">${icon("i-book")}Learn about TB</a></div>
+        </div>
+        <div class="in-stats">
+          ${stat(n == null ? "—" : fmt(n), n == null ? `notified TB cases, ${y} (data not loaded)` : `notified TB cases in Metro Manila, ${y}`)}
+          ${stat(nc, "cities and municipality on the map")}
+          ${stat(PLACES.length, "public places with crowding estimates")}
+        </div>
+        <section class="in-sec" aria-labelledby="inProb"><h2 id="inProb">The problem</h2>
+          <p>TB spreads through the air. Risk grows when people spend long periods close together in crowded, poorly ventilated indoor places, such as malls, public markets and transit stations. ${n == null ? "Metro Manila reports thousands of TB cases every year" : `Metro Manila notified ${fmt(n)} TB cases in ${y} (DOH FHSIS)`}, yet the public has no simple way to see where cases are reported or when shared spaces are busiest, and health offices have no single view that puts the two together.</p></section>
+        <section class="in-sec" aria-labelledby="inHow"><h2 id="inHow">What SPIRO shows</h2>
+          <div class="in-cards">
+            <article class="in-card">${icon("i-map", 22)}<h3>TB cases by city</h3><p>Notified TB cases per city from DOH FHSIS records, ${YEARS[0]}–${y}, with ${y} shown first.</p></article>
+            <article class="in-card">${icon("i-people", 22)}<h3>Crowding heatmap</h3><p>An estimated typical-week pattern for ${PLACES.length} malls, markets, stations and landmarks, blended into one map. Pick a date and time.</p></article>
+            <article class="in-card">${icon("p-mask", 22)}<h3>Precautions</h3><p>Simple steps for each place, plus a TB Health Guide on symptoms and free testing in public health facilities.</p></article>
+          </div></section>
+        <p class="in-note">${icon("i-info")}<span>Crowding is an estimate, not live. A busy place is not evidence that TB is spreading there.</span></p>
+        <p class="in-src">Data: DOH Field Health Services Information System (FHSIS) TB tables · PSA PSGC 2023 boundaries · © OpenStreetMap contributors.</p>
+      </div>`;
+    $$("#intro a[href^='#']").forEach(a => a.addEventListener("click", e => { e.preventDefault(); this.navigate(a.getAttribute("href").slice(1)); }));
+  }
+
   onKey(e) {
     if (e.key !== "Escape") return;
     if (LoginView.isOpen()) { LoginView.close(); return; }
